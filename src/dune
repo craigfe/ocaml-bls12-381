@@ -1,0 +1,14 @@
+(rule
+ (targets flags.sexp)
+ (deps    (:discover config/discover.exe))
+ (action  (run %{discover}))
+)
+
+(library
+ (public_name bls12_381)
+ (name bls12_381)
+ (modules_without_implementation ff_sig)
+ (library_flags :standard -linkall -ccopt -pthread)
+ (c_names bls12_381_stubs)
+ (c_library_flags (:include flags.sexp))
+)
