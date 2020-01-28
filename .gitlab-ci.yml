@@ -12,7 +12,7 @@ build:
     paths:
       - _opam
   script:
-    - sudo apt install m4 -y
+    - sudo apt install m4 cargo -y
     - opam switch create 4.07.0 
     - opam install --deps-only -t -y .
 
