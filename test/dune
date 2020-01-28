@@ -1,0 +1,11 @@
+(executable
+ (name test)
+ (libraries bls12_381 alcotest))
+
+(alias
+ (name    runtest-bls12-381)
+ (action  (run %{exe:test.exe})))
+
+(alias
+ (name    runtest)
+ (deps    (alias runtest-bls12-381)))

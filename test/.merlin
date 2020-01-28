@@ -1,0 +1,26 @@
+EXCLUDE_QUERY_DIR
+B /home/danny/laboratory/ocaml-bls12-381/_opam/lib/alcotest
+B /home/danny/laboratory/ocaml-bls12-381/_opam/lib/astring
+B /home/danny/laboratory/ocaml-bls12-381/_opam/lib/bytes
+B /home/danny/laboratory/ocaml-bls12-381/_opam/lib/cmdliner
+B /home/danny/laboratory/ocaml-bls12-381/_opam/lib/fmt
+B /home/danny/laboratory/ocaml-bls12-381/_opam/lib/ocaml
+B /home/danny/laboratory/ocaml-bls12-381/_opam/lib/result
+B /home/danny/laboratory/ocaml-bls12-381/_opam/lib/seq
+B /home/danny/laboratory/ocaml-bls12-381/_opam/lib/stdlib-shims
+B /home/danny/laboratory/ocaml-bls12-381/_opam/lib/uuidm
+B ../_build/default/src/.bls12_381.objs/byte
+B ../_build/default/test/.test.eobjs/byte
+S /home/danny/laboratory/ocaml-bls12-381/_opam/lib/alcotest
+S /home/danny/laboratory/ocaml-bls12-381/_opam/lib/astring
+S /home/danny/laboratory/ocaml-bls12-381/_opam/lib/bytes
+S /home/danny/laboratory/ocaml-bls12-381/_opam/lib/cmdliner
+S /home/danny/laboratory/ocaml-bls12-381/_opam/lib/fmt
+S /home/danny/laboratory/ocaml-bls12-381/_opam/lib/ocaml
+S /home/danny/laboratory/ocaml-bls12-381/_opam/lib/result
+S /home/danny/laboratory/ocaml-bls12-381/_opam/lib/seq
+S /home/danny/laboratory/ocaml-bls12-381/_opam/lib/stdlib-shims
+S /home/danny/laboratory/ocaml-bls12-381/_opam/lib/uuidm
+S ../src
+S .
+FLG -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs
