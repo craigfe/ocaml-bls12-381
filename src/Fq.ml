@@ -6,6 +6,10 @@ external ml_bls12_381_fq_zero : Bytes.t -> unit
   = "ml_librustc_bls12_381_fq_zero"
   [@@noalloc]
 
+external ml_bls12_381_fq_random : Bytes.t -> unit
+  = "ml_librustc_bls12_381_fq_random"
+  [@@noalloc]
+
 
 type t = Bytes.t
 let to_t (s : Bytes.t) : t = s
@@ -17,4 +21,9 @@ let zero () =
   let s = Bytes.create 48 in
   ml_bls12_381_fq_zero s;
   (to_t s)
+let random () =
+  let s = Bytes.create 48 in
+  ml_bls12_381_fq_random s;
+  (to_t s)
+
 
