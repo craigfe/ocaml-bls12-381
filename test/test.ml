@@ -14,6 +14,18 @@ module ValueGeneration = struct
   let inverse_with_one () =
     let one = Bls12_381.Fq.one () in
     ignore @@ Bls12_381.Fq.inverse one
+
+  let negation_with_random () =
+    let random = Bls12_381.Fq.random () in
+    ignore @@ Bls12_381.Fq.negate random
+
+  let negation_with_zero () =
+    let zero = Bls12_381.Fq.zero () in
+    ignore @@ Bls12_381.Fq.negate zero
+
+  let negation_with_one () =
+    let one = Bls12_381.Fq.one () in
+    ignore @@ Bls12_381.Fq.negate one
 end
 
 module IsZero = struct
@@ -84,6 +96,14 @@ module FieldProperties = struct
     if Bls12_381.Fq.is_zero random then inverse_of_inverse ()
     else assert(Bls12_381.Fq.eq (Bls12_381.Fq.inverse (Bls12_381.Fq.inverse random)) random)
 
+  let opposite_of_opposite () =
+    let random = Bls12_381.Fq.random () in
+    assert(Bls12_381.Fq.eq (Bls12_381.Fq.negate (Bls12_381.Fq.negate random)) random)
+
+  let opposite_of_zero_is_zero () =
+    let zero = Bls12_381.Fq.zero () in
+    assert(Bls12_381.Fq.eq (Bls12_381.Fq.negate zero) zero)
+
 end
 
 let () =
@@ -97,6 +117,9 @@ let () =
         [ test_case "zero" `Quick ValueGeneration.zero;
           test_case "random" `Quick ValueGeneration.random;
           test_case "inverse_random_not_null" `Quick ValueGeneration.inverse_with_random_not_null;
+          test_case "negate_with_one" `Quick ValueGeneration.negation_with_one;
+          test_case "negate_with_zero" `Quick ValueGeneration.negation_with_zero;
+          test_case "negate_with_random" `Quick ValueGeneration.negation_with_random;
           test_case "inverse_one" `Quick ValueGeneration.inverse_with_one ] );
       ( "equality",
         [ test_case
@@ -140,5 +163,12 @@ let () =
             "inverse_of_inverse"
             `Quick
             FieldProperties.inverse_of_inverse;
-
+          test_case
+            "opposite_of_opposite"
+            `Quick
+            FieldProperties.opposite_of_opposite;
+          test_case
+            "opposite_of_zero_is_zero"
+            `Quick
+            FieldProperties.opposite_of_zero_is_zero;
  ] ) ]
