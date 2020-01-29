@@ -22,6 +22,8 @@ build-and-test:
     - mkdir -p ${OPAM_SWITCH_PREFIX}/lib/librustc-bls12-381
     - cp target/debug/librustc_bls12_381.a ${OPAM_SWITCH_PREFIX}/lib/librustc-bls12-381/librustc_bls12_381.a
     - opam install .
+    - opam install alcotest
+    - cd ${CI_PROJECT_DIR}
     - dune runtest
 
 lint:
