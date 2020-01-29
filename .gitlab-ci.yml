@@ -3,7 +3,7 @@ image: ocaml/opam2:4.07
 stages:
   - build
 
-build-and-test:
+build-test-lint:
   # https://docs.gitlab.com/ee/ci/yaml/#cache
   stage: build
   cache:
@@ -24,11 +24,6 @@ build-and-test:
     - opam install alcotest
     - cd ${CI_PROJECT_DIR}
     - dune runtest
-
-lint:
-  stage: build
-  script:
-    - eval $(opam env)
     - opam install ocamlformat
     - ocamlformat --check src/*.ml*
     - ocamlformat --check test/*.ml*
