@@ -44,3 +44,8 @@ dune build @install
 opam install alcotest
 dune runtest
 ```
+
+
+## TODO
+
+- Use integer instead of void to handle errors in the C stubs
