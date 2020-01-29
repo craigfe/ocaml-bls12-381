@@ -26,6 +26,8 @@ build-and-test:
     - dune runtest
 
 lint:
+  dependencies:
+    - build-and-test
   stage: build
   script:
     - eval $(opam env)
