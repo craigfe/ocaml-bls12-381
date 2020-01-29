@@ -23,6 +23,10 @@ external ml_bls12_381_fq_mul: Bytes.t -> Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_fq_mul"
   [@@noalloc]
 
+external ml_bls12_381_fq_eq: Bytes.t -> Bytes.t -> bool
+  = "ml_librustc_bls12_381_fq_eq"
+  [@@noalloc]
+
 external ml_bls12_381_fq_is_one: Bytes.t -> bool
   = "ml_librustc_bls12_381_fq_is_one"
   [@@noalloc]
@@ -72,3 +76,7 @@ let mul x y =
   ml_bls12_381_fq_mul g x y;
   (to_t g)
 
+let eq x y =
+  (* IMPORTANT: DO NOT USE THE BYTES representation because we use 384 bits
+     instead of 381 bits. We trust the binding offered by the library *)
+  ml_bls12_381_fq_eq x y

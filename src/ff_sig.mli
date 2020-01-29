@@ -9,5 +9,5 @@ module type T = sig
   val random : unit -> t
   val add : t -> t -> t
   val mul : t -> t -> t
-  (* val eq : t -> t *)
+  val eq : t -> t -> bool
 end

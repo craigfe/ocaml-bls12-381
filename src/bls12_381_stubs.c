@@ -57,3 +57,11 @@ CAMLprim value ml_librustc_bls12_381_fq_mul(value buffer, value x, value y) {
   rustc_bls12_381_fq_mul(Bytes_val(buffer), Bytes_val(x), Bytes_val(y));
   return Val_unit;
 }
+
+extern int rustc_bls12_381_fq_eq(const unsigned char *x,
+                                  const unsigned char *y);
+
+CAMLprim value ml_librustc_bls12_381_fq_eq(value x, value y) {
+  int res = rustc_bls12_381_fq_eq(Bytes_val(x), Bytes_val(y));
+  return Val_bool(res);
+}
