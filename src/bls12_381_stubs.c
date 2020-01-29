@@ -58,6 +58,22 @@ CAMLprim value ml_librustc_bls12_381_fq_mul(value buffer, value x, value y) {
   return Val_unit;
 }
 
+extern void rustc_bls12_381_fq_unsafe_inverse(unsigned char *buffer,
+                                              const unsigned char *x);
+
+CAMLprim value ml_librustc_bls12_381_fq_unsafe_inverse(value buffer, value x, value y) {
+  rustc_bls12_381_fq_unsafe_inverse(Bytes_val(buffer), Bytes_val(x));
+  return Val_unit;
+}
+
+extern void rustc_bls12_381_fq_negate(unsigned char *buffer,
+                                       const unsigned char *x);
+
+CAMLprim value ml_librustc_bls12_381_fq_negate(value buffer, value x) {
+  rustc_bls12_381_fq_negate(Bytes_val(buffer), Bytes_val(x));
+  return Val_unit;
+}
+
 extern int rustc_bls12_381_fq_eq(const unsigned char *x,
                                   const unsigned char *y);
 

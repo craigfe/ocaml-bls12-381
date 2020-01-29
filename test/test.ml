@@ -2,9 +2,24 @@
 module ValueGeneration = struct
   let zero () =
     ignore @@ (Bls12_381.Fq.zero ())
+
   let random () =
     ignore @@ (Bls12_381.Fq.random ())
 
+  let one () =
+    ignore @@ (Bls12_381.Fq.one ())
+
+  let rec inverse_with_random_not_null () =
+    let random = Bls12_381.Fq.random () in
+    if (Bls12_381.Fq.is_zero random) then inverse_with_random_not_null ()
+    else
+       ignore @@ (Bls12_381.Fq.inverse random)
+
+  let rec inverse_with_random_not_null () =
+    let random = Bls12_381.Fq.random () in
+    if (Bls12_381.Fq.is_zero random) then inverse_with_random_not_null ()
+    else
+       ignore @@ (Bls12_381.Fq.inverse random)
 end
 
 module IsZero = struct

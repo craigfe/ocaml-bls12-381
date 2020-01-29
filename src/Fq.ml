@@ -3,6 +3,10 @@ external ml_bls12_381_fq_is_zero : Bytes.t -> bool
   = "ml_librustc_bls12_381_fq_is_zero"
   [@@noalloc]
 
+external ml_bls12_381_fq_is_one: Bytes.t -> bool
+  = "ml_librustc_bls12_381_fq_is_one"
+  [@@noalloc]
+
 external ml_bls12_381_fq_zero : Bytes.t -> unit
   = "ml_librustc_bls12_381_fq_zero"
   [@@noalloc]
@@ -23,14 +27,17 @@ external ml_bls12_381_fq_mul: Bytes.t -> Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_fq_mul"
   [@@noalloc]
 
+external ml_bls12_381_fq_unsafe_inverse : Bytes.t -> Bytes.t -> unit
+  = "ml_librustc_bls12_381_fq_unsafe_inverse"
+  [@@noalloc]
+
+external ml_bls12_381_fq_negate : Bytes.t -> Bytes.t -> unit
+  = "ml_librustc_bls12_381_fq_negate"
+  [@@noalloc]
+
 external ml_bls12_381_fq_eq: Bytes.t -> Bytes.t -> bool
   = "ml_librustc_bls12_381_fq_eq"
   [@@noalloc]
-
-external ml_bls12_381_fq_is_one: Bytes.t -> bool
-  = "ml_librustc_bls12_381_fq_is_one"
-  [@@noalloc]
-
 
 (** High level (OCaml) definitions/logic *)
 let fq_size_bytes = 48
@@ -75,6 +82,24 @@ let mul x y =
   assert (Bytes.length y = fq_size_bytes);
   ml_bls12_381_fq_mul g x y;
   (to_t g)
+
+let inverse g =
+  let buffer = Bytes.create fq_size_bytes in
+  ml_bls12_381_fq_unsafe_inverse buffer g;
+  (to_t buffer)
+
+let inverse_opt g =
+  if is_zero g then None
+  else
+    let buffer = Bytes.create fq_size_bytes in
+    ml_bls12_381_fq_unsafe_inverse buffer g;
+    Some (to_t buffer)
+
+let negate g =
+  let buffer = Bytes.create fq_size_bytes in
+  ml_bls12_381_fq_negate buffer g;
+  (to_t buffer)
+
 
 let eq x y =
   (* IMPORTANT: DO NOT USE THE BYTES representation because we use 384 bits
