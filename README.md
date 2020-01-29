@@ -1,3 +1,7 @@
+# THIS IS A WIP
+
+## Install
+
 1. Setup environment
 ```
 opam switch create ./ 4.07.1
