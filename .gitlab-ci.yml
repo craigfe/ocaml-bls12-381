@@ -2,10 +2,9 @@ image: ocaml/opam2:4.07
 
 stages:
   - build
-  - test
   - lint
 
-build:
+build-and-test:
   # https://docs.gitlab.com/ee/ci/yaml/#cache
   stage: build
   cache:
@@ -22,19 +21,11 @@ build:
     - cargo build
     - mkdir -p ${OPAM_SWITCH_PREFIX}/lib/librustc-bls12-381
     - cp target/debug/librustc_bls12_381.a ${OPAM_SWITCH_PREFIX}/lib/librustc-bls12-381/librustc_bls12_381.a
-
-test:
-  stage: test
-  cache:
-    key: "$CI_COMMIT_REF_SLUG"
-    paths:
-      - _opam
-  script:
-    - eval $(opam env)
     - opam install .
     - dune runtest
 
 lint:
+  stage: lint
   script:
     - eval $(opam env)
     - opam install ocamlformat
