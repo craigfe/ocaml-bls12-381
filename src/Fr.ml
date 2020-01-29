@@ -77,8 +77,6 @@ let add x y =
 
 let mul x y =
   let g = Bytes.create fr_size_bytes in
-  Printf.printf "Length of x: %d\n" (Bytes.length x);
-  Printf.printf "Length of y: %d\n" (Bytes.length y);
   assert (Bytes.length x = fr_size_bytes) ;
   assert (Bytes.length y = fr_size_bytes) ;
   ml_bls12_381_fr_mul g x y ;
