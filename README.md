@@ -21,7 +21,7 @@ cargo build
 
 Then copy `target/debug/librustc_bls12_381.a` in `${OPAM_SWITCH_PREFIX}/lib/librustc-bls12-381`:
 ```
-cp /tmp/rustc-bls12-381/target/debug/librustc_bls12_381 ${OPAM_SWITCH_PREFIX}/lib/librustc-bls12-381
+cp /tmp/rustc-bls12-381/target/debug/librustc_bls12_381.a ${OPAM_SWITCH_PREFIX}/lib/librustc-bls12-381
 ```
 
 3. build
