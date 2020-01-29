@@ -13,7 +13,7 @@ build:
       - _opam
   script:
     - sudo apt install m4 cargo -y
-    # - opam switch create 4.07.1
+    - opam switch create 4.07.1
     - eval $(opam env)
     - opam install --deps-only -t -y .
     # Install the static library from rustc
