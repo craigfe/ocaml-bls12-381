@@ -1,32 +1,23 @@
 (** Check the routine generators do not raise any exception *)
 module ValueGeneration = struct
-  let zero () =
-    ignore @@ (Bls12_381.Fq.zero ())
+  let zero () = ignore @@ Bls12_381.Fq.zero ()
 
-  let random () =
-    ignore @@ (Bls12_381.Fq.random ())
+  let random () = ignore @@ Bls12_381.Fq.random ()
 
-  let one () =
-    ignore @@ (Bls12_381.Fq.one ())
+  let one () = ignore @@ Bls12_381.Fq.one ()
 
   let rec inverse_with_random_not_null () =
     let random = Bls12_381.Fq.random () in
-    if (Bls12_381.Fq.is_zero random) then inverse_with_random_not_null ()
-    else
-       ignore @@ (Bls12_381.Fq.inverse random)
-
-  let rec inverse_with_random_not_null () =
-    let random = Bls12_381.Fq.random () in
-    if (Bls12_381.Fq.is_zero random) then inverse_with_random_not_null ()
-    else
-       ignore @@ (Bls12_381.Fq.inverse random)
+    if Bls12_381.Fq.is_zero random then inverse_with_random_not_null ()
+    else ignore @@ Bls12_381.Fq.inverse random
 end
 
 module IsZero = struct
   let with_zero_value () =
-    assert(Bls12_381.Fq.is_zero (Bls12_381.Fq.zero ()) = true)
+    assert (Bls12_381.Fq.is_zero (Bls12_381.Fq.zero ()) = true)
+
   let with_random_value () =
-    assert(Bls12_381.Fq.is_zero (Bls12_381.Fq.random ()) = false)
+    assert (Bls12_381.Fq.is_zero (Bls12_381.Fq.random ()) = false)
 end
 
 module Equality = struct
@@ -70,25 +61,37 @@ end
 
 let () =
   let open Alcotest in
-  run "Fq" [
-    "is_zero", [
-       test_case "with zero value" `Quick IsZero.with_zero_value;
-       test_case "with random value" `Quick IsZero.with_random_value;
-    ];
-    "value generation", [
-       test_case "zero" `Quick ValueGeneration.zero;
-       test_case "random" `Quick ValueGeneration.random;
-    ];
-    "equality", [
-       test_case "zero_two_different_objects" `Quick Equality.zero_two_different_objects;
-       test_case "zero_same_objects" `Quick Equality.zero_same_objects;
-       test_case "one_two_different_objects" `Quick Equality.one_two_different_objects;
-       test_case "one_same_objects" `Quick Equality.one_same_objects;
-       test_case "random_same_objects" `Quick Equality.random_same_objects;
-    ];
-    "Field properties", [
-       test_case "zero_nullifier_one" `Quick FieldProperties.zero_nullifier_one;
-       test_case "zero_nullifier_zero" `Quick FieldProperties.zero_nullifier_zero;
-       test_case "zero_nullifier_random" `Quick FieldProperties.zero_nullifier_random;
-    ];
-  ]
+  run
+    "Fq"
+    [ ( "is_zero",
+        [ test_case "with zero value" `Quick IsZero.with_zero_value;
+          test_case "with random value" `Quick IsZero.with_random_value ] );
+      ( "value generation",
+        [ test_case "zero" `Quick ValueGeneration.zero;
+          test_case "random" `Quick ValueGeneration.random ] );
+      ( "equality",
+        [ test_case
+            "zero_two_different_objects"
+            `Quick
+            Equality.zero_two_different_objects;
+          test_case "zero_same_objects" `Quick Equality.zero_same_objects;
+          test_case
+            "one_two_different_objects"
+            `Quick
+            Equality.one_two_different_objects;
+          test_case "one_same_objects" `Quick Equality.one_same_objects;
+          test_case "random_same_objects" `Quick Equality.random_same_objects ]
+      );
+      ( "Field properties",
+        [ test_case
+            "zero_nullifier_one"
+            `Quick
+            FieldProperties.zero_nullifier_one;
+          test_case
+            "zero_nullifier_zero"
+            `Quick
+            FieldProperties.zero_nullifier_zero;
+          test_case
+            "zero_nullifier_random"
+            `Quick
+            FieldProperties.zero_nullifier_random ] ) ]

@@ -11,8 +11,8 @@ module type T = sig
   val mul : t -> t -> t
   val eq : t -> t -> bool
   val negate : t -> t
-  (** Unsafe version of inverse *)
+  (* Unsafe version of inverse *)
   val inverse : t -> t
-  (** Safe version of inverse *)
+  (* Safe version of inverse *)
   val inverse_opt : t -> t option
 end
