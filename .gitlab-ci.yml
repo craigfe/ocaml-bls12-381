@@ -3,6 +3,7 @@ image: ocaml/opam2:ubuntu-lts
 stages:
   - build
   - test
+  - lint
 
 build:
   # https://docs.gitlab.com/ee/ci/yaml/#cache
@@ -24,8 +25,6 @@ build:
     - cp target/debug/librustc_bls12_381.a ${OPAM_SWITCH_PREFIX}/lib/librustc-bls12-381/librustc_bls12_381.a
 
 test:
-  dependencies:
-    - build
   stage: test
   cache:
     key: "$CI_COMMIT_REF_SLUG"
@@ -36,3 +35,11 @@ test:
     - eval $(opam env)
     - opam install .
     - dune runtest
+
+lint:
+  script:
+    - opam switch 4.07.1
+    - eval $(opam env)
+    - opam install ocamlformat
+    - ocamlformat --check src/*.ml*
+    - ocamlformat --check test/*.ml*
