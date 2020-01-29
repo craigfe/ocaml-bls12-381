@@ -1,4 +1,4 @@
-image: ocaml/opam2:ubuntu-lts
+image: ocaml/opam2:4.07
 
 stages:
   - build
@@ -14,7 +14,6 @@ build:
       - _opam
   script:
     - sudo apt install m4 cargo -y
-    - opam switch create 4.07.1
     - eval $(opam env)
     - opam install --deps-only -t -y .
     # Install the static library from rustc
@@ -31,14 +30,12 @@ test:
     paths:
       - _opam
   script:
-    - opam switch 4.07.1
     - eval $(opam env)
     - opam install .
     - dune runtest
 
 lint:
   script:
-    - opam switch 4.07.1
     - eval $(opam env)
     - opam install ocamlformat
     - ocamlformat --check src/*.ml*
