@@ -81,29 +81,35 @@ module FieldProperties = struct
   let zero_has_no_inverse () =
     let zero = Bls12_381.Fq.zero () in
     match Bls12_381.Fq.inverse_opt zero with
-    | Some(_) -> assert(false)
-    | None -> assert(true)
+    | Some _ -> assert false
+    | None -> assert true
 
   let rec inverse_of_non_null_does_exist () =
     let random = Bls12_381.Fq.random () in
     if Bls12_381.Fq.is_zero random then inverse_of_non_null_does_exist ()
-    else match Bls12_381.Fq.inverse_opt random with
-    | Some(_) -> assert(true)
-    | None -> assert(false)
+    else
+      match Bls12_381.Fq.inverse_opt random with
+      | Some _ -> assert true
+      | None -> assert false
 
   let rec inverse_of_inverse () =
     let random = Bls12_381.Fq.random () in
     if Bls12_381.Fq.is_zero random then inverse_of_inverse ()
-    else assert(Bls12_381.Fq.eq (Bls12_381.Fq.inverse (Bls12_381.Fq.inverse random)) random)
+    else
+      assert (
+        Bls12_381.Fq.eq
+          (Bls12_381.Fq.inverse (Bls12_381.Fq.inverse random))
+          random )
 
   let opposite_of_opposite () =
     let random = Bls12_381.Fq.random () in
-    assert(Bls12_381.Fq.eq (Bls12_381.Fq.negate (Bls12_381.Fq.negate random)) random)
+    assert (
+      Bls12_381.Fq.eq (Bls12_381.Fq.negate (Bls12_381.Fq.negate random)) random
+    )
 
   let opposite_of_zero_is_zero () =
     let zero = Bls12_381.Fq.zero () in
-    assert(Bls12_381.Fq.eq (Bls12_381.Fq.negate zero) zero)
-
+    assert (Bls12_381.Fq.eq (Bls12_381.Fq.negate zero) zero)
 end
 
 let () =
@@ -116,10 +122,16 @@ let () =
       ( "value generation",
         [ test_case "zero" `Quick ValueGeneration.zero;
           test_case "random" `Quick ValueGeneration.random;
-          test_case "inverse_random_not_null" `Quick ValueGeneration.inverse_with_random_not_null;
+          test_case
+            "inverse_random_not_null"
+            `Quick
+            ValueGeneration.inverse_with_random_not_null;
           test_case "negate_with_one" `Quick ValueGeneration.negation_with_one;
           test_case "negate_with_zero" `Quick ValueGeneration.negation_with_zero;
-          test_case "negate_with_random" `Quick ValueGeneration.negation_with_random;
+          test_case
+            "negate_with_random"
+            `Quick
+            ValueGeneration.negation_with_random;
           test_case "inverse_one" `Quick ValueGeneration.inverse_with_one ] );
       ( "equality",
         [ test_case
@@ -170,5 +182,4 @@ let () =
           test_case
             "opposite_of_zero_is_zero"
             `Quick
-            FieldProperties.opposite_of_zero_is_zero;
- ] ) ]
+            FieldProperties.opposite_of_zero_is_zero ] ) ]
