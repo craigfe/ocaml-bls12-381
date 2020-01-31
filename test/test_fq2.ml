@@ -121,6 +121,15 @@ module FieldProperties = struct
         (Bls12_381.Fq2.add (Bls12_381.Fq2.add g1 g2) g3)
         (Bls12_381.Fq2.add (Bls12_381.Fq2.add g2 g3) g1) )
 
+  let distributivity () =
+    let g1 = Bls12_381.Fq2.random () in
+    let g2 = Bls12_381.Fq2.random () in
+    let g3 = Bls12_381.Fq2.random () in
+    assert (
+      Bls12_381.Fq2.eq
+        (Bls12_381.Fq2.mul (Bls12_381.Fq2.add g1 g2) g3)
+        (Bls12_381.Fq2.add (Bls12_381.Fq2.mul g1 g3) (Bls12_381.Fq2.mul g2 g3)))
+
   let multiplicative_associativity () =
     let g1 = Bls12_381.Fq2.random () in
     let g2 = Bls12_381.Fq2.random () in
@@ -206,6 +215,10 @@ let () =
             "additive_associativity"
             `Quick
             FieldProperties.additive_associativity;
+          test_case
+            "distributivity"
+            `Quick
+            FieldProperties.distributivity;
           test_case
             "multiplicative_associativity"
             `Quick
