@@ -110,6 +110,24 @@ module FieldProperties = struct
   let opposite_of_zero_is_zero () =
     let zero = Bls12_381.Fr.zero () in
     assert (Bls12_381.Fr.eq (Bls12_381.Fr.negate zero) zero)
+
+  let additive_associativity () =
+    let g1 = Bls12_381.Fr.random () in
+    let g2 = Bls12_381.Fr.random () in
+    let g3 = Bls12_381.Fr.random () in
+    assert (
+      Bls12_381.Fr.eq
+        (Bls12_381.Fr.add (Bls12_381.Fr.add g1 g2) g3)
+        (Bls12_381.Fr.add (Bls12_381.Fr.add g2 g3) g1) )
+
+  let multiplicative_associativity () =
+    let g1 = Bls12_381.Fr.random () in
+    let g2 = Bls12_381.Fr.random () in
+    let g3 = Bls12_381.Fr.random () in
+    assert (
+      Bls12_381.Fr.eq
+        (Bls12_381.Fr.mul (Bls12_381.Fr.mul g1 g2) g3)
+        (Bls12_381.Fr.mul (Bls12_381.Fr.mul g2 g3) g1) )
 end
 
 let () =
@@ -182,4 +200,12 @@ let () =
           test_case
             "opposite_of_zero_is_zero"
             `Quick
-            FieldProperties.opposite_of_zero_is_zero ] ) ]
+            FieldProperties.opposite_of_zero_is_zero;
+          test_case
+            "additive_associativity"
+            `Quick
+            FieldProperties.additive_associativity;
+          test_case
+            "multiplicative_associativity"
+            `Quick
+            FieldProperties.multiplicative_associativity ] ) ]
