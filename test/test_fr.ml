@@ -127,7 +127,7 @@ module FieldProperties = struct
     assert (
       Bls12_381.Fr.eq
         (Bls12_381.Fr.mul (Bls12_381.Fr.add g1 g2) g3)
-        (Bls12_381.Fr.add (Bls12_381.Fr.mul g1 g3) (Bls12_381.Fr.mul g2 g3)))
+        (Bls12_381.Fr.add (Bls12_381.Fr.mul g1 g3) (Bls12_381.Fr.mul g2 g3)) )
 
   let multiplicative_associativity () =
     let g1 = Bls12_381.Fr.random () in
@@ -210,10 +210,7 @@ let () =
             "opposite_of_zero_is_zero"
             `Quick
             FieldProperties.opposite_of_zero_is_zero;
-          test_case
-            "distributivity"
-            `Quick
-            FieldProperties.distributivity;
+          test_case "distributivity" `Quick FieldProperties.distributivity;
           test_case
             "additive_associativity"
             `Quick
