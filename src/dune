@@ -9,6 +9,6 @@
  (name bls12_381)
  (modules_without_implementation ff_sig)
  (library_flags :standard -linkall -ccopt -pthread)
- (c_names bls12_381_stubs_fq bls12_381_stubs_fr)
+ (c_names bls12_381_stubs_fq bls12_381_stubs_fr bls12_381_stubs_fq2)
  (c_library_flags (:include flags.sexp))
 )

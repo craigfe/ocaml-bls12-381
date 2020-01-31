@@ -45,6 +45,8 @@ type t = Bytes.t
 
 let to_t (g : Bytes.t) : t = g
 
+let to_bytes g = g
+
 let is_zero g =
   assert (Bytes.length g = fq_size_bytes) ;
   ml_bls12_381_fq_is_zero g

@@ -2,6 +2,10 @@
 module type T = sig
   type t
 
+  val to_t : Bytes.t -> t
+
+  val to_bytes : t -> Bytes.t
+
   (* Let's use a function for the moment *)
   val zero : unit -> t
 
