@@ -93,6 +93,11 @@ module ECProperties = struct
       Bls12_381.G1.eq
         (Bls12_381.G1.mul (Bls12_381.G1.add g1 g2) s)
         (Bls12_381.G1.add (Bls12_381.G1.mul g1 s) (Bls12_381.G1.mul g2 s)) )
+
+  let opposite_of_scalar_is_opposite_of_ec () =
+    let s = Bls12_381.Fr.random () in
+    let g = Bls12_381.G1.random () in
+    assert (Bls12_381.G1.eq (Bls12_381.G1.mul g (Bls12_381.Fr.negate s)) (Bls12_381.G1.mul (Bls12_381.G1.negate g) s))
 end
 
 let () =
@@ -146,6 +151,7 @@ let () =
             `Quick
             ECProperties.opposite_of_zero_is_zero;
           test_case "distributivity" `Quick ECProperties.distributivity;
+          test_case "opposite_of_scalar_is_opposite_of_ec" `Quick ECProperties.opposite_of_scalar_is_opposite_of_ec;
           test_case
             "additive_associativity"
             `Quick
