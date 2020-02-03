@@ -22,14 +22,12 @@ external ml_bls12_381_g1_mul : Bytes.t -> Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_g1_mul"
   [@@noalloc]
 
-external ml_bls12_381_g1_zero: Bytes.t -> unit
+external ml_bls12_381_g1_zero : Bytes.t -> unit
   = "ml_librustc_bls12_381_g1_zero"
   [@@noalloc]
 
-external ml_bls12_381_g1_one: Bytes.t -> unit
-  = "ml_librustc_bls12_381_g1_one"
+external ml_bls12_381_g1_one : Bytes.t -> unit = "ml_librustc_bls12_381_g1_one"
   [@@noalloc]
-
 
 type t = Bytes.t
 
