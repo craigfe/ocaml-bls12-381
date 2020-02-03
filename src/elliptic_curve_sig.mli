@@ -3,6 +3,10 @@ module type T = sig
 
   type scalar
 
+  val zero : unit -> t
+
+  val one : unit -> t
+
   val is_zero : t -> bool
 
   val random : unit -> t

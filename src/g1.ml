@@ -22,6 +22,15 @@ external ml_bls12_381_g1_mul : Bytes.t -> Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_g1_mul"
   [@@noalloc]
 
+external ml_bls12_381_g1_zero: Bytes.t -> unit
+  = "ml_librustc_bls12_381_g1_zero"
+  [@@noalloc]
+
+external ml_bls12_381_g1_one: Bytes.t -> unit
+  = "ml_librustc_bls12_381_g1_one"
+  [@@noalloc]
+
+
 type t = Bytes.t
 
 type scalar = Fr.t
@@ -29,6 +38,16 @@ type scalar = Fr.t
 let to_t (g : Bytes.t) : t = g
 
 (* let to_bytes g = g *)
+
+let zero () =
+  let g = Bytes.create 96 in
+  ml_bls12_381_g1_zero g ;
+  to_t g
+
+let one () =
+  let g = Bytes.create 96 in
+  ml_bls12_381_g1_one g ;
+  to_t g
 
 let random () =
   let g = Bytes.create 96 in

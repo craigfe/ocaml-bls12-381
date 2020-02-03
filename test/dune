@@ -8,21 +8,19 @@
  (modules test_fq12)
  (libraries bls12_381 alcotest))
 
+(executable
+ (name test_g1)
+ (modules test_g1)
+ (libraries bls12_381 alcotest))
+
+
 (alias
- (name    runtest-bls12-381-test-fq)
- (action  (run %{exe:test_fq.exe})))
+ (name    runtest-bls12-381-test-g1)
+ (action  (run %{exe:test_g1.exe})))
 
 (alias
  (name    runtest-bls12-381-test-fr)
  (action  (run %{exe:test_fr.exe})))
-
-(alias
- (name    runtest-bls12-381-test-fq2)
- (action  (run %{exe:test_fq2.exe})))
-
-(alias
- (name    runtest-bls12-381-test-fq6)
- (action  (run %{exe:test_fq6.exe})))
 
 (alias
  (name    runtest-bls12-381-test-fq12)
@@ -30,4 +28,4 @@
 
 (alias
  (name    runtest)
- (deps    (alias runtest-bls12-381-test-fr) (alias runtest-bls12-381-test-fq12)))
+ (deps    (alias runtest-bls12-381-test-fr) (alias runtest-bls12-381-test-fq12) (alias runtest-bls12-381-test-g1)))

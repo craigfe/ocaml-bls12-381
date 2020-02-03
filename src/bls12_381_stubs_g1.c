@@ -6,6 +6,20 @@
 #include <inttypes.h>
 #include <stdbool.h>
 
+extern void rustc_bls12_381_g1_one(unsigned char *buffer);
+
+CAMLprim value ml_librustc_bls12_381_g1_one(value buffer) {
+  rustc_bls12_381_g1_one(Bytes_val(buffer));
+  return Val_unit;
+}
+
+extern void rustc_bls12_381_g1_zero(unsigned char *buffer);
+
+CAMLprim value ml_librustc_bls12_381_g1_zero(value buffer) {
+  rustc_bls12_381_g1_zero(Bytes_val(buffer));
+  return Val_unit;
+}
+
 extern void rustc_bls12_381_g1_random(unsigned char *element);
 
 CAMLprim value ml_librustc_bls12_381_g1_random(value element) {
