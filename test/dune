@@ -1,21 +1,6 @@
 (executable
- (name test_fq)
- (modules test_fq)
- (libraries bls12_381 alcotest))
-
-(executable
  (name test_fr)
  (modules test_fr)
- (libraries bls12_381 alcotest))
-
-(executable
- (name test_fq2)
- (modules test_fq2)
- (libraries bls12_381 alcotest))
-
-(executable
- (name test_fq6)
- (modules test_fq6)
  (libraries bls12_381 alcotest))
 
 (executable
@@ -45,4 +30,4 @@
 
 (alias
  (name    runtest)
- (deps    (alias runtest-bls12-381-test-fq) (alias runtest-bls12-381-test-fr) (alias runtest-bls12-381-test-fq2) (alias runtest-bls12-381-test-fq6) (alias runtest-bls12-381-test-fq12)))
+ (deps    (alias runtest-bls12-381-test-fr) (alias runtest-bls12-381-test-fq12)))
