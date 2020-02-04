@@ -79,25 +79,27 @@ let random () =
   to_t g
 
 let add x y =
-  let g = Bytes.create fr_size_bytes in
   assert (Bytes.length x = fr_size_bytes) ;
   assert (Bytes.length y = fr_size_bytes) ;
+  let g = Bytes.create fr_size_bytes in
   ml_bls12_381_fr_add g x y ;
   to_t g
 
 let mul x y =
-  let g = Bytes.create fr_size_bytes in
   assert (Bytes.length x = fr_size_bytes) ;
   assert (Bytes.length y = fr_size_bytes) ;
+  let g = Bytes.create fr_size_bytes in
   ml_bls12_381_fr_mul g x y ;
   to_t g
 
 let inverse g =
+  assert (Bytes.length g = fr_size_bytes) ;
   let buffer = Bytes.create fr_size_bytes in
   ml_bls12_381_fr_unsafe_inverse buffer g ;
   to_t buffer
 
 let inverse_opt g =
+  assert (Bytes.length g = fr_size_bytes) ;
   if is_zero g then None
   else
     let buffer = Bytes.create fr_size_bytes in
@@ -105,16 +107,19 @@ let inverse_opt g =
     Some (to_t buffer)
 
 let negate g =
+  assert (Bytes.length g = fr_size_bytes) ;
   let buffer = Bytes.create fr_size_bytes in
   ml_bls12_381_fr_negate buffer g ;
   to_t buffer
 
 let square g =
+  assert (Bytes.length g = fr_size_bytes) ;
   let buffer = Bytes.create fr_size_bytes in
   ml_bls12_381_fr_square buffer g ;
   to_t buffer
 
 let double g =
+  assert (Bytes.length g = fr_size_bytes) ;
   let buffer = Bytes.create fr_size_bytes in
   ml_bls12_381_fr_double buffer g ;
   to_t buffer

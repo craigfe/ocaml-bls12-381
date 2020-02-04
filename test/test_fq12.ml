@@ -46,6 +46,10 @@ module ValueGeneration = struct
   let double_with_random () =
     let g = Bls12_381.Fq12.random () in
     ignore @@ Bls12_381.Fq12.double g
+
+  let double_is_same_than_multiply_by_same_element () =
+    let g = Bls12_381.Fq12.random () in
+    assert (Bls12_381.Fq12.eq (Bls12_381.Fq12.double g) (Bls12_381.Fq12.add g g))
 end
 
 module IsZero = struct
@@ -193,6 +197,10 @@ let () =
             "negate_with_random"
             `Quick
             ValueGeneration.negation_with_random;
+          test_case
+            "double_is_same_than_multiply_by_same_element"
+            `Quick
+            ValueGeneration.double_is_same_than_multiply_by_same_element;
           test_case "inverse_one" `Quick ValueGeneration.inverse_with_one ] );
       ( "equality",
         [ test_case

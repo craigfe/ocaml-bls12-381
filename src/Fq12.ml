@@ -109,7 +109,7 @@ let double g =
   assert (Bytes.length g = length_fq12) ;
   let buffer = Bytes.create length_fq12 in
   ml_bls12_381_fq12_double buffer g ;
-  buffer
+  to_t buffer
 
 let inverse g =
   assert (Bytes.length g = length_fq12) ;
