@@ -89,3 +89,11 @@ CAMLprim value ml_librustc_bls12_381_fr_square(value buffer, value x) {
   rustc_bls12_381_fr_square(Bytes_val(buffer), Bytes_val(x));
   return Val_unit;
 }
+
+extern void rustc_bls12_381_fr_double(unsigned char *buffer,
+                                      const unsigned char *x);
+
+CAMLprim value ml_librustc_bls12_381_fr_double(value buffer, value x) {
+  rustc_bls12_381_fr_double(Bytes_val(buffer), Bytes_val(x));
+  return Val_unit;
+}

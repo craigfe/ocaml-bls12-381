@@ -34,6 +34,18 @@ module ValueGeneration = struct
   let square_with_random () =
     let g = Bls12_381.Fr.random () in
     ignore @@ Bls12_381.Fr.square g
+
+  let double_with_zero () =
+    let g = Bls12_381.Fr.zero () in
+    ignore @@ Bls12_381.Fr.double g
+
+  let double_with_one () =
+    let g = Bls12_381.Fr.one () in
+    ignore @@ Bls12_381.Fr.double g
+
+  let double_with_random () =
+    let g = Bls12_381.Fr.random () in
+    ignore @@ Bls12_381.Fr.double g
 end
 
 module IsZero = struct
@@ -163,11 +175,21 @@ let () =
             ValueGeneration.inverse_with_random_not_null;
           test_case "negate_with_one" `Quick ValueGeneration.negation_with_one;
           test_case "negate_with_zero" `Quick ValueGeneration.negation_with_zero;
+          test_case
+            "negate_with_random"
+            `Quick
+            ValueGeneration.negation_with_random;
           test_case "square_with_one" `Quick ValueGeneration.square_with_one;
           test_case
             "square_with_random"
             `Quick
             ValueGeneration.square_with_random;
+          test_case "double_with_zero" `Quick ValueGeneration.double_with_zero;
+          test_case "double_with_one" `Quick ValueGeneration.double_with_one;
+          test_case
+            "double_with_random"
+            `Quick
+            ValueGeneration.double_with_random;
           test_case
             "negate_with_random"
             `Quick

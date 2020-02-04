@@ -32,4 +32,6 @@ module type T = sig
   val inverse_opt : t -> t option
 
   val square : t -> t
+
+  val double : t -> t
 end
