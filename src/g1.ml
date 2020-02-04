@@ -35,7 +35,7 @@ type scalar = Fr.t
 
 let to_t (g : Bytes.t) : t = g
 
-(* let to_bytes g = g *)
+let to_bytes g = g
 
 let zero () =
   let g = Bytes.create 96 in

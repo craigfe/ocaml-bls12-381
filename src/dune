@@ -9,6 +9,6 @@
  (name bls12_381)
  (modules_without_implementation ff_sig elliptic_curve_sig)
  (library_flags :standard -linkall -ccopt -pthread)
- (c_names bls12_381_stubs_fr bls12_381_stubs_fq12 bls12_381_stubs_g1 bls12_381_stubs_g2)
+ (c_names bls12_381_stubs_fr bls12_381_stubs_fq12 bls12_381_stubs_g1 bls12_381_stubs_g2 bls12_381_stubs_pairing)
  (c_library_flags (:include flags.sexp))
 )
