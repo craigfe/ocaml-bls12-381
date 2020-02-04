@@ -123,3 +123,11 @@ let inverse_opt g =
     let inverse_buffer = Bytes.create length_fq12 in
     ml_bls12_381_fq12_unsafe_inverse inverse_buffer g ;
     Some inverse_buffer
+
+(* let pow g n =
+ *   assert (n > 0);
+ *   let rec inner_pow g n =
+ *     if n = 0 then square g
+ *     else inner_pow (mul g g) (n - 1)
+ *   in
+ *   inner_pow g n *)

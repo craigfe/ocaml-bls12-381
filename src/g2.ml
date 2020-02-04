@@ -56,7 +56,7 @@ let add g1 g2 =
   assert (Bytes.length g1 = 192) ;
   assert (Bytes.length g2 = 192) ;
   let g = Bytes.create 192 in
-  ml_bls12_381_g2_add g g2 g2 ;
+  ml_bls12_381_g2_add g g1 g2 ;
   to_t g
 
 let negate g =

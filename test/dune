@@ -9,14 +9,32 @@
  (libraries bls12_381 alcotest))
 
 (executable
+ (name test_pairing)
+ (modules test_pairing)
+ (libraries bls12_381 alcotest))
+
+
+(executable
  (name test_g1)
  (modules test_g1)
  (libraries bls12_381 alcotest))
 
+(executable
+ (name test_g2)
+ (modules test_g2)
+ (libraries bls12_381 alcotest))
 
 (alias
  (name    runtest-bls12-381-test-g1)
  (action  (run %{exe:test_g1.exe})))
+
+(alias
+ (name    runtest-bls12-381-test-g2)
+ (action  (run %{exe:test_g2.exe})))
+
+(alias
+ (name    runtest-bls12-381-test-pairing)
+ (action  (run %{exe:test_pairing.exe})))
 
 (alias
  (name    runtest-bls12-381-test-fr)
@@ -28,4 +46,4 @@
 
 (alias
  (name    runtest)
- (deps    (alias runtest-bls12-381-test-fr) (alias runtest-bls12-381-test-fq12) (alias runtest-bls12-381-test-g1)))
+ (deps    (alias runtest-bls12-381-test-fr) (alias runtest-bls12-381-test-fq12) (alias runtest-bls12-381-test-g1) (alias runtest-bls12-381-test-g2)))
