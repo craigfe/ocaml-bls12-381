@@ -38,6 +38,10 @@ external ml_bls12_381_fq12_negate : Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_fq12_negate"
   [@@noalloc]
 
+external ml_bls12_381_fq12_square : Bytes.t -> Bytes.t -> unit
+  = "ml_librustc_bls12_381_fq12_square"
+  [@@noalloc]
+
 let length_fq12 = 576
 
 (** 288 bytes long *)
@@ -90,6 +94,12 @@ let negate g =
   let opposite_buffer = Bytes.create length_fq12 in
   ml_bls12_381_fq12_negate opposite_buffer g ;
   opposite_buffer
+
+let square g =
+  assert (Bytes.length g = length_fq12) ;
+  let buffer = Bytes.create length_fq12 in
+  ml_bls12_381_fq12_square buffer g ;
+  buffer
 
 let inverse g =
   assert (Bytes.length g = length_fq12) ;

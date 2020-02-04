@@ -81,3 +81,11 @@ CAMLprim value ml_librustc_bls12_381_fr_eq(value x, value y) {
   int res = rustc_bls12_381_fr_eq(Bytes_val(x), Bytes_val(y));
   return Val_bool(res);
 }
+
+extern void rustc_bls12_381_fr_square(unsigned char *buffer,
+                                        const unsigned char *x);
+
+CAMLprim value ml_librustc_bls12_381_fr_square(value buffer, value x) {
+  rustc_bls12_381_fr_square(Bytes_val(buffer), Bytes_val(x));
+  return Val_unit;
+}

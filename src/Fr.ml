@@ -34,6 +34,10 @@ external ml_bls12_381_fr_negate : Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_fr_negate"
   [@@noalloc]
 
+external ml_bls12_381_fr_square : Bytes.t -> Bytes.t -> unit
+  = "ml_librustc_bls12_381_fr_square"
+  [@@noalloc]
+
 external ml_bls12_381_fr_eq : Bytes.t -> Bytes.t -> bool
   = "ml_librustc_bls12_381_fr_eq"
   [@@noalloc]
@@ -99,6 +103,11 @@ let inverse_opt g =
 let negate g =
   let buffer = Bytes.create fr_size_bytes in
   ml_bls12_381_fr_negate buffer g ;
+  to_t buffer
+
+let square g =
+  let buffer = Bytes.create fr_size_bytes in
+  ml_bls12_381_fr_square buffer g ;
   to_t buffer
 
 let eq x y =

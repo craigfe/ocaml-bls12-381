@@ -82,3 +82,11 @@ CAMLprim value ml_librustc_bls12_381_fq12_negate(value buffer, value x) {
   rustc_bls12_381_fq12_negate(Bytes_val(buffer), Bytes_val(x));
   return Val_unit;
 }
+
+extern void rustc_bls12_381_fq12_square(unsigned char *buffer,
+                                        const unsigned char *x);
+
+CAMLprim value ml_librustc_bls12_381_fq12_square(value buffer, value x) {
+  rustc_bls12_381_fq12_square(Bytes_val(buffer), Bytes_val(x));
+  return Val_unit;
+}

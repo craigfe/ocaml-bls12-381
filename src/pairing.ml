@@ -25,7 +25,8 @@ end
 *)
 
 (** External definition, must use `Bytes.t` to represent the field elements *)
-external ml_bls12_381_pairing_miller_loop_simple : Bytes.t -> Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_pairing_miller_loop_simple :
+  Bytes.t -> Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_pairing_miller_loop_simple"
   [@@noalloc]
 
@@ -37,11 +38,14 @@ external ml_bls12_381_pairing : Bytes.t -> Bytes.t -> Bytes.t -> unit
 let miller_loop_simple (g1 : G1.t) (g2 : G2.t) : Fq12.t =
   (* FIXME/IMPROVEME: Use a method create_buffer? *)
   let buffer = Fq12.zero () in
-  ml_bls12_381_pairing_miller_loop_simple (Fq12.to_bytes buffer) (G1.to_bytes g1) (G2.to_bytes g2);
+  ml_bls12_381_pairing_miller_loop_simple
+    (Fq12.to_bytes buffer)
+    (G1.to_bytes g1)
+    (G2.to_bytes g2) ;
   buffer
 
 let pairing (g1 : G1.t) (g2 : G2.t) : Fq12.t =
   (* FIXME/IMPROVEME: Use a method create_buffer? *)
   let buffer = Fq12.zero () in
-  ml_bls12_381_pairing (Fq12.to_bytes buffer) (G1.to_bytes g1) (G2.to_bytes g2);
+  ml_bls12_381_pairing (Fq12.to_bytes buffer) (G1.to_bytes g1) (G2.to_bytes g2) ;
   buffer

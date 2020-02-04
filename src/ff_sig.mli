@@ -30,4 +30,6 @@ module type T = sig
 
   (* Safe version of inverse *)
   val inverse_opt : t -> t option
+
+  val square : t -> t
 end

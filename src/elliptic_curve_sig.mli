@@ -6,6 +6,7 @@ module type T = sig
   type scalar
 
   (** Build an element using a bytes representation. Use carefully *)
+
   (* val to_t : Bytes.t -> t *)
 
   (** Return a representation in bytes. Use carefully *)
