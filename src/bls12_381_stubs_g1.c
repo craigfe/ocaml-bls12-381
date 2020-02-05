@@ -65,3 +65,22 @@ CAMLprim value ml_librustc_bls12_381_g1_mul(value buffer, value g, value a) {
   rustc_bls12_381_g1_mul(Bytes_val(buffer), Bytes_val(g), Bytes_val(a));
   return Val_unit;
 }
+
+extern void rustc_bls12_381_g1_compressed_of_uncompressed(unsigned char *buffer,
+                                                          const unsigned char *g);
+
+CAMLprim value ml_librustc_bls12_381_g1_compressed_of_uncompressed(value buffer, value g) {
+  rustc_bls12_381_g1_compressed_of_uncompressed(Bytes_val(buffer), Bytes_val(g));
+  return Val_unit;
+}
+
+extern void
+rustc_bls12_381_g1_uncompressed_of_compressed(unsigned char *buffer,
+                                              const unsigned char *g);
+
+CAMLprim value ml_librustc_bls12_381_g1_uncompressed_of_compressed(value buffer,
+                                                                   value g) {
+  rustc_bls12_381_g1_uncompressed_of_compressed(Bytes_val(buffer),
+                                                Bytes_val(g));
+  return Val_unit;
+}

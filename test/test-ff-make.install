@@ -1,0 +1,5 @@
+lib: [
+  "_build/install/default/lib/test-ff-make/META"
+  "_build/install/default/lib/test-ff-make/dune-package"
+  "_build/install/default/lib/test-ff-make/opam"
+]

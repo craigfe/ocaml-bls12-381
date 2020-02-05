@@ -1,12 +1,27 @@
+(library
+ (name Test_ec_make)
+ (public_name test-ec-make)
+ (modules Test_ec_make)
+ (libraries alcotest bls12_381)
+)
+
+(library
+ (name Test_ff_make)
+ (public_name test-ff-make)
+ (modules Test_ff_make)
+ (libraries alcotest bls12_381)
+)
+
+
 (executable
  (name test_fr)
  (modules test_fr)
- (libraries bls12_381 alcotest))
+ (libraries test-ff-make bls12_381 alcotest))
 
 (executable
  (name test_fq12)
  (modules test_fq12)
- (libraries bls12_381 alcotest))
+ (libraries test-ff-make bls12_381 alcotest))
 
 (executable
  (name test_pairing)
@@ -17,12 +32,12 @@
 (executable
  (name test_g1)
  (modules test_g1)
- (libraries bls12_381 alcotest))
+ (libraries test-ec-make bls12_381 alcotest))
 
 (executable
  (name test_g2)
  (modules test_g2)
- (libraries bls12_381 alcotest))
+ (libraries test-ec-make bls12_381 alcotest))
 
 (alias
  (name    runtest-bls12-381-test-g1)

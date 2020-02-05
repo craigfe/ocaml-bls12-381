@@ -2,8 +2,7 @@ module type T = sig
   (** The type of the element in the elliptic curve *)
   type t
 
-  (** The type of the scalars *)
-  type scalar
+  module Scalar : Ff_sig.T
 
   (** Build an element using a bytes representation. Use carefully *)
 
@@ -34,5 +33,5 @@ module type T = sig
   val eq : t -> t -> bool
 
   (** Multiply an element by a scalar *)
-  val mul : t -> scalar -> t
+  val mul : t -> Scalar.t -> t
 end
