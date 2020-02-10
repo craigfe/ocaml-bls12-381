@@ -1,0 +1,11 @@
+(executable
+ (name bench_g1)
+ (public_name bench-g1)
+ (libraries core_bench bls12_381 core)
+)
+
+(alias
+ (name    benchmark_g1)
+ (action  (run %{exe:bench_g1.exe})))
+
+
