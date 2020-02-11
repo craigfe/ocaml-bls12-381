@@ -39,7 +39,7 @@ B /home/danny/laboratory/ocaml-bls12-381/_opam/lib/textutils/console
 B /home/danny/laboratory/ocaml-bls12-381/_opam/lib/time_now
 B /home/danny/laboratory/ocaml-bls12-381/_opam/lib/typerep
 B /home/danny/laboratory/ocaml-bls12-381/_opam/lib/variantslib
-B ../_build/default/benchmark/.bench_g1.eobjs/byte
+B ../_build/default/benchmark/.bench_ec.eobjs/byte
 B ../_build/default/src/.bls12_381.objs/byte
 S /home/danny/laboratory/ocaml-bls12-381/_opam/lib/base
 S /home/danny/laboratory/ocaml-bls12-381/_opam/lib/base/caml

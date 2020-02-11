@@ -1,11 +1,11 @@
 (executable
- (name bench_g1)
- (public_name bench-g1)
+ (name bench_ec)
+ (public_name bench-ec)
  (libraries core_bench bls12_381 core)
 )
 
 (alias
- (name    benchmark_g1)
- (action  (run %{exe:bench_g1.exe})))
+ (name    benchmark_ec)
+ (action  (run %{exe:bench_ec.exe})))
 
 

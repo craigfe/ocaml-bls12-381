@@ -4,5 +4,5 @@ lib: [
   "_build/install/default/lib/bls12_381_benchmark/opam"
 ]
 bin: [
-  "_build/install/default/bin/bench-g1"
+  "_build/install/default/bin/bench-ec"
 ]
