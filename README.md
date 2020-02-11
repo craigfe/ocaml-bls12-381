@@ -43,10 +43,12 @@ dune utop
 dune build @install
 opam install alcotest
 dune runtest
-```
+``**
 
 
 ## Run the benchmarks
+
+**USE THE RELEASE VERSION OF THE RUST LIBRARY TO GET PRODUCTION BENCHMARKS (cargo build --release)**
 
 ```
 opam install core_bench
