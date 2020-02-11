@@ -46,6 +46,13 @@ dune runtest
 ```
 
 
+## Run the benchmarks
+
+```
+opam install core_bench
+dune exec benchmark/bench_ec.exe
+```
+
 ## TODO
 
 - Use integer instead of void to handle errors in the C stubs

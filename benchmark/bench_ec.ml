@@ -17,10 +17,11 @@ module ECBenchmark (G : Bls12_381.Elliptic_curve_sig.T) = struct
   let get_benches ec_name =
     [ (* Bench.Test.create ~name:(Printf.sprintf "%s addition" ec_name) generate_addition; *)
       (* Bench.Test.create ~name:(Printf.sprintf "%s random" ec_name) generate_random_element; *)
-      (* Bench.Test.create ~name:(Printf.sprintf "%s opposite of pregenerated random element" ec_name) generate_opposite_of_pregenerated_random_element ; *)
-      Bench.Test.create
-        ~name:(Printf.sprintf "%s opposite of zero" ec_name)
-        generate_opposite_of_zero ]
+      Bench.Test.create ~name:(Printf.sprintf "%s opposite of pregenerated random element" ec_name) generate_opposite_of_pregenerated_random_element ;
+      (* Bench.Test.create
+       *   ~name:(Printf.sprintf "%s opposite of zero" ec_name)
+       *   generate_opposite_of_zero *)
+]
 end
 
 module BenchmarkG1Uncompressed = ECBenchmark (Bls12_381.G1.Uncompressed)
