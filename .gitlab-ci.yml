@@ -17,13 +17,16 @@ build-test-lint:
     # Install the static library from rustc
     - git clone https://gitlab.com/dannywillems/rustc-bls12-381 /tmp/rustc-bls12-381
     - cd /tmp/rustc-bls12-381
-    - cargo build
+    - cargo build --release
     - mkdir -p ${OPAM_SWITCH_PREFIX}/lib/librustc-bls12-381
-    - cp target/debug/librustc_bls12_381.a ${OPAM_SWITCH_PREFIX}/lib/librustc-bls12-381/librustc_bls12_381.a
+    - cp target/release/librustc_bls12_381.a ${OPAM_SWITCH_PREFIX}/lib/librustc-bls12-381/librustc_bls12_381.a
     - opam install .
+    # Run test
     - opam install alcotest
     - cd ${CI_PROJECT_DIR}
     - dune runtest
+    # Lint
     - opam install ocamlformat
     - ocamlformat --check src/*.ml*
     - ocamlformat --check test/*.ml*
+    - ocamlformat --check benchmark/*.ml*
