@@ -124,8 +124,6 @@ let inverse_opt g =
     ml_bls12_381_fq12_unsafe_inverse inverse_buffer g ;
     Some inverse_buffer
 
-let to_string _t = failwith "Not implemented"
-
 (* let pow g n =
  *   assert (n > 0);
  *   let rec inner_pow g n =
