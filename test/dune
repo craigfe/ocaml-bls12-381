@@ -61,4 +61,4 @@
 
 (alias
  (name    runtest)
- (deps    (alias runtest-bls12-381-test-fr) (alias runtest-bls12-381-test-fq12) (alias runtest-bls12-381-test-g1) (alias runtest-bls12-381-test-g2)))
+ (deps    (alias runtest-bls12-381-test-fr) (alias runtest-bls12-381-test-fq12) (alias runtest-bls12-381-test-g1) (alias runtest-bls12-381-test-g2) (alias runtest-bls12-381-test-pairing)))

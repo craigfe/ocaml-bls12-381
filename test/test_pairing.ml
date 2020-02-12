@@ -2,7 +2,28 @@ open Bls12_381
 
 module Properties = struct
   let with_zero_as_first_component () =
-    assert (Fq12.eq (Pairing.pairing (G1.zero ()) (G2.random ())) (Fq12.zero ()))
+    assert (
+      Fq12.eq
+        (Pairing.pairing (G1.Uncompressed.zero ()) (G2.Uncompressed.random ()))
+        (Fq12.one ()) )
+
+  let with_zero_as_second_component () =
+    assert (
+      Fq12.eq
+        (Pairing.pairing (G1.Uncompressed.random ()) (G2.Uncompressed.zero ()))
+        (Fq12.one ()) )
+
+  let linearity_commutativity_scalar () =
+    (* pairing(a * g_{1}, b * g_{2}) = pairing(b * g_{1}, a * g_{2})*)
+    let a = Fr.random () in
+    let b = Fr.random () in
+    let g1 = G1.Uncompressed.random () in
+    let g2 = G2.Uncompressed.random () in
+    assert (
+      Fq12.eq
+        (Pairing.pairing (G1.Uncompressed.mul g1 a) (G2.Uncompressed.mul g2 b))
+        (Pairing.pairing (G1.Uncompressed.mul g1 b) (G2.Uncompressed.mul g2 a))
+    )
 end
 
 let () =
@@ -13,4 +34,12 @@ let () =
         [ test_case
             "with zero as first component"
             `Quick
-            Properties.with_zero_as_first_component ] ) ]
+            Properties.with_zero_as_first_component;
+          test_case
+            "with zero as second component"
+            `Quick
+            Properties.with_zero_as_second_component;
+          test_case
+            "linearity commutativity scalar"
+            `Quick
+            Properties.linearity_commutativity_scalar ] ) ]
