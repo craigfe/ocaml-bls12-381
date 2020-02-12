@@ -4,6 +4,8 @@ module type T = sig
 
   val to_t : Bytes.t -> t
 
+  val to_string : t -> String.t
+
   val to_bytes : t -> Bytes.t
 
   (* Let's use a function for the moment *)

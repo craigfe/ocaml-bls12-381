@@ -128,3 +128,5 @@ let eq x y =
   (* IMPORTANT: DO NOT USE THE BYTES representation because we use 384 bits
      instead of 381 bits. We trust the binding offered by the library *)
   ml_bls12_381_fr_eq x y
+
+let to_string a = Z.to_string (Z.of_bits (Bytes.to_string a))

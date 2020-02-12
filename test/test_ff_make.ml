@@ -251,3 +251,16 @@ module MakeFieldProperties (FiniteField : Bls12_381.Ff_sig.T) = struct
           `Quick
           (repeat 1000 multiplicative_associativity) ] )
 end
+
+module MakeStringRepresentation (G : Bls12_381.Ff_sig.T) = struct
+  let test_to_string_one () = assert (String.equal "1" (G.to_string (G.one ())))
+
+  let test_to_string_zero () =
+    assert (String.equal "0" (G.to_string (G.zero ())))
+
+  let get_tests () =
+    let open Alcotest in
+    ( "String representation",
+      [ test_case "one" `Quick test_to_string_one;
+        test_case "zero" `Quick test_to_string_zero ] )
+end
