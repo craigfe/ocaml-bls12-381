@@ -7,17 +7,17 @@
 #include <stdbool.h>
 
 
-extern int rustc_bls12_381_fr_is_zero(const unsigned char *element);
+extern bool rustc_bls12_381_fr_is_zero(const unsigned char *element);
 
 CAMLprim value ml_librustc_bls12_381_fr_is_zero(value element) {
-  int res = rustc_bls12_381_fr_is_zero(Bytes_val(element));
+  bool res = rustc_bls12_381_fr_is_zero(Bytes_val(element));
   return Val_bool(res);
 }
 
-extern int rustc_bls12_381_fr_is_one(const unsigned char *x);
+extern bool rustc_bls12_381_fr_is_one(const unsigned char *x);
 
 CAMLprim value ml_librustc_bls12_381_fr_is_one(value x) {
-  int res = rustc_bls12_381_fr_is_one(Bytes_val(x));
+  bool res = rustc_bls12_381_fr_is_one(Bytes_val(x));
   return Val_bool(res);
 }
 
@@ -74,11 +74,11 @@ CAMLprim value ml_librustc_bls12_381_fr_negate(value buffer, value x) {
   return Val_unit;
 }
 
-extern int rustc_bls12_381_fr_eq(const unsigned char *x,
-                                 const unsigned char *y);
+extern bool rustc_bls12_381_fr_eq(const unsigned char *x,
+                                  const unsigned char *y);
 
 CAMLprim value ml_librustc_bls12_381_fr_eq(value x, value y) {
-  int res = rustc_bls12_381_fr_eq(Bytes_val(x), Bytes_val(y));
+  bool res = rustc_bls12_381_fr_eq(Bytes_val(x), Bytes_val(y));
   return Val_bool(res);
 }
 
