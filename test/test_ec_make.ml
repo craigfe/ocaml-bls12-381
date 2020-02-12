@@ -1,3 +1,6 @@
+let rec repeat n f =
+  if n <= 0 then let f () = () in f else (f (); repeat (n - 1) f)
+
 module MakeEquality (G : Bls12_381.Elliptic_curve_sig.T) = struct
   let zero_two_different_objects () = assert (G.eq (G.zero ()) (G.zero ()))
 
@@ -18,11 +21,11 @@ module MakeEquality (G : Bls12_381.Elliptic_curve_sig.T) = struct
   let get_tests () =
     let open Alcotest in
     ( "equality",
-      [ test_case "zero_two_different_objects" `Quick zero_two_different_objects;
-        test_case "zero_same_objects" `Quick zero_same_objects;
-        test_case "one_two_different_objects" `Quick one_two_different_objects;
-        test_case "one_same_objects" `Quick one_same_objects;
-        test_case "random_same_objects" `Quick random_same_objects ] )
+      [ test_case "zero_two_different_objects" `Quick (repeat 100 zero_two_different_objects);
+        test_case "zero_same_objects" `Quick (repeat 100 zero_same_objects);
+        test_case "one_two_different_objects" `Quick (repeat 100 one_two_different_objects);
+        test_case "one_same_objects" `Quick (repeat 100 one_same_objects);
+        test_case "random_same_objects" `Quick (repeat 100 random_same_objects) ] )
 end
 
 module MakeValueGeneration (G : Bls12_381.Elliptic_curve_sig.T) = struct
@@ -47,11 +50,11 @@ module MakeValueGeneration (G : Bls12_381.Elliptic_curve_sig.T) = struct
   let get_tests () =
     let open Alcotest in
     ( "value generation",
-      [ test_case "zero" `Quick zero;
-        test_case "random" `Quick random;
-        test_case "negate_with_one" `Quick negation_with_one;
-        test_case "negate_with_zero" `Quick negation_with_zero;
-        test_case "negate_with_random" `Quick negation_with_random ] )
+      [ test_case "zero" `Quick (repeat 100 zero);
+        test_case "random" `Quick (repeat 100 random);
+        test_case "negate_with_one" `Quick (repeat 100 negation_with_one);
+        test_case "negate_with_zero" `Quick (repeat 100 negation_with_zero);
+        test_case "negate_with_random" `Quick (repeat 100 negation_with_random) ] )
 end
 
 module MakeIsZero (G : Bls12_381.Elliptic_curve_sig.T) = struct
@@ -62,8 +65,8 @@ module MakeIsZero (G : Bls12_381.Elliptic_curve_sig.T) = struct
   let get_tests () =
     let open Alcotest in
     ( "is_zero",
-      [ test_case "with zero value" `Quick with_zero_value;
-        test_case "with random value" `Quick with_random_value ] )
+      [ test_case "with zero value" `Quick (repeat 100 with_zero_value);
+        test_case "with random value" `Quick (repeat 100 with_random_value) ] )
 end
 
 module MakeECProperties (G : Bls12_381.Elliptic_curve_sig.T) = struct
@@ -109,9 +112,6 @@ module MakeECProperties (G : Bls12_381.Elliptic_curve_sig.T) = struct
     let s = G.Scalar.random () in
     let g = G.random () in
     assert (G.eq (G.mul g (G.Scalar.negate s)) (G.mul (G.negate g) s))
-
-  let rec repeat n f =
-    if n <= 0 then let f () = () in f else (f (); repeat (n - 1) f)
 
   let get_tests () =
     let open Alcotest in
