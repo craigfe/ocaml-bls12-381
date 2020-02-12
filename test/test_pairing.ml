@@ -1,5 +1,13 @@
 open Bls12_381
 
+let rec repeat n f =
+  if n <= 0 then
+    let f () = () in
+    f
+  else (
+    f () ;
+    repeat (n - 1) f )
+
 module Properties = struct
   let with_zero_as_first_component () =
     assert (
@@ -34,12 +42,12 @@ let () =
         [ test_case
             "with zero as first component"
             `Quick
-            Properties.with_zero_as_first_component;
+            (repeat 1000 Properties.with_zero_as_first_component);
           test_case
             "with zero as second component"
             `Quick
-            Properties.with_zero_as_second_component;
+            (repeat 1000 Properties.with_zero_as_second_component);
           test_case
             "linearity commutativity scalar"
             `Quick
-            Properties.linearity_commutativity_scalar ] ) ]
+            (repeat 1000 Properties.linearity_commutativity_scalar) ] ) ]
