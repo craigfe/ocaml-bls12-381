@@ -53,6 +53,8 @@ dune runtest
 ```
 opam install core_bench
 dune exec benchmark/bench_ec.exe
+dune exec benchmark/bench_ff.exe
+dune exec benchmark/bench_pairing.exe
 ```
 
 ## TODO
