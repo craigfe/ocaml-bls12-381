@@ -32,6 +32,16 @@ module Properties = struct
         (Pairing.pairing (G1.Uncompressed.mul g1 a) (G2.Uncompressed.mul g2 b))
         (Pairing.pairing (G1.Uncompressed.mul g1 b) (G2.Uncompressed.mul g2 a))
     )
+
+  let linearity_commutativity_scalar_with_only_one_scalar () =
+    (* pairing(a * g_{1}, g_{2}) = pairing(a * g_{1}, g_{2})*)
+    let a = Fr.random () in
+    let g1 = G1.Uncompressed.random () in
+    let g2 = G2.Uncompressed.random () in
+    assert (
+      Fq12.eq
+        (Pairing.pairing g1 (G2.Uncompressed.mul g2 a))
+        (Pairing.pairing (G1.Uncompressed.mul g1 a) g2) )
 end
 
 let () =
@@ -47,6 +57,12 @@ let () =
             "with zero as second component"
             `Quick
             (repeat 1000 Properties.with_zero_as_second_component);
+          test_case
+            "linearity commutative scalar with only one scalar"
+            `Quick
+            (repeat
+               1000
+               Properties.linearity_commutativity_scalar_with_only_one_scalar);
           test_case
             "linearity commutativity scalar"
             `Quick
