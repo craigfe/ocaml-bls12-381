@@ -1,5 +1,10 @@
 let rec repeat n f =
-  if n <= 0 then let f () = () in f else (f (); repeat (n - 1) f)
+  if n <= 0 then
+    let f () = () in
+    f
+  else (
+    f () ;
+    repeat (n - 1) f )
 
 module MakeEquality (G : Bls12_381.Elliptic_curve_sig.T) = struct
   let zero_two_different_objects () = assert (G.eq (G.zero ()) (G.zero ()))
@@ -21,11 +26,18 @@ module MakeEquality (G : Bls12_381.Elliptic_curve_sig.T) = struct
   let get_tests () =
     let open Alcotest in
     ( "equality",
-      [ test_case "zero_two_different_objects" `Quick (repeat 100 zero_two_different_objects);
+      [ test_case
+          "zero_two_different_objects"
+          `Quick
+          (repeat 100 zero_two_different_objects);
         test_case "zero_same_objects" `Quick (repeat 100 zero_same_objects);
-        test_case "one_two_different_objects" `Quick (repeat 100 one_two_different_objects);
+        test_case
+          "one_two_different_objects"
+          `Quick
+          (repeat 100 one_two_different_objects);
         test_case "one_same_objects" `Quick (repeat 100 one_same_objects);
-        test_case "random_same_objects" `Quick (repeat 100 random_same_objects) ] )
+        test_case "random_same_objects" `Quick (repeat 100 random_same_objects)
+      ] )
 end
 
 module MakeValueGeneration (G : Bls12_381.Elliptic_curve_sig.T) = struct
@@ -54,7 +66,8 @@ module MakeValueGeneration (G : Bls12_381.Elliptic_curve_sig.T) = struct
         test_case "random" `Quick (repeat 100 random);
         test_case "negate_with_one" `Quick (repeat 100 negation_with_one);
         test_case "negate_with_zero" `Quick (repeat 100 negation_with_zero);
-        test_case "negate_with_random" `Quick (repeat 100 negation_with_random) ] )
+        test_case "negate_with_random" `Quick (repeat 100 negation_with_random)
+      ] )
 end
 
 module MakeIsZero (G : Bls12_381.Elliptic_curve_sig.T) = struct
@@ -116,18 +129,33 @@ module MakeECProperties (G : Bls12_381.Elliptic_curve_sig.T) = struct
   let get_tests () =
     let open Alcotest in
     ( "Field properties",
-      [ test_case "zero_scalar_nullifier_one" `Quick (repeat 100 zero_scalar_nullifier_one);
-        test_case "zero_scalar_nullifier_zero" `Quick (repeat 100 zero_scalar_nullifier_zero);
+      [ test_case
+          "zero_scalar_nullifier_one"
+          `Quick
+          (repeat 100 zero_scalar_nullifier_one);
+        test_case
+          "zero_scalar_nullifier_zero"
+          `Quick
+          (repeat 100 zero_scalar_nullifier_zero);
         test_case
           "zero_scalar_nullifier_random"
           `Quick
           (repeat 100 zero_scalar_nullifier_random);
-        test_case "opposite_of_opposite" `Quick (repeat 100 opposite_of_opposite);
-        test_case "opposite_of_zero_is_zero" `Quick (repeat 100 opposite_of_zero_is_zero) ;
+        test_case
+          "opposite_of_opposite"
+          `Quick
+          (repeat 100 opposite_of_opposite);
+        test_case
+          "opposite_of_zero_is_zero"
+          `Quick
+          (repeat 100 opposite_of_zero_is_zero);
         test_case "distributivity" `Quick (repeat 100 distributivity);
         test_case
           "opposite_of_scalar_is_opposite_of_ec"
           `Quick
           (repeat 100 opposite_of_scalar_is_opposite_of_ec);
-        test_case "additive_associativity" `Quick (repeat 100 additive_associativity) ] )
+        test_case
+          "additive_associativity"
+          `Quick
+          (repeat 100 additive_associativity) ] )
 end

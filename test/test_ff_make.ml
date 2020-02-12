@@ -1,6 +1,10 @@
 let rec repeat n f =
-  if n <= 0 then let f () = () in f else (f (); repeat (n - 1) f)
-
+  if n <= 0 then
+    let f () = () in
+    f
+  else (
+    f () ;
+    repeat (n - 1) f )
 
 (** Check the routine generators do not raise any exception *)
 module MakeValueGeneration (FiniteField : Bls12_381.Ff_sig.T) = struct
@@ -60,7 +64,10 @@ module MakeValueGeneration (FiniteField : Bls12_381.Ff_sig.T) = struct
     ( "value generation",
       [ test_case "zero" `Quick (repeat 1000 zero);
         test_case "random" `Quick (repeat 1000 random);
-        test_case "inverse_random_not_null" `Quick (repeat 1000 inverse_with_random_not_null);
+        test_case
+          "inverse_random_not_null"
+          `Quick
+          (repeat 1000 inverse_with_random_not_null);
         test_case "negate_with_one" `Quick (repeat 1000 negation_with_one);
         test_case "negate_with_zero" `Quick (repeat 1000 negation_with_zero);
         test_case "double_with_one" `Quick (repeat 1000 double_with_one);
@@ -87,7 +94,8 @@ module MakeIsZero (FiniteField : Bls12_381.Ff_sig.T) = struct
     let open Alcotest in
     ( "is_zero",
       [ test_case "with zero value" `Quick (repeat 1000 with_zero_value);
-        test_case "with random value" `Quick (repeat 1000 with_random_value) ] )
+        test_case "with random value" `Quick (repeat 1000 with_random_value) ]
+    )
 end
 
 module MakeEquality (FiniteField : Bls12_381.Ff_sig.T) = struct
@@ -112,11 +120,18 @@ module MakeEquality (FiniteField : Bls12_381.Ff_sig.T) = struct
   let get_tests () =
     let open Alcotest in
     ( "equality",
-      [ test_case "zero_two_different_objects" `Quick (repeat 1000 zero_two_different_objects);
+      [ test_case
+          "zero_two_different_objects"
+          `Quick
+          (repeat 1000 zero_two_different_objects);
         test_case "zero_same_objects" `Quick (repeat 1000 zero_same_objects);
-        test_case "one_two_different_objects" `Quick (repeat 1000 one_two_different_objects);
+        test_case
+          "one_two_different_objects"
+          `Quick
+          (repeat 1000 one_two_different_objects);
         test_case "one_same_objects" `Quick (repeat 1000 one_same_objects);
-        test_case "random_same_objects" `Quick (repeat 1000 random_same_objects) ] )
+        test_case "random_same_objects" `Quick (repeat 1000 random_same_objects)
+      ] )
 end
 
 module MakeFieldProperties (FiniteField : Bls12_381.Ff_sig.T) = struct
@@ -204,17 +219,32 @@ module MakeFieldProperties (FiniteField : Bls12_381.Ff_sig.T) = struct
     ( "Field properties",
       [ test_case "zero_nullifier_one" `Quick (repeat 1000 zero_nullifier_one);
         test_case "zero_nullifier_zero" `Quick (repeat 1000 zero_nullifier_zero);
-        test_case "zero_nullifier_random" `Quick (repeat 1000 zero_nullifier_random);
+        test_case
+          "zero_nullifier_random"
+          `Quick
+          (repeat 1000 zero_nullifier_random);
         test_case
           "inverse_of_non_null_does_exist"
           `Quick
           (repeat 1000 inverse_of_non_null_does_exist);
-        test_case "inverse_of_one_is_one" `Quick (repeat 1000 inverse_of_one_is_one);
+        test_case
+          "inverse_of_one_is_one"
+          `Quick
+          (repeat 1000 inverse_of_one_is_one);
         test_case "zero_has_no_inverse" `Quick (repeat 1000 zero_has_no_inverse);
         test_case "inverse_of_inverse" `Quick (repeat 1000 inverse_of_inverse);
-        test_case "opposite_of_opposite" `Quick (repeat 1000 opposite_of_opposite);
-        test_case "opposite_of_zero_is_zero" `Quick (repeat 1000 opposite_of_zero_is_zero);
-        test_case "additive_associativity" `Quick (repeat 1000 additive_associativity);
+        test_case
+          "opposite_of_opposite"
+          `Quick
+          (repeat 1000 opposite_of_opposite);
+        test_case
+          "opposite_of_zero_is_zero"
+          `Quick
+          (repeat 1000 opposite_of_zero_is_zero);
+        test_case
+          "additive_associativity"
+          `Quick
+          (repeat 1000 additive_associativity);
         test_case "distributivity" `Quick (repeat 1000 distributivity);
         test_case
           "multiplicative_associativity"
