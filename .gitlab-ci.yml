@@ -11,6 +11,7 @@ build-test-lint:
     paths:
       - _opam
   script:
+    - sudo apt-get update && sudo apt-get upgrade -y
     - sudo apt install m4 cargo -y
     - eval $(opam env)
     - opam install --deps-only -t -y .
