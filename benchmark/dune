@@ -9,16 +9,3 @@
  (modules bench_ff)
  (libraries core_bench bls12_381 core)
 )
-
-; (alias
-;  (name    run-benchmark-ec)
-;  (action  (run %{exe:bench_ec.exe})))
-
-; (alias
-;  (name    run-benchmark-ff)
-;  (action  (run %{exe:bench_ff.exe})))
-
-; (alias
-;  (name    runbenches)
-;  (deps    (alias run-benchmark-ec) (alias run-benchmark-ff)))
-
