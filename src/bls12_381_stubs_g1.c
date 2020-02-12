@@ -42,18 +42,18 @@ CAMLprim value ml_librustc_bls12_381_g1_negate(value buffer, value g) {
   return Val_unit;
 }
 
-extern int rustc_bls12_381_g1_eq(const unsigned char *g1,
+extern bool rustc_bls12_381_g1_eq(const unsigned char *g1,
                                  const unsigned char *g2);
 
 CAMLprim value ml_librustc_bls12_381_g1_eq(value g1, value g2) {
-  int res = rustc_bls12_381_g1_eq(Bytes_val(g1), Bytes_val(g2));
+  bool res = rustc_bls12_381_g1_eq(Bytes_val(g1), Bytes_val(g2));
   return Val_bool(res);
 }
 
-extern int rustc_bls12_381_g1_is_zero(const unsigned char *g);
+extern bool rustc_bls12_381_g1_is_zero(const unsigned char *g);
 
 CAMLprim value ml_librustc_bls12_381_g1_is_zero(value g) {
-  int res = rustc_bls12_381_g1_is_zero(Bytes_val(g));
+  bool res = rustc_bls12_381_g1_is_zero(Bytes_val(g));
   return Val_bool(res);
 }
 

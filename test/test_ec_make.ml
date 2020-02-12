@@ -110,21 +110,24 @@ module MakeECProperties (G : Bls12_381.Elliptic_curve_sig.T) = struct
     let g = G.random () in
     assert (G.eq (G.mul g (G.Scalar.negate s)) (G.mul (G.negate g) s))
 
+  let rec repeat n f =
+    if n <= 0 then let f () = () in f else (f (); repeat (n - 1) f)
+
   let get_tests () =
     let open Alcotest in
     ( "Field properties",
-      [ test_case "zero_scalar_nullifier_one" `Quick zero_scalar_nullifier_one;
-        test_case "zero_scalar_nullifier_zero" `Quick zero_scalar_nullifier_zero;
+      [ test_case "zero_scalar_nullifier_one" `Quick (repeat 100 zero_scalar_nullifier_one);
+        test_case "zero_scalar_nullifier_zero" `Quick (repeat 100 zero_scalar_nullifier_zero);
         test_case
           "zero_scalar_nullifier_random"
           `Quick
-          zero_scalar_nullifier_random;
-        test_case "opposite_of_opposite" `Quick opposite_of_opposite;
-        test_case "opposite_of_zero_is_zero" `Quick opposite_of_zero_is_zero;
-        test_case "distributivity" `Quick distributivity;
+          (repeat 100 zero_scalar_nullifier_random);
+        test_case "opposite_of_opposite" `Quick (repeat 100 opposite_of_opposite);
+        test_case "opposite_of_zero_is_zero" `Quick (repeat 100 opposite_of_zero_is_zero) ;
+        test_case "distributivity" `Quick (repeat 100 distributivity);
         test_case
           "opposite_of_scalar_is_opposite_of_ec"
           `Quick
-          opposite_of_scalar_is_opposite_of_ec;
-        test_case "additive_associativity" `Quick additive_associativity ] )
+          (repeat 100 opposite_of_scalar_is_opposite_of_ec);
+        test_case "additive_associativity" `Quick (repeat 100 additive_associativity) ] )
 end

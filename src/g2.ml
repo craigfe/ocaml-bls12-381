@@ -88,7 +88,8 @@ module Uncompressed = struct
 
   let is_zero g =
     assert (Bytes.length g = 192) ;
-    ml_bls12_381_g2_is_zero g
+    let g = ml_bls12_381_g2_is_zero g in
+    g
 
   let mul (g : t) (a : Scalar.t) : t =
     assert (Bytes.length g = 192) ;
