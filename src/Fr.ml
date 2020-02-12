@@ -130,3 +130,17 @@ let eq x y =
   ml_bls12_381_fr_eq x y
 
 let to_string a = Z.to_string (Z.of_bits (Bytes.to_string a))
+
+let to_z a = Z.of_bits (Bytes.to_string a)
+
+let pow g n =
+  let rec inner_pow n acc =
+    if Z.equal n Z.zero then acc else inner_pow (Z.pred n) (mul acc g)
+  in
+  inner_pow n (one ())
+
+(* let of_string s =
+ *   let a = Bytes.create fr_size_bytes in
+ *   let repr_bytes_z = Z.of_string s in
+ *   Bytes.
+ *   to_t a *)

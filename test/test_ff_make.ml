@@ -214,6 +214,24 @@ module MakeFieldProperties (FiniteField : Bls12_381.Ff_sig.T) = struct
         (FiniteField.mul (FiniteField.mul g1 g2) g3)
         (FiniteField.mul (FiniteField.mul g2 g3) g1) )
 
+  let pow_zero_on_random_equals_one () =
+    let r = FiniteField.random () in
+    assert (FiniteField.eq (FiniteField.pow r Z.zero) (FiniteField.one ()))
+
+  let pow_zero_on_one_equals_one () =
+    let e = FiniteField.one () in
+    assert (FiniteField.eq (FiniteField.pow e Z.zero) (FiniteField.one ()))
+
+  let pow_one_on_random_element_equals_the_random_element () =
+    let e = FiniteField.random () in
+    assert (FiniteField.eq (FiniteField.pow e Z.one) e)
+
+  let pow_two_on_random_element_equals_the_square () =
+    let e = FiniteField.random () in
+    assert (
+      FiniteField.eq (FiniteField.pow e (Z.succ Z.one)) (FiniteField.square e)
+    )
+
   let get_tests () =
     let open Alcotest in
     ( "Field properties",
@@ -246,6 +264,22 @@ module MakeFieldProperties (FiniteField : Bls12_381.Ff_sig.T) = struct
           `Quick
           (repeat 1000 additive_associativity);
         test_case "distributivity" `Quick (repeat 1000 distributivity);
+        test_case
+          "pow zero on random element equals one"
+          `Quick
+          (repeat 1000 pow_zero_on_random_equals_one);
+        test_case
+          "pow zero on one equals one"
+          `Quick
+          (repeat 1000 pow_zero_on_one_equals_one);
+        test_case
+          "pow one on random element equals the same element"
+          `Quick
+          (repeat 1000 pow_one_on_random_element_equals_the_random_element);
+        test_case
+          "pow two on random element equals the square"
+          `Quick
+          (repeat 1000 pow_one_on_random_element_equals_the_random_element);
         test_case
           "multiplicative_associativity"
           `Quick

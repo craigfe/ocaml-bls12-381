@@ -124,10 +124,8 @@ let inverse_opt g =
     ml_bls12_381_fq12_unsafe_inverse inverse_buffer g ;
     Some inverse_buffer
 
-(* let pow g n =
- *   assert (n > 0);
- *   let rec inner_pow g n =
- *     if n = 0 then square g
- *     else inner_pow (mul g g) (n - 1)
- *   in
- *   inner_pow g n *)
+let pow g n =
+  let rec inner_pow n acc =
+    if Z.equal n Z.zero then acc else inner_pow (Z.pred n) (mul acc g)
+  in
+  inner_pow n (one ())

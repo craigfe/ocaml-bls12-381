@@ -34,4 +34,6 @@ module type T = sig
   val square : t -> t
 
   val double : t -> t
+
+  val pow : t -> Z.t -> t
 end
