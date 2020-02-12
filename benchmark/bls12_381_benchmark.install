@@ -3,6 +3,3 @@ lib: [
   "_build/install/default/lib/bls12_381_benchmark/dune-package"
   "_build/install/default/lib/bls12_381_benchmark/opam"
 ]
-bin: [
-  "_build/install/default/bin/bench-ec"
-]

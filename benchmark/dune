@@ -1,11 +1,24 @@
 (executable
  (name bench_ec)
- (public_name bench-ec)
+ (modules bench_ec)
  (libraries core_bench bls12_381 core)
 )
 
-(alias
- (name    benchmark_ec)
- (action  (run %{exe:bench_ec.exe})))
+(executable
+ (name bench_ff)
+ (modules bench_ff)
+ (libraries core_bench bls12_381 core)
+)
 
+; (alias
+;  (name    run-benchmark-ec)
+;  (action  (run %{exe:bench_ec.exe})))
+
+; (alias
+;  (name    run-benchmark-ff)
+;  (action  (run %{exe:bench_ff.exe})))
+
+; (alias
+;  (name    runbenches)
+;  (deps    (alias run-benchmark-ec) (alias run-benchmark-ff)))
 

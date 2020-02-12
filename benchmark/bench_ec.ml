@@ -23,7 +23,7 @@ module ECBenchmark (G : Bls12_381.Elliptic_curve_sig.T) = struct
 
   let check_is_zero_on_pregenerated_zero () = ignore @@ G.is_zero zero
 
-  let compute_addition () = G.add g1 g2
+  let compute_addition_pregenerated_random () = G.add g1 g2
 
   let check_equality_on_random () = ignore @@ G.eq g1 g2
 
@@ -33,39 +33,72 @@ module ECBenchmark (G : Bls12_381.Elliptic_curve_sig.T) = struct
 
   let check_equality_on_same_element () = ignore @@ G.eq g1 g1
 
-  let compute_mul_on_pregenerated_random_element_and_scalar () = ignore @@ G.mul g1 scalar
+  let compute_mul_on_pregenerated_random_element_and_scalar () =
+    ignore @@ G.mul g1 scalar
 
-  let compute_opposite_of_pregenerated_random_element () =
-    ignore @@ G.negate g1
+  let compute_opposite_of_pregenerated_random_element () = ignore @@ G.negate g1
 
   let compute_opposite_of_zero () = ignore @@ G.negate zero
 
   let compute_opposite_of_one () = ignore @@ G.negate one
 
   let get_benches ec_name =
-    [ Bench.Test.create ~name:(Printf.sprintf "%s compute addition random element" ec_name) compute_addition;
-      Bench.Test.create ~name:(Printf.sprintf "%s random generation" ec_name) generate_random_element;
-      Bench.Test.create ~name:(Printf.sprintf "%s zero generation" ec_name) generate_zero ;
-      Bench.Test.create ~name:(Printf.sprintf "%s one generation" ec_name) generate_one ;
-      Bench.Test.create ~name:(Printf.sprintf "%s check if zero on pregenerated random" ec_name) check_is_zero_on_pregenerated_random ;
-      Bench.Test.create ~name:(Printf.sprintf "%s check if zero on pregenerated one" ec_name) check_is_zero_on_pregenerated_one ;
-      Bench.Test.create ~name:(Printf.sprintf "%s check if zero on pregenerated zero" ec_name) check_is_zero_on_pregenerated_zero ;
-      Bench.Test.create ~name:(Printf.sprintf "%s check equality on random" ec_name) check_equality_on_random ;
-      Bench.Test.create ~name:(Printf.sprintf "%s check equality on one and random" ec_name) check_equality_on_one_and_random ;
-      Bench.Test.create ~name:(Printf.sprintf "%s check equality on zero and random" ec_name) check_equality_on_zero_and_random ;
-      Bench.Test.create ~name:(Printf.sprintf "%s check equality on same element" ec_name) check_equality_on_same_element ;
-      Bench.Test.create ~name:(Printf.sprintf "%s compute scalar multiplication on pregenerated random element and scalar" ec_name) compute_mul_on_pregenerated_random_element_and_scalar ;
-      Bench.Test.create ~name:(Printf.sprintf "%s check if zero on pregenerated zero" ec_name) check_is_zero_on_pregenerated_zero ;
-
-      Bench.Test.create ~name:(Printf.sprintf "%s opposite of pregenerated random element" ec_name) compute_opposite_of_pregenerated_random_element ;
+    [ Bench.Test.create
+        ~name:
+          (Printf.sprintf
+             "%s compute addition pregenerated random element"
+             ec_name)
+        compute_addition_pregenerated_random;
+      Bench.Test.create
+        ~name:(Printf.sprintf "%s random generation" ec_name)
+        generate_random_element;
+      Bench.Test.create
+        ~name:(Printf.sprintf "%s zero generation" ec_name)
+        generate_zero;
+      Bench.Test.create
+        ~name:(Printf.sprintf "%s one generation" ec_name)
+        generate_one;
+      Bench.Test.create
+        ~name:(Printf.sprintf "%s check if zero on pregenerated random" ec_name)
+        check_is_zero_on_pregenerated_random;
+      Bench.Test.create
+        ~name:(Printf.sprintf "%s check if zero on pregenerated one" ec_name)
+        check_is_zero_on_pregenerated_one;
+      Bench.Test.create
+        ~name:(Printf.sprintf "%s check if zero on pregenerated zero" ec_name)
+        check_is_zero_on_pregenerated_zero;
+      Bench.Test.create
+        ~name:(Printf.sprintf "%s check equality on random" ec_name)
+        check_equality_on_random;
+      Bench.Test.create
+        ~name:(Printf.sprintf "%s check equality on one and random" ec_name)
+        check_equality_on_one_and_random;
+      Bench.Test.create
+        ~name:(Printf.sprintf "%s check equality on zero and random" ec_name)
+        check_equality_on_zero_and_random;
+      Bench.Test.create
+        ~name:(Printf.sprintf "%s check equality on same element" ec_name)
+        check_equality_on_same_element;
+      Bench.Test.create
+        ~name:
+          (Printf.sprintf
+             "%s compute scalar multiplication on pregenerated random element \
+              and scalar"
+             ec_name)
+        compute_mul_on_pregenerated_random_element_and_scalar;
+      Bench.Test.create
+        ~name:(Printf.sprintf "%s check if zero on pregenerated zero" ec_name)
+        check_is_zero_on_pregenerated_zero;
+      Bench.Test.create
+        ~name:
+          (Printf.sprintf "%s opposite of pregenerated random element" ec_name)
+        compute_opposite_of_pregenerated_random_element;
       Bench.Test.create
         ~name:(Printf.sprintf "%s opposite of zero" ec_name)
-        compute_opposite_of_zero ;
+        compute_opposite_of_zero;
       Bench.Test.create
         ~name:(Printf.sprintf "%s opposite of one" ec_name)
-        compute_opposite_of_one ;
-
-]
+        compute_opposite_of_one ]
 end
 
 module BenchmarkG1Uncompressed = ECBenchmark (Bls12_381.G1.Uncompressed)
@@ -76,9 +109,9 @@ module BenchmarkG2Compressed = ECBenchmark (Bls12_381.G2.Compressed)
 let () =
   let commands =
     List.concat
-      [ BenchmarkG1Uncompressed.get_benches "G1 Uncompressed" ;
-        BenchmarkG1Compressed.get_benches "G1 Compressed" ;
-        BenchmarkG2Uncompressed.get_benches "G2 Uncompressed" ;
-        BenchmarkG2Compressed.get_benches "G2 Compressed" ; ]
+      [ BenchmarkG1Uncompressed.get_benches "G1 Uncompressed";
+        (* BenchmarkG1Compressed.get_benches "G1 Compressed" ; *)
+        BenchmarkG2Uncompressed.get_benches "G2 Uncompressed"
+        (* BenchmarkG2Compressed.get_benches "G2 Compressed" *) ]
   in
   Core.Command.run (Bench.make_command commands)
