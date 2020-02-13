@@ -42,6 +42,16 @@ module Properties = struct
       Fq12.eq
         (Pairing.pairing g1 (G2.Uncompressed.mul g2 a))
         (Pairing.pairing (G1.Uncompressed.mul g1 a) g2) )
+
+  let linearity_scalar_in_scalar_with_only_one_scalar () =
+    (* pairing(a * g_{1}, g_{2}) = pairing(g_{1}, g_{2}) ^ a*)
+    let a = Fr.random () in
+    let g1 = G1.Uncompressed.random () in
+    let g2 = G2.Uncompressed.random () in
+    assert (
+      Fq12.eq
+        (Pairing.pairing g1 (G2.Uncompressed.mul g2 a))
+        (Fq12.pow (Pairing.pairing g1 g2) (Fr.to_z a)) )
 end
 
 let () =
@@ -52,18 +62,24 @@ let () =
         [ test_case
             "with zero as first component"
             `Quick
-            (repeat 1000 Properties.with_zero_as_first_component);
+            (repeat 100 Properties.with_zero_as_first_component);
           test_case
             "with zero as second component"
             `Quick
-            (repeat 1000 Properties.with_zero_as_second_component);
+            (repeat 100 Properties.with_zero_as_second_component);
           test_case
             "linearity commutative scalar with only one scalar"
             `Quick
             (repeat
-               1000
+               100
                Properties.linearity_commutativity_scalar_with_only_one_scalar);
+          test_case
+            "linearity scalar in scalar with only one scalar"
+            `Quick
+            (repeat
+               100
+               Properties.linearity_scalar_in_scalar_with_only_one_scalar);
           test_case
             "linearity commutativity scalar"
             `Quick
-            (repeat 1000 Properties.linearity_commutativity_scalar) ] ) ]
+            (repeat 100 Properties.linearity_commutativity_scalar) ] ) ]

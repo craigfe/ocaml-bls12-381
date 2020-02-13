@@ -232,6 +232,15 @@ module MakeFieldProperties (FiniteField : Bls12_381.Ff_sig.T) = struct
       FiniteField.eq (FiniteField.pow e (Z.succ Z.one)) (FiniteField.square e)
     )
 
+  let pow_addition_property () =
+    let g = FiniteField.random () in
+    let x = Z.of_int (Random.int 1_000_000_000) in
+    let y = Z.of_int (Random.int 1_000_000_000) in
+    assert (
+      FiniteField.eq
+        (FiniteField.pow g (Z.add x y))
+        (FiniteField.mul (FiniteField.pow g x) (FiniteField.pow g y)) )
+
   let get_tests () =
     let open Alcotest in
     ( "Field properties",
@@ -280,6 +289,10 @@ module MakeFieldProperties (FiniteField : Bls12_381.Ff_sig.T) = struct
           "pow two on random element equals the square"
           `Quick
           (repeat 1000 pow_one_on_random_element_equals_the_random_element);
+        test_case
+          "pow addition property"
+          `Quick
+          (repeat 1000 pow_addition_property);
         test_case
           "multiplicative_associativity"
           `Quick
