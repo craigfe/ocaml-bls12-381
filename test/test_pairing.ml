@@ -52,6 +52,20 @@ module Properties = struct
       Fq12.eq
         (Pairing.pairing g1 (G2.Uncompressed.mul g2 a))
         (Fq12.pow (Pairing.pairing g1 g2) (Fr.to_z a)) )
+
+  let full_linearity () =
+    let a = Fr.random () in
+    let b = Fr.random () in
+    let g1 = G1.Uncompressed.random () in
+    let g2 = G2.Uncompressed.random () in
+    assert (
+      Fq12.eq
+        (Pairing.pairing (G1.Uncompressed.mul g1 a) (G2.Uncompressed.mul g2 b))
+        (Fq12.pow (Pairing.pairing g1 g2) (Z.mul (Fr.to_z a) (Fr.to_z b))) ) ;
+    assert (
+      Fq12.eq
+        (Pairing.pairing (G1.Uncompressed.mul g1 a) (G2.Uncompressed.mul g2 b))
+        (Fq12.pow (Pairing.pairing g1 g2) (Fr.to_z (Fr.mul a b))) )
 end
 
 let () =
@@ -79,6 +93,10 @@ let () =
             (repeat
                100
                Properties.linearity_scalar_in_scalar_with_only_one_scalar);
+          test_case
+            "full linearity"
+            `Quick
+            (repeat 100 Properties.full_linearity);
           test_case
             "linearity commutativity scalar"
             `Quick
