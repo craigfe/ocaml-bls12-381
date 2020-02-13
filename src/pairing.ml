@@ -37,8 +37,7 @@ external ml_bls12_381_pairing : Bytes.t -> Bytes.t -> Bytes.t -> unit
 
 let miller_loop_simple (g1 : G1.Uncompressed.t) (g2 : G2.Uncompressed.t) :
     Fq12.t =
-  (* FIXME/IMPROVEME: Use a method create_buffer? *)
-  let buffer = Fq12.zero () in
+  let buffer = Fq12.empty () in
   ml_bls12_381_pairing_miller_loop_simple
     (Fq12.to_bytes buffer)
     (G1.Uncompressed.to_bytes g1)
@@ -46,7 +45,6 @@ let miller_loop_simple (g1 : G1.Uncompressed.t) (g2 : G2.Uncompressed.t) :
   buffer
 
 let pairing (g1 : G1.Uncompressed.t) (g2 : G2.Uncompressed.t) : Fq12.t =
-  (* FIXME/IMPROVEME: Use a method create_buffer? *)
   let buffer = Fq12.empty () in
   ml_bls12_381_pairing
     (Fq12.to_bytes buffer)
