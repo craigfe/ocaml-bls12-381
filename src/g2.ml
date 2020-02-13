@@ -54,30 +54,30 @@ module Uncompressed = struct
     g
 
   let zero () =
-    let g = Bytes.create 192 in
+    let g = empty () in
     ml_bls12_381_g2_zero g ;
     to_t g
 
   let one () =
-    let g = Bytes.create 192 in
+    let g = empty () in
     ml_bls12_381_g2_one g ;
     to_t g
 
   let random () =
-    let g = Bytes.create 192 in
+    let g = empty () in
     ml_bls12_381_g2_random g ;
     to_t g
 
   let add g1 g2 =
     assert (Bytes.length g1 = 192) ;
     assert (Bytes.length g2 = 192) ;
-    let g = Bytes.create 192 in
+    let g = empty () in
     ml_bls12_381_g2_add g g1 g2 ;
     to_t g
 
   let negate g =
     assert (Bytes.length g = 192) ;
-    let buffer = Bytes.create 192 in
+    let buffer = empty () in
     ml_bls12_381_g2_negate buffer g ;
     to_t buffer
 
@@ -94,7 +94,7 @@ module Uncompressed = struct
   let mul (g : t) (a : Scalar.t) : t =
     assert (Bytes.length g = 192) ;
     assert (Bytes.length (Scalar.to_bytes a) = 32) ;
-    let buffer = Bytes.create 192 in
+    let buffer = empty () in
     ml_bls12_381_g2_mul buffer g (Fr.to_bytes a) ;
     to_t buffer
 end

@@ -51,6 +51,8 @@ let fr_size_bytes = 32
 
 type t = Bytes.t
 
+let empty () = Bytes.create fr_size_bytes
+
 let to_t (g : Bytes.t) : t = g
 
 let to_bytes g = g

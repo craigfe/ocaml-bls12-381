@@ -6,6 +6,10 @@ module type T = sig
 
   val to_bytes : t -> Bytes.t
 
+  (** Create an empty value to store an element of the field. DO NOT USE THIS TO
+      DO COMPUTATIONS ON, UNDEFINED BEHAVIORS MAY HAPPEN. USE IT AS A BUFFER *)
+  val empty : unit -> t
+
   (* Let's use a function for the moment *)
   val zero : unit -> t
 

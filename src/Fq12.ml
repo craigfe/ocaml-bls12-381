@@ -51,6 +51,8 @@ let length_fq12 = 576
 (** 288 bytes long *)
 type t = Bytes.t
 
+let empty () = Bytes.create length_fq12
+
 let to_bytes s = s
 
 let to_t g = g
