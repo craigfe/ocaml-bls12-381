@@ -6,7 +6,7 @@ module ECProperties = Test_ff_make.MakeFieldProperties (Bls12_381.Fq12)
 let () =
   let open Alcotest in
   run
-    "G2"
+    "Fq12"
     [ IsZero.get_tests ();
       ValueGeneration.get_tests ();
       Equality.get_tests ();

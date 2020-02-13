@@ -48,11 +48,6 @@ module Uncompressed = struct
 
   let to_bytes g = g
 
-  let of_compressed compressed =
-    let g = empty () in
-    ml_bls12_381_g2_uncompressed_of_compressed g compressed ;
-    g
-
   let zero () =
     let g = empty () in
     ml_bls12_381_g2_zero g ;
@@ -111,11 +106,16 @@ module Compressed = struct
     ml_bls12_381_g2_compressed_of_uncompressed g uncompressed ;
     g
 
+  let to_uncompressed compressed =
+    let g = Uncompressed.empty () in
+    ml_bls12_381_g2_uncompressed_of_compressed g compressed ;
+    g
+
   let to_t g = g
 
   let to_bytes g = g
 
-  let is_zero g = to_t @@ Uncompressed.is_zero (Uncompressed.of_compressed g)
+  let is_zero g = Uncompressed.is_zero (to_uncompressed g)
 
   let zero () = to_t @@ of_uncompressed (Uncompressed.zero ())
 
@@ -124,24 +124,24 @@ module Compressed = struct
   let random () = to_t @@ of_uncompressed (Uncompressed.random ())
 
   let add g1 g2 =
-    let g1 = Uncompressed.of_compressed g1 in
-    let g2 = Uncompressed.of_compressed g2 in
+    let g1 = to_uncompressed g1 in
+    let g2 = to_uncompressed g2 in
     let result = Uncompressed.add g1 g2 in
     to_t @@ of_uncompressed result
 
   (* FIXME: can be improved by creating a C binding *)
   let eq g1 g2 =
-    let g1 = Uncompressed.of_compressed g1 in
-    let g2 = Uncompressed.of_compressed g2 in
+    let g1 = to_uncompressed g1 in
+    let g2 = to_uncompressed g2 in
     to_t @@ Uncompressed.eq g1 g2
 
   let negate g =
-    let g = Uncompressed.of_compressed g in
+    let g = to_uncompressed g in
     let opposite = Uncompressed.negate g in
     to_t @@ of_uncompressed opposite
 
   let mul g a =
-    let g = Uncompressed.of_compressed g in
+    let g = to_uncompressed g in
     let result = Uncompressed.mul g a in
     to_t @@ of_uncompressed result
 end
