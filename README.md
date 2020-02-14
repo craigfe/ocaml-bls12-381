@@ -60,3 +60,8 @@ dune exec benchmark/bench_pairing.exe
 ## TODO
 
 - Use integer instead of void to handle errors in the C stubs
+
+
+## Documentation
+
+- Use `dune build @doc` to generate the API documentation.
