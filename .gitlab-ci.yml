@@ -1,10 +1,4 @@
-image: ocaml/opam2:4.07
-
-stages:
-  - build
-
-build-test-lint:
-  # https://docs.gitlab.com/ee/ci/yaml/#cache
+.build-test-lint: &build_definition
   stage: build
   cache:
     key: "$CI_COMMIT_REF_SLUG"
@@ -35,3 +29,10 @@ build-test-lint:
     - ocamlformat --check src/*.ml*
     - ocamlformat --check test/*.ml*
     - ocamlformat --check benchmark/*.ml*
+ 
+stages:
+  - build
+
+build-ocaml-4.07:
+  <<: *build_definition
+  image: ocaml/opam2:4.07
