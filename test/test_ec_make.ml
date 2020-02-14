@@ -7,22 +7,28 @@ let rec repeat n f =
     repeat (n - 1) f )
 
 module MakeEquality (G : Bls12_381.Elliptic_curve_sig.T) = struct
+  (** Verify the equality of two values of zero created invidually *)
   let zero_two_different_objects () = assert (G.eq (G.zero ()) (G.zero ()))
 
+  (** Verify the equality on one value of zero created *)
   let zero_same_objects () =
     let zero = G.zero () in
     assert (G.eq zero zero)
 
+  (** Verify the equality of two values of one created invidually *)
   let one_two_different_objects () = assert (G.eq (G.one ()) (G.one ()))
 
+  (** Verify the equality on one value of one created *)
   let one_same_objects () =
     let one = G.one () in
     assert (G.eq one one)
 
+  (** Verify the equality of two random values created invidually *)
   let random_same_objects () =
     let random = G.random () in
     assert (G.eq random random)
 
+  (** Returns the tests to be used with Alcotest *)
   let get_tests () =
     let open Alcotest in
     ( "equality",
@@ -59,6 +65,7 @@ module MakeValueGeneration (G : Bls12_381.Elliptic_curve_sig.T) = struct
     let one = G.one () in
     ignore @@ G.negate one
 
+  (** Returns the tests to be used with Alcotest *)
   let get_tests () =
     let open Alcotest in
     ( "value generation",
@@ -75,6 +82,7 @@ module MakeIsZero (G : Bls12_381.Elliptic_curve_sig.T) = struct
 
   let with_random_value () = assert (G.is_zero (G.random ()) = false)
 
+  (** Returns the tests to be used with Alcotest *)
   let get_tests () =
     let open Alcotest in
     ( "is_zero",
@@ -83,49 +91,59 @@ module MakeIsZero (G : Bls12_381.Elliptic_curve_sig.T) = struct
 end
 
 module MakeECProperties (G : Bls12_381.Elliptic_curve_sig.T) = struct
+  (** Verify 0_S * g_EC = 0_EC where 0_S is the zero of the scalar field, 0_EC
+  is the point at infinity and g_EC is an element of the EC *)
   let zero_scalar_nullifier_random () =
-    (* 0 * g = 0 *)
     let zero = G.Scalar.zero () in
     let random = G.random () in
     assert (G.is_zero (G.mul random zero))
 
+  (** Verify 0_S * 0_EC = 0_EC where 0_S is the zero of the scalar field and
+  0_EC is the point at infinity of the EC *)
   let zero_scalar_nullifier_zero () =
-    (* Special case 0 * 0 = 0 *)
     let zero_fr = G.Scalar.zero () in
     let zero_g1 = G.zero () in
     assert (G.is_zero (G.mul zero_g1 zero_fr))
 
+  (** Verify 0_S * 1_EC = 0_EC where 0_S is the 0 of the scalar field, 1_EC is a
+  fixed generator and 0_EC is the point at infinity of the EC *)
   let zero_scalar_nullifier_one () =
-    (* Special case 0 * 1 = 0 *)
     let zero = G.Scalar.zero () in
     let one = G.one () in
     assert (G.is_zero (G.mul one zero))
 
+  (** Verify -(-g) = g where g is an element of the EC *)
   let opposite_of_opposite () =
     let random = G.random () in
     assert (G.eq (G.negate (G.negate random)) random)
 
+  (** Verify -(-0_EC) = 0_EC where 0_EC is the point at infinity of the EC *)
   let opposite_of_zero_is_zero () =
     let zero = G.zero () in
     assert (G.eq (G.negate zero) zero)
 
+  (** Verify g1 + (g2 + g3) = (g1 + g2) + g3 where g1, g2 and g3 are elements of the EC *)
   let additive_associativity () =
     let g1 = G.random () in
     let g2 = G.random () in
     let g3 = G.random () in
     assert (G.eq (G.add (G.add g1 g2) g3) (G.add (G.add g2 g3) g1))
 
+  (** Verify a (g1 + g2) = a * g1 + a * g2 where a is a scalar, g1, g2 two
+  elements of the EC *)
   let distributivity () =
     let s = G.Scalar.random () in
     let g1 = G.random () in
     let g2 = G.random () in
     assert (G.eq (G.mul (G.add g1 g2) s) (G.add (G.mul g1 s) (G.mul g2 s)))
 
+  (** Verify (-s) * g = s * (-g) *)
   let opposite_of_scalar_is_opposite_of_ec () =
     let s = G.Scalar.random () in
     let g = G.random () in
     assert (G.eq (G.mul g (G.Scalar.negate s)) (G.mul (G.negate g) s))
 
+  (** Returns the tests to be used with Alcotest *)
   let get_tests () =
     let open Alcotest in
     ( "Field properties",

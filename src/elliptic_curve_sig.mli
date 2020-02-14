@@ -19,7 +19,7 @@ module type T = sig
   (** Zero of the elliptic curve *)
   val zero : unit -> t
 
-  (** One of the elliptic curve *)
+  (** A fixed generator of the elliptic curve *)
   val one : unit -> t
 
   (** Return true if the given element is zero *)
