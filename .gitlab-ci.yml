@@ -1,9 +1,5 @@
 .build-test-lint: &build_definition
   stage: build
-  cache:
-    key: "$CI_COMMIT_REF_SLUG"
-    paths:
-      - _opam
   before_script:
     # Always update system package manager + setup OPAM env
     - sudo apt-get update && sudo apt-get upgrade -y
@@ -36,3 +32,15 @@ stages:
 build-ocaml-4.07:
   <<: *build_definition
   image: ocaml/opam2:4.07
+
+build-ocaml-4.08:
+  <<: *build_definition
+  image: ocaml/opam2:4.08
+
+build-ocaml-4.09:
+  <<: *build_definition
+  image: ocaml/opam2:4.09
+
+build-ocaml-4.10:
+  <<: *build_definition
+  image: ocaml/opam2:4.10
