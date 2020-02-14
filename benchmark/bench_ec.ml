@@ -111,7 +111,7 @@ let () =
     List.concat
       [ BenchmarkG1Uncompressed.get_benches "G1 Uncompressed";
         BenchmarkG1Compressed.get_benches "G1 Compressed";
-        BenchmarkG2Uncompressed.get_benches "G2 Uncompressed";
+        BenchmarkG2Uncompressed.get_benches "G2 Uncompressed"
         (* BenchmarkG2Compressed.get_benches "G2 Compressed" *) ]
   in
   Core.Command.run (Bench.make_command commands)

@@ -10,11 +10,15 @@ build-test-lint:
     key: "$CI_COMMIT_REF_SLUG"
     paths:
       - _opam
-  script:
+  before_script:
+    # Always update system package manager + setup OPAM env
     - sudo apt-get update && sudo apt-get upgrade -y
-    - sudo apt install m4 cargo -y
     - eval $(opam env)
-    - opam install --deps-only -t -y .
+    - opam update
+  script:
+    # Install external dependencies
+    - opam depext -i -y conf-rust zarith
+    - opam install --deps-only --with-test -y .
     # Install the static library from rustc
     - git clone https://gitlab.com/dannywillems/rustc-bls12-381 /tmp/rustc-bls12-381
     - cd /tmp/rustc-bls12-381
