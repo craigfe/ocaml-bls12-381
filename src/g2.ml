@@ -42,7 +42,9 @@ module Uncompressed = struct
 
   module Scalar = Fr
 
-  let empty () = Bytes.create 192
+  let length_bytes = 192
+
+  let empty () = Bytes.create length_bytes
 
   let to_t (g : Bytes.t) : t = g
 
@@ -64,30 +66,30 @@ module Uncompressed = struct
     to_t g
 
   let add g1 g2 =
-    assert (Bytes.length g1 = 192) ;
-    assert (Bytes.length g2 = 192) ;
+    assert (Bytes.length g1 = length_bytes) ;
+    assert (Bytes.length g2 = length_bytes) ;
     let g = empty () in
     ml_bls12_381_g2_add g g1 g2 ;
     to_t g
 
   let negate g =
-    assert (Bytes.length g = 192) ;
+    assert (Bytes.length g = length_bytes) ;
     let buffer = empty () in
     ml_bls12_381_g2_negate buffer g ;
     to_t buffer
 
   let eq g1 g2 =
-    assert (Bytes.length g1 = 192) ;
-    assert (Bytes.length g2 = 192) ;
+    assert (Bytes.length g1 = length_bytes) ;
+    assert (Bytes.length g2 = length_bytes) ;
     ml_bls12_381_g2_eq g1 g2
 
   let is_zero g =
-    assert (Bytes.length g = 192) ;
+    assert (Bytes.length g = length_bytes) ;
     let g = ml_bls12_381_g2_is_zero g in
     g
 
   let mul (g : t) (a : Scalar.t) : t =
-    assert (Bytes.length g = 192) ;
+    assert (Bytes.length g = length_bytes) ;
     assert (Bytes.length (Scalar.to_bytes a) = 32) ;
     let buffer = empty () in
     ml_bls12_381_g2_mul buffer g (Fr.to_bytes a) ;
@@ -99,7 +101,9 @@ module Compressed = struct
 
   module Scalar = Fr
 
-  let empty () = Bytes.create 48
+  let length_bytes = 96
+
+  let empty () = Bytes.create length_bytes
 
   let of_uncompressed uncompressed =
     let g = empty () in
@@ -124,6 +128,8 @@ module Compressed = struct
   let random () = to_t @@ of_uncompressed (Uncompressed.random ())
 
   let add g1 g2 =
+    assert (Bytes.length g1 = length_bytes) ;
+    assert (Bytes.length g2 = length_bytes) ;
     let g1 = to_uncompressed g1 in
     let g2 = to_uncompressed g2 in
     let result = Uncompressed.add g1 g2 in
@@ -131,16 +137,21 @@ module Compressed = struct
 
   (* FIXME: can be improved by creating a C binding *)
   let eq g1 g2 =
+    assert (Bytes.length g1 = length_bytes) ;
+    assert (Bytes.length g2 = length_bytes) ;
     let g1 = to_uncompressed g1 in
     let g2 = to_uncompressed g2 in
     to_t @@ Uncompressed.eq g1 g2
 
   let negate g =
+    assert (Bytes.length g = length_bytes) ;
     let g = to_uncompressed g in
     let opposite = Uncompressed.negate g in
     to_t @@ of_uncompressed opposite
 
   let mul g a =
+    assert (Bytes.length g = length_bytes) ;
+    assert (Bytes.length (Scalar.to_bytes a) = 32) ;
     let g = to_uncompressed g in
     let result = Uncompressed.mul g a in
     to_t @@ of_uncompressed result
