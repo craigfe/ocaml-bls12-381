@@ -53,7 +53,7 @@ type t = Bytes.t
 
 let empty () = Bytes.create fr_size_bytes
 
-let to_t (g : Bytes.t) : t = g
+let of_bytes (g : Bytes.t) : t = g
 
 let to_bytes g = g
 
@@ -68,37 +68,37 @@ let is_one g =
 let zero () =
   let g = Bytes.create fr_size_bytes in
   ml_bls12_381_fr_zero g ;
-  to_t g
+  of_bytes g
 
 let one () =
   let g = Bytes.create fr_size_bytes in
   ml_bls12_381_fr_one g ;
-  to_t g
+  of_bytes g
 
 let random () =
   let g = Bytes.create fr_size_bytes in
   ml_bls12_381_fr_random g ;
-  to_t g
+  of_bytes g
 
 let add x y =
   assert (Bytes.length x = fr_size_bytes) ;
   assert (Bytes.length y = fr_size_bytes) ;
   let g = Bytes.create fr_size_bytes in
   ml_bls12_381_fr_add g x y ;
-  to_t g
+  of_bytes g
 
 let mul x y =
   assert (Bytes.length x = fr_size_bytes) ;
   assert (Bytes.length y = fr_size_bytes) ;
   let g = Bytes.create fr_size_bytes in
   ml_bls12_381_fr_mul g x y ;
-  to_t g
+  of_bytes g
 
 let inverse g =
   assert (Bytes.length g = fr_size_bytes) ;
   let buffer = Bytes.create fr_size_bytes in
   ml_bls12_381_fr_unsafe_inverse buffer g ;
-  to_t buffer
+  of_bytes buffer
 
 let inverse_opt g =
   assert (Bytes.length g = fr_size_bytes) ;
@@ -106,25 +106,25 @@ let inverse_opt g =
   else
     let buffer = Bytes.create fr_size_bytes in
     ml_bls12_381_fr_unsafe_inverse buffer g ;
-    Some (to_t buffer)
+    Some (of_bytes buffer)
 
 let negate g =
   assert (Bytes.length g = fr_size_bytes) ;
   let buffer = Bytes.create fr_size_bytes in
   ml_bls12_381_fr_negate buffer g ;
-  to_t buffer
+  of_bytes buffer
 
 let square g =
   assert (Bytes.length g = fr_size_bytes) ;
   let buffer = Bytes.create fr_size_bytes in
   ml_bls12_381_fr_square buffer g ;
-  to_t buffer
+  of_bytes buffer
 
 let double g =
   assert (Bytes.length g = fr_size_bytes) ;
   let buffer = Bytes.create fr_size_bytes in
   ml_bls12_381_fr_double buffer g ;
-  to_t buffer
+  of_bytes buffer
 
 let eq x y =
   (* IMPORTANT: DO NOT USE THE BYTES representation because we use 384 bits
@@ -146,8 +146,8 @@ let rec pow g n =
     let acc_square = mul acc acc in
     if Z.equal r Z.zero then acc_square else mul acc_square g
 
-(* let of_string s =
- *   let a = Bytes.create fr_size_bytes in
- *   let repr_bytes_z = Z.of_string s in
- *   Bytes.
- *   to_t a *)
+let of_string s =
+  let g = empty () in
+  let s = Bytes.of_string s in
+  Bytes.blit s 0 g 0 fr_size_bytes ;
+  of_bytes s

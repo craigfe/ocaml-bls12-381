@@ -7,11 +7,11 @@ module type T = sig
   (** Build an element using a bytes representation. Use carefully *)
 
   (** Create an empty value to store an element of the curve. DO NOT USE THIS TO
-      DO COMPUTATIONS ON, UNDEFINED BEHAVIORS MAY HAPPEN *)
-
+      DO COMPUTATIONS WITH, UNDEFINED BEHAVIORS MAY HAPPEN *)
   val empty : unit -> t
 
-  (* val to_t : Bytes.t -> t *)
+  (** UNSAFE *)
+  val of_bytes : Bytes.t -> t
 
   (** Return a representation in bytes. Use carefully *)
   val to_bytes : t -> Bytes.t

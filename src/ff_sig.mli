@@ -2,12 +2,12 @@
 module type T = sig
   type t
 
-  val to_t : Bytes.t -> t
+  val of_bytes : Bytes.t -> t
 
   val to_bytes : t -> Bytes.t
 
   (** Create an empty value to store an element of the field. DO NOT USE THIS TO
-      DO COMPUTATIONS ON, UNDEFINED BEHAVIORS MAY HAPPEN. USE IT AS A BUFFER *)
+      DO COMPUTATIONS WITH, UNDEFINED BEHAVIORS MAY HAPPEN. USE IT AS A BUFFER *)
   val empty : unit -> t
 
   (* Let's use a function for the moment *)
