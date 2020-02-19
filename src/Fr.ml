@@ -151,3 +151,9 @@ let of_string s =
   let s = Bytes.of_string s in
   Bytes.blit s 0 g 0 fr_size_bytes ;
   of_bytes s
+
+let of_z z =
+  let z = Bytes.of_string (Z.to_bits z) in
+  let x = empty () in
+  Bytes.blit z 0 x 0 fr_size_bytes ;
+  x

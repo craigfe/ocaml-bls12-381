@@ -1,5 +1,7 @@
 include Ff_sig.T
 
+val of_z : Z.t -> t
+
 val to_z : t -> Z.t
 
 (** Returns the decimal representation as a string *)

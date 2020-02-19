@@ -1,3 +1,11 @@
+let rec repeat n f =
+  if n <= 0 then
+    let f () = () in
+    f
+  else (
+    f () ;
+    repeat (n - 1) f )
+
 module ValueGeneration = Test_ff_make.MakeValueGeneration (Bls12_381.Fr)
 module IsZero = Test_ff_make.MakeIsZero (Bls12_381.Fr)
 module Equality = Test_ff_make.MakeEquality (Bls12_381.Fr)
@@ -16,6 +24,32 @@ module StringRepresentation = struct
       [ test_case "one" `Quick test_to_string_one;
         test_case "zero" `Quick test_to_string_zero ] )
 end
+
+module ZRepresentation = struct
+  let test_of_z_zero () =
+    assert (Bls12_381.Fr.eq (Bls12_381.Fr.zero ()) (Bls12_381.Fr.of_z (Z.zero)))
+
+  let test_of_z_one () =
+    assert (Bls12_381.Fr.eq (Bls12_381.Fr.one ()) (Bls12_381.Fr.of_z (Z.of_string "1")))
+
+  let test_of_z_and_to_z () =
+    let x = Bls12_381.Fr.random () in
+    assert (Bls12_381.Fr.eq x (Bls12_381.Fr.of_z (Bls12_381.Fr.to_z x)))
+
+  let test_to_z_and_of_z () =
+    let x = Z.of_int (Random.int 2_000_000) in
+    assert (Z.equal (Bls12_381.Fr.to_z (Bls12_381.Fr.of_z x)) x)
+
+  let get_tests () =
+    let open Alcotest in
+    ( "Z representation",
+      [ test_case "one" `Quick test_of_z_one;
+        test_case "zero" `Quick test_of_z_zero;
+        test_case "of z and to z" `Quick (repeat 1000 test_of_z_and_to_z);
+        test_case "to z and of z" `Quick (repeat 1000 test_to_z_and_of_z)
+ ] )
+end
+
 
 let () =
   let open Alcotest in
