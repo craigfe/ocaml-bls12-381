@@ -66,6 +66,19 @@ module Properties = struct
       Fq12.eq
         (Pairing.pairing (G1.Uncompressed.mul g1 a) (G2.Uncompressed.mul g2 b))
         (Fq12.pow (Pairing.pairing g1 g2) (Fr.to_z (Fr.mul a b))) )
+
+  let result_pairing_with_miller_loop_followed_by_final_exponentiation () =
+    let a = Fr.random () in
+    let b = Fr.random () in
+    let g1 = G1.Uncompressed.random () in
+    let g2 = G2.Uncompressed.random () in
+    assert (
+      Fq12.eq
+        (Pairing.pairing (G1.Uncompressed.mul g1 a) (G2.Uncompressed.mul g2 b))
+        (Pairing.unsafe_final_exponentiation
+           (Pairing.miller_loop_simple
+              (G1.Uncompressed.mul g1 a)
+              (G2.Uncompressed.mul g2 b))) )
 end
 
 let test_vectors_one_one () =
@@ -87,6 +100,13 @@ let test_vectors_one_one () =
   assert (
     Fq12.eq
       (Pairing.pairing (G1.Uncompressed.one ()) (G2.Uncompressed.one ()))
+      expected_result ) ;
+  assert (
+    Fq12.eq
+      (Pairing.unsafe_final_exponentiation
+         (Pairing.miller_loop_simple
+            (G1.Uncompressed.one ())
+            (G2.Uncompressed.one ())))
       expected_result )
 
 let () =
@@ -122,6 +142,14 @@ let () =
             "test vectors pairing of one and one"
             `Quick
             (repeat 10 test_vectors_one_one);
+          test_case
+            "test result pairing with miller loop simple followed by final \
+             exponentiation"
+            `Quick
+            (repeat
+               10
+               Properties
+               .result_pairing_with_miller_loop_followed_by_final_exponentiation);
           test_case
             "linearity commutativity scalar"
             `Quick

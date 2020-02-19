@@ -26,3 +26,11 @@ CAMLprim value ml_librustc_bls12_381_pairing(value buffer,
   rustc_bls12_381_pairing(Bytes_val(buffer), Bytes_val(g1), Bytes_val(g2));
   return Val_unit;
 }
+
+extern void rustc_bls12_381_unsafe_pairing_final_exponentiation(unsigned char *buffer,
+                                                                const unsigned char *x);
+
+CAMLprim value ml_librustc_bls12_381_unsafe_pairing_final_exponentiation(value buffer, value x) {
+  rustc_bls12_381_unsafe_pairing_final_exponentiation(Bytes_val(buffer), Bytes_val(x));
+  return Val_unit;
+}

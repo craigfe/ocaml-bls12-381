@@ -27,10 +27,13 @@ end
 
 module ZRepresentation = struct
   let test_of_z_zero () =
-    assert (Bls12_381.Fr.eq (Bls12_381.Fr.zero ()) (Bls12_381.Fr.of_z (Z.zero)))
+    assert (Bls12_381.Fr.eq (Bls12_381.Fr.zero ()) (Bls12_381.Fr.of_z Z.zero))
 
   let test_of_z_one () =
-    assert (Bls12_381.Fr.eq (Bls12_381.Fr.one ()) (Bls12_381.Fr.of_z (Z.of_string "1")))
+    assert (
+      Bls12_381.Fr.eq
+        (Bls12_381.Fr.one ())
+        (Bls12_381.Fr.of_z (Z.of_string "1")) )
 
   let test_of_z_and_to_z () =
     let x = Bls12_381.Fr.random () in
@@ -46,10 +49,8 @@ module ZRepresentation = struct
       [ test_case "one" `Quick test_of_z_one;
         test_case "zero" `Quick test_of_z_zero;
         test_case "of z and to z" `Quick (repeat 1000 test_of_z_and_to_z);
-        test_case "to z and of z" `Quick (repeat 1000 test_to_z_and_of_z)
- ] )
+        test_case "to z and of z" `Quick (repeat 1000 test_to_z_and_of_z) ] )
 end
-
 
 let () =
   let open Alcotest in
