@@ -1,5 +1,7 @@
 include Ff_sig.T
 
+val order : Z.t
+
 val of_z : Z.t -> t
 
 val to_z : t -> Z.t

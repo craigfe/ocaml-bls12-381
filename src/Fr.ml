@@ -49,6 +49,10 @@ external ml_bls12_381_fr_eq : Bytes.t -> Bytes.t -> bool
 (** High level (OCaml) definitions/logic *)
 let fr_size_bytes = 32
 
+let order =
+  Z.of_string
+    "52435875175126190479447740508185965837690552500527637822603658699938581184513"
+
 type t = Bytes.t
 
 let empty () = Bytes.create fr_size_bytes
