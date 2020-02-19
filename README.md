@@ -43,8 +43,7 @@ dune utop
 dune build @install
 opam install alcotest
 dune runtest
-``**
-
+```
 
 ## Run the benchmarks
 
