@@ -46,3 +46,15 @@ let final_exponentiation (e : Fq12.t) : Fq12.t option =
       (Fq12.to_bytes buffer)
       (Fq12.to_bytes e) ;
     Some buffer
+
+(* PLEASE DO NOT USE, NOT TESTED AND NOT OPTIMIZED *)
+let miller_loop_composite (xs : (G1.Uncompressed.t * G2.Uncompressed.t) list) :
+    Fq12.t =
+  let rec f acc = function
+    | [] -> acc
+    | (g1, g2) :: xs ->
+        let acc = Fq12.mul (miller_loop_simple g1 g2) acc in
+        f acc xs
+  in
+  if List.length xs = 0 then failwith "Empty list of points given"
+  else unsafe_final_exponentiation (f (Fq12.one ()) xs)
