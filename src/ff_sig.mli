@@ -2,6 +2,9 @@
 module type T = sig
   type t
 
+  (** The size of a point representation, in bytes *)
+  val size : int
+
   val of_bytes : Bytes.t -> t
 
   val to_bytes : t -> Bytes.t

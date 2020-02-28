@@ -2,6 +2,9 @@ module type T = sig
   (** The type of the element in the elliptic curve *)
   type t
 
+  (** The size of a point representation, in bytes *)
+  val size : int
+
   module Scalar : Ff_sig.T
 
   (** Build an element using a bytes representation. Use carefully *)

@@ -47,7 +47,7 @@ external ml_bls12_381_fr_eq : Bytes.t -> Bytes.t -> bool
   [@@noalloc]
 
 (** High level (OCaml) definitions/logic *)
-let fr_size_bytes = 32
+let size = 32
 
 let order =
   Z.of_string
@@ -55,78 +55,78 @@ let order =
 
 type t = Bytes.t
 
-let empty () = Bytes.create fr_size_bytes
+let empty () = Bytes.create size
 
 let of_bytes (g : Bytes.t) : t = g
 
 let to_bytes g = g
 
 let is_zero g =
-  assert (Bytes.length g = fr_size_bytes) ;
+  assert (Bytes.length g = size) ;
   ml_bls12_381_fr_is_zero g
 
 let is_one g =
-  assert (Bytes.length g = fr_size_bytes) ;
+  assert (Bytes.length g = size) ;
   ml_bls12_381_fr_is_one g
 
 let zero () =
-  let g = Bytes.create fr_size_bytes in
+  let g = Bytes.create size in
   ml_bls12_381_fr_zero g ;
   of_bytes g
 
 let one () =
-  let g = Bytes.create fr_size_bytes in
+  let g = Bytes.create size in
   ml_bls12_381_fr_one g ;
   of_bytes g
 
 let random () =
-  let g = Bytes.create fr_size_bytes in
+  let g = Bytes.create size in
   ml_bls12_381_fr_random g ;
   of_bytes g
 
 let add x y =
-  assert (Bytes.length x = fr_size_bytes) ;
-  assert (Bytes.length y = fr_size_bytes) ;
-  let g = Bytes.create fr_size_bytes in
+  assert (Bytes.length x = size) ;
+  assert (Bytes.length y = size) ;
+  let g = Bytes.create size in
   ml_bls12_381_fr_add g x y ;
   of_bytes g
 
 let mul x y =
-  assert (Bytes.length x = fr_size_bytes) ;
-  assert (Bytes.length y = fr_size_bytes) ;
-  let g = Bytes.create fr_size_bytes in
+  assert (Bytes.length x = size) ;
+  assert (Bytes.length y = size) ;
+  let g = Bytes.create size in
   ml_bls12_381_fr_mul g x y ;
   of_bytes g
 
 let inverse g =
-  assert (Bytes.length g = fr_size_bytes) ;
-  let buffer = Bytes.create fr_size_bytes in
+  assert (Bytes.length g = size) ;
+  let buffer = Bytes.create size in
   ml_bls12_381_fr_unsafe_inverse buffer g ;
   of_bytes buffer
 
 let inverse_opt g =
-  assert (Bytes.length g = fr_size_bytes) ;
+  assert (Bytes.length g = size) ;
   if is_zero g then None
   else
-    let buffer = Bytes.create fr_size_bytes in
+    let buffer = Bytes.create size in
     ml_bls12_381_fr_unsafe_inverse buffer g ;
     Some (of_bytes buffer)
 
 let negate g =
-  assert (Bytes.length g = fr_size_bytes) ;
-  let buffer = Bytes.create fr_size_bytes in
+  assert (Bytes.length g = size) ;
+  let buffer = Bytes.create size in
   ml_bls12_381_fr_negate buffer g ;
   of_bytes buffer
 
 let square g =
-  assert (Bytes.length g = fr_size_bytes) ;
-  let buffer = Bytes.create fr_size_bytes in
+  assert (Bytes.length g = size) ;
+  let buffer = Bytes.create size in
   ml_bls12_381_fr_square buffer g ;
   of_bytes buffer
 
 let double g =
-  assert (Bytes.length g = fr_size_bytes) ;
-  let buffer = Bytes.create fr_size_bytes in
+  assert (Bytes.length g = size) ;
+  let buffer = Bytes.create size in
   ml_bls12_381_fr_double buffer g ;
   of_bytes buffer
 
@@ -153,11 +153,11 @@ let rec pow g n =
 let of_string s =
   let g = empty () in
   let s = Bytes.of_string s in
-  Bytes.blit s 0 g 0 fr_size_bytes ;
+  Bytes.blit s 0 g 0 size ;
   of_bytes s
 
 let of_z z =
   let z = Bytes.of_string (Z.to_bits z) in
   let x = empty () in
-  Bytes.blit z 0 x 0 fr_size_bytes ;
+  Bytes.blit z 0 x 0 size ;
   x

@@ -40,9 +40,11 @@ external ml_bls12_381_g1_one : Bytes.t -> unit = "ml_librustc_bls12_381_g1_one"
 module Uncompressed = struct
   type t = Bytes.t
 
+  let size = 96
+
   module Scalar = Fr
 
-  let empty () = Bytes.create 96
+  let empty () = Bytes.create size
 
   let of_bytes (g : Bytes.t) : t = g
 
@@ -64,30 +66,30 @@ module Uncompressed = struct
     of_bytes g
 
   let add g1 g2 =
-    assert (Bytes.length g1 = 96) ;
-    assert (Bytes.length g2 = 96) ;
+    assert (Bytes.length g1 = size) ;
+    assert (Bytes.length g2 = size) ;
     let g = empty () in
     ml_bls12_381_g1_add g g1 g2 ;
     of_bytes g
 
   let negate g =
-    assert (Bytes.length g = 96) ;
+    assert (Bytes.length g = size) ;
     let buffer = empty () in
     ml_bls12_381_g1_negate buffer g ;
     of_bytes buffer
 
   let eq g1 g2 =
-    assert (Bytes.length g1 = 96) ;
-    assert (Bytes.length g2 = 96) ;
+    assert (Bytes.length g1 = size) ;
+    assert (Bytes.length g2 = size) ;
     ml_bls12_381_g1_eq g1 g2
 
   let is_zero g =
-    assert (Bytes.length g = 96) ;
+    assert (Bytes.length g = size) ;
     ml_bls12_381_g1_is_zero g
 
   let mul (g : t) (a : Scalar.t) : t =
-    assert (Bytes.length g = 96) ;
-    assert (Bytes.length (Fr.to_bytes a) = 32) ;
+    assert (Bytes.length g = size) ;
+    assert (Bytes.length (Scalar.to_bytes a) = Scalar.size) ;
     let buffer = empty () in
     ml_bls12_381_g1_mul buffer g (Scalar.to_bytes a) ;
     of_bytes buffer
@@ -96,9 +98,11 @@ end
 module Compressed = struct
   type t = Bytes.t
 
+  let size = 48
+
   module Scalar = Fr
 
-  let empty () = Bytes.create 48
+  let empty () = Bytes.create size
 
   let to_uncompressed (compressed : t) : Uncompressed.t =
     let g = Uncompressed.empty () in
