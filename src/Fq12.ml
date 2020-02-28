@@ -1,3 +1,7 @@
+external ml_bls12_381_fq12_is_in_field : Bytes.t -> bool
+  = "ml_librustc_bls12_381_fq12_is_in_field"
+  [@@noalloc]
+
 external ml_bls12_381_fq12_is_zero : Bytes.t -> bool
   = "ml_librustc_bls12_381_fq12_is_zero"
   [@@noalloc]
@@ -52,9 +56,14 @@ type t = Bytes.t
 
 let empty () = Bytes.create size
 
-let to_bytes s = s
+let is_in_field bs =
+  if Bytes.length bs = size then ml_bls12_381_fq12_is_in_field bs else false
+
+let of_bytes_opt bs = if is_in_field bs then Some bs else None
 
 let of_bytes g = g
+
+let to_bytes s = s
 
 let zero () =
   let g = Bytes.create size in

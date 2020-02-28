@@ -1,4 +1,8 @@
 (** External definition, must use `Bytes.t` to represent the field elements *)
+external ml_bls12_381_fr_is_in_field : Bytes.t -> bool
+  = "ml_librustc_bls12_381_fr_is_in_field"
+  [@@noalloc]
+
 external ml_bls12_381_fr_is_zero : Bytes.t -> bool
   = "ml_librustc_bls12_381_fr_is_zero"
   [@@noalloc]
@@ -56,6 +60,11 @@ let order =
 type t = Bytes.t
 
 let empty () = Bytes.create size
+
+let is_in_field bs =
+  if Bytes.length bs = size then ml_bls12_381_fr_is_in_field bs else false
+
+let of_bytes_opt bs = if is_in_field bs then Some bs else None
 
 let of_bytes (g : Bytes.t) : t = g
 

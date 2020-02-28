@@ -13,6 +13,12 @@ module type T = sig
       DO COMPUTATIONS WITH, UNDEFINED BEHAVIORS MAY HAPPEN *)
   val empty : unit -> t
 
+  (** Check if a point, represented as a byte array, is on the curve **)
+  val is_on_curve : Bytes.t -> bool
+
+  (* Attempt to construct a point from a byte array *)
+  val of_bytes_opt : Bytes.t -> t option
+
   (** UNSAFE *)
   val of_bytes : Bytes.t -> t
 

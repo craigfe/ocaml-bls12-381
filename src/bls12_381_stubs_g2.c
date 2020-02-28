@@ -6,6 +6,20 @@
 #include <inttypes.h>
 #include <stdbool.h>
 
+extern bool rustc_bls12_381_g2_uncompressed_is_on_curve(const unsigned char *element);
+
+CAMLprim value ml_librustc_bls12_381_g2_uncompressed_is_on_curve(value element) {
+  bool res = rustc_bls12_381_g2_uncompressed_is_on_curve(Bytes_val(element));
+  return Val_bool(res);
+}
+
+extern bool rustc_bls12_381_g2_compressed_is_on_curve(const unsigned char *element);
+
+CAMLprim value ml_librustc_bls12_381_g2_compressed_is_on_curve(value element) {
+  bool res = rustc_bls12_381_g2_compressed_is_on_curve(Bytes_val(element));
+  return Val_bool(res);
+}
+
 extern void rustc_bls12_381_g2_one(unsigned char *buffer);
 
 CAMLprim value ml_librustc_bls12_381_g2_one(value buffer) {

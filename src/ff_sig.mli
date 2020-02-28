@@ -5,6 +5,12 @@ module type T = sig
   (** The size of a point representation, in bytes *)
   val size : int
 
+  (** Check if a point, represented as a byte array, is in the field **)
+  val is_in_field : Bytes.t -> bool
+
+  (* Attempt to construct a point from a byte array *)
+  val of_bytes_opt : Bytes.t -> t option
+
   val of_bytes : Bytes.t -> t
 
   val to_bytes : t -> Bytes.t
