@@ -87,9 +87,6 @@ module ECBenchmark (G : Bls12_381.Elliptic_curve_sig.T) = struct
              ec_name)
         compute_mul_on_pregenerated_random_element_and_scalar;
       Bench.Test.create
-        ~name:(Printf.sprintf "%s check if zero on pregenerated zero" ec_name)
-        check_is_zero_on_pregenerated_zero;
-      Bench.Test.create
         ~name:
           (Printf.sprintf "%s opposite of pregenerated random element" ec_name)
         compute_opposite_of_pregenerated_random_element;
