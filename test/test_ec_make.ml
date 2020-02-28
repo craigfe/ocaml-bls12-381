@@ -91,6 +91,15 @@ module MakeIsZero (G : Bls12_381.Elliptic_curve_sig.T) = struct
 end
 
 module MakeECProperties (G : Bls12_381.Elliptic_curve_sig.T) = struct
+  (** Verify that a random point is on the curve *)
+  let is_on_curve_random () = assert (G.(is_on_curve @@ to_bytes @@ random ()))
+
+  (** Verify that the zero point is on the curve *)
+  let is_on_curve_zero () = assert (G.(is_on_curve @@ to_bytes @@ zero ()))
+
+  (** Verify that the one point is on the curve *)
+  let is_on_curve_one () = assert (G.(is_on_curve @@ to_bytes @@ one ()))
+
   (** Verify 0_S * g_EC = 0_EC where 0_S is the zero of the scalar field, 0_EC
   is the point at infinity and g_EC is an element of the EC *)
   let zero_scalar_nullifier_random () =
@@ -147,7 +156,10 @@ module MakeECProperties (G : Bls12_381.Elliptic_curve_sig.T) = struct
   let get_tests () =
     let open Alcotest in
     ( "Field properties",
-      [ test_case
+      [ test_case "is_on_curve_random" `Quick (repeat 100 is_on_curve_random);
+        test_case "is_on_curve_zero" `Quick (repeat 100 is_on_curve_zero);
+        test_case "is_on_curve_one" `Quick (repeat 100 is_on_curve_one);
+        test_case
           "zero_scalar_nullifier_one"
           `Quick
           (repeat 100 zero_scalar_nullifier_one);
