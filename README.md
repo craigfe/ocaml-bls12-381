@@ -64,3 +64,9 @@ dune exec benchmark/bench_pairing.exe
 ## Documentation
 
 - Use `dune build @doc` to generate the API documentation.
+
+## Test coverage
+
+```
+BISECT_ENABLE=yes dune runtest --force
+```
