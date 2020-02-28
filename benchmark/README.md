@@ -108,7 +108,7 @@ a time/run of 2.78ms for the pairing!!**
 #### Finite field
 
 | Name                                                    | Rust 1.40.0 | Rust 1.40.0, OCaml 4.07.1 | mWd/Run |
-|---------------------------------------------------------|-------------|---------------------------|---------+
+|---------------------------------------------------------|-------------|---------------------------|---------|
 | Fr compute addition pregenerated random element         |             | 129.94ns                  | 6.00w   |
 | Fr random generation                                    |             | 69.24ns                   | 6.00w   |
 | Fr zero generation                                      |             | 40.96ns                   | 6.00w   |
@@ -161,7 +161,7 @@ a time/run of 2.78ms for the pairing!!**
 #### Pairing
 
 | Name                                                                                                       | Rust 1.40.0 | Rust 1.40.0, OCaml 4.07.1 | mWd/Run | mjWd/Run | Prom/Run |
-|------------------------------------------------------------------------------------------------------------|-------------|---------------------------|---------|----------|----------+
+|------------------------------------------------------------------------------------------------------------|-------------|---------------------------|---------|----------|----------|
 | Pairing on pregenerated uncompressed random elements                                                       |             | 2.96ms                    | 74.00w  |          |          |
 | Miller loop on pregenerated uncompressed random elements                                                   |             | 1.58ms                    | 74.00w  |          |          |
 | Miller loop on three pregenerated couples of uncompressed random elements                                  |             | 6.20ms                    | 592.00w | 0.25w    | 0.25w    |
