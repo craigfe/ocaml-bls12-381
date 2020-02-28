@@ -9,30 +9,33 @@ For the elliptic curves (resp. finite fields), a functor `ECBenchmark` (resp.
 
 Benchmarking a finite field or an elliptic curve implementation is relatively simple using these functors:
 
-```
+```ocaml
 module BenchmarkG1Uncompressed = ECBenchmark (Bls12_381.G1.Uncompressed)
 let () =
   let commands = BenchmarkG1Uncompressed.get_benches "G1 Uncompressed" in
   Core.Command.run (Bench.make_command commands)
-``
+```
 
 ### Run the benches
 
-```
+```shell
 opam install core_bench
 dune exec benchmark/bench_ec.exe
 dune exec benchmark/bench_ff.exe
 dune exec benchmark/bench_pairing.exe
-``**
+```
 
 ### Benchmarks results
 
 The following results have been run on a machine with
 - CPU: Intel(R) Core(TM** i7-8565U CPU @ 1.80GHz
 - RAM: 16Go
+
 and with the commands given above.
 
-**!!Note benchmarking depends on the machine!!***
+**!!Note benchmarking depends on the machine and may differ between execution.
+Sometimes, we experienced a difference of 10%. For instance, we have experienced
+a time/run of 2.96ms for the pairing!!**
 
 #### Elliptic curves
 
