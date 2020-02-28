@@ -37,6 +37,38 @@ external ml_bls12_381_g2_zero : Bytes.t -> unit
 external ml_bls12_381_g2_one : Bytes.t -> unit = "ml_librustc_bls12_381_g2_one"
   [@@noalloc]
 
+external ml_bls12_381_g2_compressed_random : Bytes.t -> unit
+  = "ml_librustc_bls12_381_g2_compressed_random"
+  [@@noalloc]
+
+external ml_bls12_381_g2_compressed_add : Bytes.t -> Bytes.t -> Bytes.t -> unit
+  = "ml_librustc_bls12_381_g2_compressed_add"
+  [@@noalloc]
+
+external ml_bls12_381_g2_compressed_negate : Bytes.t -> Bytes.t -> unit
+  = "ml_librustc_bls12_381_g2_compressed_negate"
+  [@@noalloc]
+
+external ml_bls12_381_g2_compressed_eq : Bytes.t -> Bytes.t -> bool
+  = "ml_librustc_bls12_381_g2_compressed_eq"
+  [@@noalloc]
+
+external ml_bls12_381_g2_compressed_is_zero : Bytes.t -> bool
+  = "ml_librustc_bls12_381_g2_compressed_is_zero"
+  [@@noalloc]
+
+external ml_bls12_381_g2_compressed_mul : Bytes.t -> Bytes.t -> Bytes.t -> unit
+  = "ml_librustc_bls12_381_g2_compressed_mul"
+  [@@noalloc]
+
+external ml_bls12_381_g2_compressed_zero : Bytes.t -> unit
+  = "ml_librustc_bls12_381_g2_compressed_zero"
+  [@@noalloc]
+
+external ml_bls12_381_g2_compressed_one : Bytes.t -> unit
+  = "ml_librustc_bls12_381_g2_compressed_one"
+  [@@noalloc]
+
 module Uncompressed = struct
   type t = Bytes.t
 
@@ -119,40 +151,48 @@ module Compressed = struct
 
   let to_bytes g = g
 
-  let is_zero g = Uncompressed.is_zero (to_uncompressed g)
+  let zero () =
+    let g = empty () in
+    ml_bls12_381_g2_compressed_zero g ;
+    of_bytes g
 
-  let zero () = of_bytes @@ of_uncompressed (Uncompressed.zero ())
+  let one () =
+    let g = empty () in
+    ml_bls12_381_g2_compressed_one g ;
+    of_bytes g
 
-  let one () = of_bytes @@ of_uncompressed (Uncompressed.one ())
-
-  let random () = of_bytes @@ of_uncompressed (Uncompressed.random ())
+  let random () =
+    let g = empty () in
+    ml_bls12_381_g2_compressed_random g ;
+    of_bytes g
 
   let add g1 g2 =
     assert (Bytes.length g1 = length_bytes) ;
     assert (Bytes.length g2 = length_bytes) ;
-    let g1 = to_uncompressed g1 in
-    let g2 = to_uncompressed g2 in
-    let result = Uncompressed.add g1 g2 in
-    of_bytes @@ of_uncompressed result
-
-  (* FIXME: can be improved by creating a C binding *)
-  let eq g1 g2 =
-    assert (Bytes.length g1 = length_bytes) ;
-    assert (Bytes.length g2 = length_bytes) ;
-    let g1 = to_uncompressed g1 in
-    let g2 = to_uncompressed g2 in
-    of_bytes @@ Uncompressed.eq g1 g2
+    let g = empty () in
+    ml_bls12_381_g2_compressed_add g g1 g2 ;
+    of_bytes g
 
   let negate g =
     assert (Bytes.length g = length_bytes) ;
-    let g = to_uncompressed g in
-    let opposite = Uncompressed.negate g in
-    of_bytes @@ of_uncompressed opposite
+    let buffer = empty () in
+    ml_bls12_381_g2_compressed_negate buffer g ;
+    of_bytes buffer
 
-  let mul g a =
+  let eq g1 g2 =
+    assert (Bytes.length g1 = length_bytes) ;
+    assert (Bytes.length g2 = length_bytes) ;
+    ml_bls12_381_g2_compressed_eq g1 g2
+
+  let is_zero g =
+    assert (Bytes.length g = length_bytes) ;
+    let g = ml_bls12_381_g2_compressed_is_zero g in
+    g
+
+  let mul (g : t) (a : Scalar.t) : t =
     assert (Bytes.length g = length_bytes) ;
     assert (Bytes.length (Scalar.to_bytes a) = 32) ;
-    let g = to_uncompressed g in
-    let result = Uncompressed.mul g a in
-    of_bytes @@ of_uncompressed result
+    let buffer = empty () in
+    ml_bls12_381_g2_compressed_mul buffer g (Fr.to_bytes a) ;
+    of_bytes buffer
 end
