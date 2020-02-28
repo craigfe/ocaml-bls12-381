@@ -35,7 +35,7 @@ and with the commands given above.
 
 **!!Note benchmarking depends on the machine and may differ between execution.
 Sometimes, we experienced a difference of 10%. For instance, we have experienced
-a time/run of 2.96ms for the pairing!!**
+a time/run of 2.78ms for the pairing!!**
 
 #### Elliptic curves
 
@@ -161,6 +161,10 @@ a time/run of 2.96ms for the pairing!!**
 
 #### Pairing
 
-| Name                                   | Time/Run (Rust 1.40.0, OCaml 4.07.1) | mWd/Run | Percentage |
-|----------------------------------------|--------------------------------------|---------|------------|
-| Pairing on pregenerated random element | 2.78ms                               | 74.00w  |    100.00% |
+| Name                                                                                                       | Time/Run (Rust 1.40.0, OCaml 4.07.1) | mWd/Run | mjWd/Run | Prom/Run | Percentage |
+|------------------------------------------------------------------------------------------------------------|--------------------------------------|---------|----------|----------|------------|
+| Pairing on pregenerated uncompressed random elements                                                       | 2.96ms                               | 74.00w  |          |          |     38.43% |
+| Miller loop on pregenerated uncompressed random elements                                                   | 1.58ms                               | 74.00w  |          |          |     20.54% |
+| Miller loop on three pregenerated couples of uncompressed random elements                                  | 6.20ms                               | 592.00w | 0.25w    | 0.25w    |     80.53% |
+| Miller loop on three pregenerated couples of uncompressed random elements followed by final exponentiation | 7.69ms                               | 668.00w | 0.13w    | 0.13w    |    100.00% |
+| Final exponentiation on pregenerated random element                                                        | 1.41ms                               | 76.00w  |          |          |     18.28% |
