@@ -11,11 +11,28 @@ module ECBenchmark (G : Bls12_381.Elliptic_curve_sig.T) = struct
 
   let scalar = G.Scalar.random ()
 
+  let g1_bytes = G.to_bytes g1
+
+  let g2_bytes = G.to_bytes g1
+
+  let zero_bytes = G.to_bytes zero
+
+  let one_bytes = G.to_bytes one
+
   let generate_random_element () = ignore @@ G.random ()
 
   let generate_zero () = ignore @@ G.zero ()
 
   let generate_one () = ignore @@ G.one ()
+
+  let check_is_on_curve_on_pregenerated_random_element () =
+    ignore @@ G.is_on_curve e1_bytes
+
+  let check_is_on_curve_on_pregenerated_zero_element () =
+    ignore @@ G.is_on_curve zero_bytes
+
+  let check_is_on_curve_on_pregenerated_one_element () =
+    ignore @@ G.is_on_curve one_bytes
 
   let check_is_zero_on_pregenerated_random () = ignore @@ G.is_zero g1
 
@@ -58,6 +75,18 @@ module ECBenchmark (G : Bls12_381.Elliptic_curve_sig.T) = struct
       Bench.Test.create
         ~name:(Printf.sprintf "%s one generation" ec_name)
         generate_one;
+      Bench.Test.create
+        ~name:
+          (Printf.sprintf "%s check is_on_curve on pregenerated random" ec_name)
+        check_is_on_curve_on_pregenerated_random_element;
+      Bench.Test.create
+        ~name:
+          (Printf.sprintf "%s check is_on_curve on pregenerated zero" ec_name)
+        check_is_on_curve_on_pregenerated_zero_element;
+      Bench.Test.create
+        ~name:
+          (Printf.sprintf "%s check is_on_curve on pregenerated one" ec_name)
+        check_is_on_curve_on_pregenerated_one_element;
       Bench.Test.create
         ~name:(Printf.sprintf "%s check if zero on pregenerated random" ec_name)
         check_is_zero_on_pregenerated_random;
