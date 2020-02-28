@@ -107,63 +107,63 @@ a time/run of 2.78ms for the pairing!!**
 
 #### Finite field
 
-| Name                                                    | Time/Run (Rust 1.40.0, OCaml 4.07.1) | mWd/Run | Percentage |
-|---------------------------------------------------------|--------------------------------------|---------|------------|
-| Fr compute addition pregenerated random element         | 129.94ns                             | 6.00w   |      0.79% |
-| Fr random generation                                    | 69.24ns                              | 6.00w   |      0.42% |
-| Fr zero generation                                      | 40.96ns                              | 6.00w   |      0.25% |
-| Fr one generation                                       | 33.38ns                              | 6.00w   |      0.20% |
-| Fr check if zero on pregenerated random                 | 41.71ns                              |         |      0.25% |
-| Fr check if zero on pregenerated one                    | 41.56ns                              |         |      0.25% |
-| Fr check if zero on pregenerated zero                   | 43.14ns                              |         |      0.26% |
-| Fr check if one on pregenerated random                  | 43.89ns                              |         |      0.27% |
-| Fr check if one on pregenerated one                     | 44.04ns                              |         |      0.27% |
-| Fr check if one on pregenerated zero                    | 43.81ns                              |         |      0.27% |
-| Fr compute addition on pregenerate random               | 119.29ns                             | 6.00w   |      0.73% |
-| Fr compute multiplication on pregenerate random         | 165.85ns                             | 6.00w   |      1.01% |
-| Fr compute square on pregenerate random                 | 103.47ns                             | 6.00w   |      0.63% |
-| Fr compute double on pregenerate random                 | 83.34ns                              | 6.00w   |      0.51% |
-| Fr compute equality on random                           | 81.68ns                              |         |      0.50% |
-| Fr compute equality on same element                     | 80.71ns                              |         |      0.49% |
-| Fr compute opposite of pregenerated random element      | 85.49ns                              | 6.00w   |      0.52% |
-| Fr compute opposite of pregenerated one element         | 84.49ns                              | 6.00w   |      0.51% |
-| Fr compute opposite of pregenerated zero element        | 81.65ns                              | 6.00w   |      0.50% |
-| Fr compute inverse of pregenerated random element       | 2_621.53ns                           | 6.00w   |     15.94% |
-| Fr compute inverse of pregenerated one element          | 2_404.37ns                           | 6.00w   |     14.62% |
-| Fr compute inverse opt of pregenerated random element   | 2_492.41ns                           | 8.00w   |     15.16% |
-| Fr compute inverse opt of pregenerated one element      | 2_462.46ns                           | 8.00w   |     14.98% |
-| Fr compute inverse opt of pregenerated zero element     | 43.72ns                              |         |      0.27% |
-| Fq12 compute addition pregenerated random element       | 2_364.19ns                           | 74.00w  |     14.38% |
-| Fq12 random generation                                  | 1_167.39ns                           | 74.00w  |      7.10% |
-| Fq12 zero generation                                    | 618.07ns                             | 74.00w  |      3.76% |
-| Fq12 one generation                                     | 622.53ns                             | 74.00w  |      3.79% |
-| Fq12 check if zero on pregenerated random               | 817.53ns                             |         |      4.97% |
-| Fq12 check if zero on pregenerated one                  | 789.68ns                             |         |      4.80% |
-| Fq12 check if zero on pregenerated zero                 | 799.72ns                             |         |      4.86% |
-| Fq12 check if one on pregenerated random                | 888.10ns                             |         |      5.40% |
-| Fq12 check if one on pregenerated one                   | 888.75ns                             |         |      5.40% |
-| Fq12 check if one on pregenerated zero                  | 828.30ns                             |         |      5.04% |
-| Fq12 compute addition on pregenerate random             | 2_591.27ns                           | 74.00w  |     15.76% |
-| Fq12 compute multiplication on pregenerate random       | 10_111.69ns                          | 74.00w  |     61.49% |
-| Fq12 compute square on pregenerate random               | 4_304.30ns                           | 74.00w  |     26.18% |
-| Fq12 compute double on pregenerate random               | 1_570.81ns                           | 74.00w  |      9.55% |
-| Fq12 compute equality on random                         | 1_559.72ns                           |         |      9.49% |
-| Fq12 compute equality on same element                   | 1_622.36ns                           |         |      9.87% |
-| Fq12 compute opposite of pregenerated random element    | 1_599.65ns                           | 74.00w  |      9.73% |
-| Fq12 compute opposite of pregenerated one element       | 1_536.35ns                           | 74.00w  |      9.34% |
-| Fq12 compute opposite of pregenerated zero element      | 1_520.81ns                           | 74.00w  |      9.25% |
-| Fq12 compute inverse of pregenerated random element     | 15_882.21ns                          | 74.00w  |     96.59% |
-| Fq12 compute inverse of pregenerated one element        | 15_079.48ns                          | 74.00w  |     91.71% |
-| Fq12 compute inverse opt of pregenerated random element | 15_682.97ns                          | 76.00w  |     95.38% |
-| Fq12 compute inverse opt of pregenerated one element    | 16_443.32ns                          | 76.00w  |    100.00% |
-| Fq12 compute inverse opt of pregenerated zero element   | 828.00ns                             |         |      5.04% |
+| Name                                                    | Rust 1.40.0 | Rust 1.40.0, OCaml 4.07.1 | mWd/Run |
+|---------------------------------------------------------|-------------|---------------------------|---------+
+| Fr compute addition pregenerated random element         |             | 129.94ns                  | 6.00w   |
+| Fr random generation                                    |             | 69.24ns                   | 6.00w   |
+| Fr zero generation                                      |             | 40.96ns                   | 6.00w   |
+| Fr one generation                                       |             | 33.38ns                   | 6.00w   |
+| Fr check if zero on pregenerated random                 |             | 41.71ns                   |         |
+| Fr check if zero on pregenerated one                    |             | 41.56ns                   |         |
+| Fr check if zero on pregenerated zero                   |             | 43.14ns                   |         |
+| Fr check if one on pregenerated random                  |             | 43.89ns                   |         |
+| Fr check if one on pregenerated one                     |             | 44.04ns                   |         |
+| Fr check if one on pregenerated zero                    |             | 43.81ns                   |         |
+| Fr compute addition on pregenerate random               |             | 119.29ns                  | 6.00w   |
+| Fr compute multiplication on pregenerate random         |             | 165.85ns                  | 6.00w   |
+| Fr compute square on pregenerate random                 |             | 103.47ns                  | 6.00w   |
+| Fr compute double on pregenerate random                 |             | 83.34ns                   | 6.00w   |
+| Fr compute equality on random                           |             | 81.68ns                   |         |
+| Fr compute equality on same element                     |             | 80.71ns                   |         |
+| Fr compute opposite of pregenerated random element      |             | 85.49ns                   | 6.00w   |
+| Fr compute opposite of pregenerated one element         |             | 84.49ns                   | 6.00w   |
+| Fr compute opposite of pregenerated zero element        |             | 81.65ns                   | 6.00w   |
+| Fr compute inverse of pregenerated random element       |             | 2_621.53ns                | 6.00w   |
+| Fr compute inverse of pregenerated one element          |             | 2_404.37ns                | 6.00w   |
+| Fr compute inverse opt of pregenerated random element   |             | 2_492.41ns                | 8.00w   |
+| Fr compute inverse opt of pregenerated one element      |             | 2_462.46ns                | 8.00w   |
+| Fr compute inverse opt of pregenerated zero element     |             | 43.72ns                   |         |
+| Fq12 compute addition pregenerated random element       |             | 2_364.19ns                | 74.00w  |
+| Fq12 random generation                                  |             | 1_167.39ns                | 74.00w  |
+| Fq12 zero generation                                    |             | 618.07ns                  | 74.00w  |
+| Fq12 one generation                                     |             | 622.53ns                  | 74.00w  |
+| Fq12 check if zero on pregenerated random               |             | 817.53ns                  |         |
+| Fq12 check if zero on pregenerated one                  |             | 789.68ns                  |         |
+| Fq12 check if zero on pregenerated zero                 |             | 799.72ns                  |         |
+| Fq12 check if one on pregenerated random                |             | 888.10ns                  |         |
+| Fq12 check if one on pregenerated one                   |             | 888.75ns                  |         |
+| Fq12 check if one on pregenerated zero                  |             | 828.30ns                  |         |
+| Fq12 compute addition on pregenerate random             |             | 2_591.27ns                | 74.00w  |
+| Fq12 compute multiplication on pregenerate random       |             | 10_111.69ns               | 74.00w  |
+| Fq12 compute square on pregenerate random               |             | 4_304.30ns                | 74.00w  |
+| Fq12 compute double on pregenerate random               |             | 1_570.81ns                | 74.00w  |
+| Fq12 compute equality on random                         |             | 1_559.72ns                |         |
+| Fq12 compute equality on same element                   |             | 1_622.36ns                |         |
+| Fq12 compute opposite of pregenerated random element    |             | 1_599.65ns                | 74.00w  |
+| Fq12 compute opposite of pregenerated one element       |             | 1_536.35ns                | 74.00w  |
+| Fq12 compute opposite of pregenerated zero element      |             | 1_520.81ns                | 74.00w  |
+| Fq12 compute inverse of pregenerated random element     |             | 15_882.21ns               | 74.00w  |
+| Fq12 compute inverse of pregenerated one element        |             | 15_079.48ns               | 74.00w  |
+| Fq12 compute inverse opt of pregenerated random element |             | 15_682.97ns               | 76.00w  |
+| Fq12 compute inverse opt of pregenerated one element    |             | 16_443.32ns               | 76.00w  |
+| Fq12 compute inverse opt of pregenerated zero element   |             | 828.00ns                  |         |
 
 #### Pairing
 
-| Name                                                                                                       | Time/Run (Rust 1.40.0, OCaml 4.07.1) | mWd/Run | mjWd/Run | Prom/Run | Percentage |
-|------------------------------------------------------------------------------------------------------------|--------------------------------------|---------|----------|----------|------------|
-| Pairing on pregenerated uncompressed random elements                                                       | 2.96ms                               | 74.00w  |          |          |     38.43% |
-| Miller loop on pregenerated uncompressed random elements                                                   | 1.58ms                               | 74.00w  |          |          |     20.54% |
-| Miller loop on three pregenerated couples of uncompressed random elements                                  | 6.20ms                               | 592.00w | 0.25w    | 0.25w    |     80.53% |
-| Miller loop on three pregenerated couples of uncompressed random elements followed by final exponentiation | 7.69ms                               | 668.00w | 0.13w    | 0.13w    |    100.00% |
-| Final exponentiation on pregenerated random element                                                        | 1.41ms                               | 76.00w  |          |          |     18.28% |
+| Name                                                                                                       | Rust 1.40.0 | Rust 1.40.0, OCaml 4.07.1 | mWd/Run | mjWd/Run | Prom/Run |
+|------------------------------------------------------------------------------------------------------------|-------------|---------------------------|---------|----------|----------+
+| Pairing on pregenerated uncompressed random elements                                                       |             | 2.96ms                    | 74.00w  |          |          |
+| Miller loop on pregenerated uncompressed random elements                                                   |             | 1.58ms                    | 74.00w  |          |          |
+| Miller loop on three pregenerated couples of uncompressed random elements                                  |             | 6.20ms                    | 592.00w | 0.25w    | 0.25w    |
+| Miller loop on three pregenerated couples of uncompressed random elements followed by final exponentiation |             | 7.69ms                    | 668.00w | 0.13w    | 0.13w    |
+| Final exponentiation on pregenerated random element                                                        |             | 1.41ms                    | 76.00w  |          |          |
