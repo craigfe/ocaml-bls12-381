@@ -44,6 +44,9 @@ a time/run of 2.78ms for the pairing!!**
 
 | Name                                                                                    | Rust 1.40.0 | Rust 1.40.0, OCaml 4.07.1 | mWd/Run |
 |-----------------------------------------------------------------------------------------|-------------|---------------------------|---------|
+| G1 from uncompressed to projective                                                      | 212,832ns   | NA                        | NA      |
+| G1 from uncompressed to affine                                                          | 217,667ns   | NA                        | NA      |
+| G1 from affine to projective                                                            | 5ns         | NA                        | NA      |
 | G1 Uncompressed compute addition pregenerated random element                            | 410_101ns   | 417_023.31ns              | 14.00w  |
 | G1 Uncompressed random generation                                                       | 157_111ns   | 160_355.11ns              | 14.00w  |
 | G1 Uncompressed zero generation                                                         | 25ns        | 35.20ns                   | 14.00w  |
@@ -74,6 +77,9 @@ a time/run of 2.78ms for the pairing!!**
 | G1 Compressed opposite of pregenerated random element                                   | 224_911ns   | 221_640.37ns              | 8.00w   |
 | G1 Compressed opposite of zero                                                          | 1,009ns     | 1_831.02ns                | 8.00w   |
 | G1 Compressed opposite of one                                                           | 224_293ns   | 225_160.33ns              | 8.00w   |
+| G2 from uncompressed to projective                                                      | 742,376ns   | NA                        | NA      |
+| G2 from uncompressed to affine                                                          | 736,388ns   | NA                        | NA      |
+| G2 from affine to projective                                                            | 19ns        | NA                        | NA      |
 | G2 Uncompressed compute addition pregenerated random element                            | 1_304_136ns | 1_427_225.06ns            | 26.00w  |
 | G2 Uncompressed random generation                                                       | 1_824_750ns | 1_586_625.22ns            | 26.00w  |
 | G2 Uncompressed zero generation                                                         | 42ns        | 58.10ns                   | 26.00w  |
