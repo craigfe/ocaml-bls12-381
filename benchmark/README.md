@@ -32,9 +32,7 @@ The following results have been run on a machine with
 - RAM: 16Go
 
 and with the commands given above.
-A benchmark of the Rust code (not including the conversion between C array and the Rust representation) is algo given as a reference.
-It may happen the Rust code looks slower than the binding, the reason being the
-benchmark strategies are different between Rust and Core Bench in OCaml.
+Benchmark of the Rust code (not including the conversion between C array and the Rust representation) can be found [here](https://gitlab.com/dannywillems/rustc-bls12-381/-/tree/master/src%2Fbenchmark).
 
 **!!Note benchmarking depends on the machine and may differ between execution.
 Sometimes, we experienced a difference of 10%. For instance, we have experienced
@@ -42,78 +40,79 @@ a time/run of 2.78ms for the pairing!!**
 
 #### Elliptic curves
 
-| Name                                                                                    | Rust 1.40.0 | Rust 1.40.0, OCaml 4.07.1 | mWd/Run |
-|-----------------------------------------------------------------------------------------|-------------|---------------------------|---------|
-| G1 from uncompressed to projective                                                      | 212,832ns   | NA                        | NA      |
-| G1 from uncompressed to affine                                                          | 217,667ns   | NA                        | NA      |
-| G1 from uncompressed to unchecked affine                                                | 140ns       | NA                        | NA      |
-| G1 from affine to projective                                                            | 5ns         | NA                        | NA      |
-| G1 from projective to affine                                                            | 16ns        | NA                        | NA      |
-| G1 Uncompressed compute addition pregenerated random element                            | 410_101ns   | 417_023.31ns              | 14.00w  |
-| G1 Uncompressed random generation                                                       | 157_111ns   | 160_355.11ns              | 14.00w  |
-| G1 Uncompressed zero generation                                                         | 25ns        | 35.20ns                   | 14.00w  |
-| G1 Uncompressed one generation                                                          | 106ns       | 132.06ns                  | 14.00w  |
-| G1 Uncompressed check if zero on pregenerated random                                    | 198_220ns   | 206_903.33ns              |         |
-| G1 Uncompressed check if zero on pregenerated one                                       | 197_494ns   | 201_565.51ns              |         |
-| G1 Uncompressed check if zero on pregenerated zero                                      | 1_010ns     | 1_221.27ns                |         |
-| G1 Uncompressed check equality on random                                                | 402_460     | 408_056.76ns              |         |
-| G1 Uncompressed check equality on one and random                                        | 400_360ns   | 411_054.42ns              |         |
-| G1 Uncompressed check equality on zero and random                                       | 198_272ns   | 203_054.28ns              |         |
-| G1 Uncompressed check equality on same element                                          |             | 400_647.64ns              |         |
-| G1 Uncompressed compute scalar multiplication on pregenerated random element and scalar | 449_115ns   | 441_382.90ns              | 14.00w  |
-| G1 Uncompressed opposite of pregenerated random element                                 | 196_701ns   | 201_767.53ns              | 14.00w  |
-| G1 Uncompressed opposite of zero                                                        | 1036ns      | 1_128.83ns                | 14.00w  |
-| G1 Uncompressed opposite of one                                                         | 197_684ns   | 201_023.40ns              | 14.00w  |
-| G1 Compressed compute addition pregenerated random element                              | 467,136ns   | 462_523.04ns              | 8.00w   |
-| G1 Compressed random generation                                                         |             | 155_109.37ns              | 8.00w   |
-| G1 Compressed zero generation                                                           |             | 36.09ns                   | 8.00w   |
-| G1 Compressed one generation                                                            |             | 139.05ns                  | 8.00w   |
-| G1 Compressed check if zero on pregenerated random                                      | 224_174ns   | 223_785.68ns              |         |
-| G1 Compressed check if zero on pregenerated one                                         | 230_364ms   | 220_527.60ns              |         |
-| G1 Compressed check if zero on pregenerated zero                                        | 994ns       | 1_797.12ns                |         |
-| G1 Compressed check equality on random                                                  | 456_978ns   | 452_046.13ns              |         |
-| G1 Compressed check equality on one and random                                          | 457_383ns   | 451_769.33ns              |         |
-| G1 Compressed check equality on zero and random                                         | 225_693ns   | 231_906.31ns              |         |
-| G1 Compressed check equality on same element                                            |             | 441_550.86ns              |         |
-| G1 Compressed compute scalar multiplication on pregenerated random element and scalar   | 464_502ns   | 457_372.34ns              | 8.00w   |
-| G1 Compressed opposite of pregenerated random element                                   | 224_911ns   | 221_640.37ns              | 8.00w   |
-| G1 Compressed opposite of zero                                                          | 1,009ns     | 1_831.02ns                | 8.00w   |
-| G1 Compressed opposite of one                                                           | 224_293ns   | 225_160.33ns              | 8.00w   |
-| G2 from uncompressed to projective                                                      | 742,376ns   | NA                        | NA      |
-| G2 from uncompressed to affine                                                          | 736,388ns   | NA                        | NA      |
-| G2 from uncompressed to unchecked affine                                                | 290ns       | NA                        | NA      |
-| G2 from affine to projective                                                            | 16ns        | NA                        | NA      |
-| G2 from projective to affine                                                            | 26ns        | NA                        | NA      |
-| G2 Uncompressed compute addition pregenerated random element                            | 1_304_136ns | 1_427_225.06ns            | 26.00w  |
-| G2 Uncompressed random generation                                                       | 1_824_750ns | 1_586_625.22ns            | 26.00w  |
-| G2 Uncompressed zero generation                                                         | 42ns        | 58.10ns                   | 26.00w  |
-| G2 Uncompressed one generation                                                          | 211ns       | 232.63ns                  | 26.00w  |
-| G2 Uncompressed check if zero on pregenerated random                                    | 691_823ns   | 657_343.93ns              |         |
-| G2 Uncompressed check if zero on pregenerated one                                       | 739_643ns   | 654_077.10ns              |         |
-| G2 Uncompressed check if zero on pregenerated zero                                      | 1_358ns     | 1_355.71ns                |         |
-| G2 Uncompressed check equality on random                                                | 1_473_690ns | 1_323_136.55ns            |         |
-| G2 Uncompressed check equality on one and random                                        | 1_396_319ns | 1_329_484.57ns            |         |
-| G2 Uncompressed check equality on zero and random                                       | 716_430ns   | 663_456.28ns              |         |
-| G2 Uncompressed check equality on same element                                          |             | 1_321_606.37ns            |         |
-| G2 Uncompressed compute scalar multiplication on pregenerated random element and scalar | 1_533_604ns | 1_496_910.22ns            | 26.00w  |
-| G2 Uncompressed opposite of pregenerated random element                                 | 770_652ns   | 700_405.34ns              | 26.00w  |
-| G2 Uncompressed opposite of zero                                                        | 1_456ns     | 1_382.32ns                | 26.00w  |
-| G2 Uncompressed opposite of one                                                         | 723_777ns   | 653_720.57ns              | 26.00w  |
-| G2 Compressed compute addition pregenerated random element                              | 1_701_145ns | 1_846_531.95ns            | 14.00w  |
-| G2 Compressed random generation                                                         |             | 1_564_921.86ns            | 14.00w  |
-| G2 Compressed zero generation                                                           |             | 51.65ns                   | 14.00w  |
-| G2 Compressed one generation                                                            |             | 206.39ns                  | 14.00w  |
-| G2 Compressed check if zero on pregenerated random                                      | 835_273ns   | 861_050.95ns              |         |
-| G2 Compressed check if zero on pregenerated one                                         | 836_098ns   | 847_608.74ns              |         |
-| G2 Compressed check if zero on pregenerated zero                                        | 1_220ns     | 3_075.86ns                |         |
-| G2 Compressed check equality on random                                                  | 1,681_466ns | 1_685_200.77ns            |         |
-| G2 Compressed check equality on one and random                                          | 1_720_012ns | 1_697_912.38ns            |         |
-| G2 Compressed check equality on zero and random                                         | 225_693ns   | 869_173.52ns              |         |
-| G2 Compressed check equality on same element                                            |             | 1_732_638.13ns            |         |
-| G2 Compressed compute scalar multiplication on pregenerated random element and scalar   | 1_597_721ns | 1_645_250.71ns            | 14.00w  |
-| G2 Compressed opposite of pregenerated random element                                   | 838_832ns   | 877_347.02ns              | 14.00w  |
-| G2 Compressed opposite of zero                                                          | 1236ns      | 3_112.50ns                | 14.00w  |
-| G2 Compressed opposite of one                                                           | 838_266ns   | 864_949.32ns              | 14.00w  |
+| Name                                                                                    | Rust 1.40.0 only | Rust 1.40.0, OCaml 4.07.1 | mWd/Run |
+|-----------------------------------------------------------------------------------------|------------------|---------------------------|---------|
+| G1 from uncompressed to projective                                                      | 212,832ns        | NA                        | NA      |
+| G1 from uncompressed to affine                                                          | 217,667ns        | NA                        | NA      |
+| G1 from uncompressed to unchecked affine                                                | 140ns            | NA                        | NA      |
+| G1 from affine to projective                                                            | 5ns              | NA                        | NA      |
+| G1 from projective to affine                                                            | 16ns             | NA                        | NA      |
+| G2 from uncompressed to projective                                                      | 742,376ns        | NA                        | NA      |
+| G2 from uncompressed to affine                                                          | 736,388ns        | NA                        | NA      |
+| G2 from uncompressed to unchecked affine                                                | 290ns            | NA                        | NA      |
+| G2 from affine to projective                                                            | 16ns             | NA                        | NA      |
+| G2 from projective to affine                                                            | 26ns             | NA                        | NA      |
+| -------------------------                                                               | --               | -                         | -       |
+| G1 Uncompressed compute addition pregenerated random element                            |                  | 7_686.72ns                | 14.00w  |
+| G1 Uncompressed random generation                                                       |                  | 165_477.34ns              | 14.00w  |
+| G1 Uncompressed zero generation                                                         |                  | 35.81ns                   | 14.00w  |
+| G1 Uncompressed one generation                                                          |                  | 133.02ns                  | 14.00w  |
+| G1 Uncompressed check if zero on pregenerated random                                    |                  | 163.92ns                  |         |
+| G1 Uncompressed check if zero on pregenerated one                                       |                  | 161.79ns                  |         |
+| G1 Uncompressed check if zero on pregenerated zero                                      |                  | 50.23ns                   |         |
+| G1 Uncompressed check equality on random                                                |                  | 342.32ns                  |         |
+| G1 Uncompressed check equality on one and random                                        |                  | 363.79ns                  |         |
+| G1 Uncompressed check equality on zero and random                                       |                  | 225.09ns                  |         |
+| G1 Uncompressed check equality on same element                                          |                  | 356.92ns                  |         |
+| G1 Uncompressed compute scalar multiplication on pregenerated random element and scalar |                  | 254_920.14ns              | 14.00w  |
+| G1 Uncompressed opposite of pregenerated random element                                 |                  | 315.45ns                  | 14.00w  |
+| G1 Uncompressed opposite of zero                                                        |                  | 76.45ns                   | 14.00w  |
+| G1 Uncompressed opposite of one                                                         |                  | 323.75ns                  | 14.00w  |
+| G1 Compressed compute addition pregenerated random element                              |                  | 72_450.73ns               | 8.00w   |
+| G1 Compressed random generation                                                         |                  | 179_380.93ns              | 8.00w   |
+| G1 Compressed zero generation                                                           |                  | 40.13ns                   | 8.00w   |
+| G1 Compressed one generation                                                            |                  | 160.00ns                  | 8.00w   |
+| G1 Compressed check if zero on pregenerated random                                      |                  | 32_034.74ns               |         |
+| G1 Compressed check if zero on pregenerated one                                         |                  | 32_410.89ns               |         |
+| G1 Compressed check if zero on pregenerated zero                                        |                  | 44.06ns                   |         |
+| G1 Compressed check equality on random                                                  |                  | 65_869.80ns               |         |
+| G1 Compressed check equality on one and random                                          |                  | 64_299.25ns               |         |
+| G1 Compressed check equality on zero and random                                         |                  | 31_490.99ns               |         |
+| G1 Compressed check equality on same element                                            |                  | 62_391.18ns               |         |
+| G1 Compressed compute scalar multiplication on pregenerated random element and scalar   |                  | 313_714.56ns              | 8.00w   |
+| G1 Compressed opposite of pregenerated random element                                   |                  | 30_238.74ns               | 8.00w   |
+| G1 Compressed opposite of zero                                                          |                  | 67.39ns                   | 8.00w   |
+| G1 Compressed opposite of one                                                           |                  | 30_523.33ns               | 8.00w   |
+| G2 Uncompressed compute addition pregenerated random element                            |                  | 12_333.90ns               | 26.00w  |
+| G2 Uncompressed random generation                                                       |                  | 1_810_567.06ns            | 26.00w  |
+| G2 Uncompressed zero generation                                                         |                  | 64.04ns                   | 26.00w  |
+| G2 Uncompressed one generation                                                          |                  | 282.05ns                  | 26.00w  |
+| G2 Uncompressed check if zero on pregenerated random                                    |                  | 342.08ns                  |         |
+| G2 Uncompressed check if zero on pregenerated one                                       |                  | 346.60ns                  |         |
+| G2 Uncompressed check if zero on pregenerated zero                                      |                  | 108.97ns                  |         |
+| G2 Uncompressed check equality on random                                                |                  | 691.24ns                  |         |
+| G2 Uncompressed check equality on one and random                                        |                  | 677.22ns                  |         |
+| G2 Uncompressed check equality on zero and random                                       |                  | 740.30ns                  |         |
+| G2 Uncompressed check equality on same element                                          |                  | 818.85ns                  |         |
+| G2 Uncompressed compute scalar multiplication on pregenerated random element and scalar |                  | 900_057.42ns              | 26.00w  |
+| G2 Uncompressed opposite of pregenerated random element                                 |                  | 624.82ns                  | 26.00w  |
+| G2 Uncompressed opposite of zero                                                        |                  | 150.71ns                  | 26.00w  |
+| G2 Uncompressed opposite of one                                                         |                  | 618.24ns                  | 26.00w  |
+| G2 Compressed compute addition pregenerated random element                              |                  | 511_858.64ns              | 14.00w  |
+| G2 Compressed random generation                                                         |                  | 3_966_696.57ns            | 14.00w  |
+| G2 Compressed zero generation                                                           |                  | 64.88ns                   | 14.00w  |
+| G2 Compressed one generation                                                            |                  | 231.83ns                  | 14.00w  |
+| G2 Compressed check if zero on pregenerated random                                      |                  | 214_350.61ns              |         |
+| G2 Compressed check if zero on pregenerated one                                         |                  | 231_000.20ns              |         |
+| G2 Compressed check if zero on pregenerated zero                                        |                  | 67.94ns                   |         |
+| G2 Compressed check equality on random                                                  |                  | 447_347.83ns              |         |
+| G2 Compressed check equality on one and random                                          |                  | 477_699.12ns              |         |
+| G2 Compressed check equality on zero and random                                         |                  | 235_987.47ns              |         |
+| G2 Compressed check equality on same element                                            |                  | 470_452.31ns              |         |
+| G2 Compressed compute scalar multiplication on pregenerated random element and scalar   |                  | 1_150_434.48ns            | 14.00w  |
+| G2 Compressed opposite of pregenerated random element                                   |                  | 227_593.55ns              | 14.00w  |
+| G2 Compressed opposite of zero                                                          |                  | 107.44ns                  | 14.00w  |
+| G2 Compressed opposite of one                                                           |                  | 217_461.02ns              | 14.00w  |
 
 #### Finite field
 
