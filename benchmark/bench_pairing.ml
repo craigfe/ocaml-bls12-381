@@ -23,12 +23,12 @@ let compute_final_exponentiation_on_pregenerated_random_element () =
 
 let compute_miller_loop_on_three_pregenerated_couple_of_uncompressed_random_elements
     () =
-  Bls12_381.Pairing.miller_loop_composite three_g1_and_g2
+  Bls12_381.Pairing.miller_loop three_g1_and_g2
 
 let compute_miller_loop_on_three_pregenerated_couple_of_uncompressed_random_elements_followed_by_final_exponentiation
     () =
   Bls12_381.Pairing.final_exponentiation
-  @@ Bls12_381.Pairing.miller_loop_composite three_g1_and_g2
+  @@ Bls12_381.Pairing.miller_loop three_g1_and_g2
 
 let () =
   Core.Command.run
