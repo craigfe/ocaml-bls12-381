@@ -184,4 +184,6 @@ let miller_loop (xs : (G1.Uncompressed.t * G2.Uncompressed.t) list) : Fq12.t =
         f acc xs
   in
   if List.length xs = 0 then failwith "Empty list of points given"
+  (* it is fine to use unsafe because we should not have any nnull values,
+  otherwise the pairing would be null everywhere *)
   else unsafe_final_exponentiation (f (Fq12.one ()) xs)
