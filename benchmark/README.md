@@ -171,8 +171,8 @@ a time/run of 2.78ms for the pairing!!**
 
 | Name                                                                                                       | Rust 1.40.0 | Rust 1.40.0, OCaml 4.07.1 | mWd/Run | mjWd/Run | Prom/Run |
 |------------------------------------------------------------------------------------------------------------|-------------|---------------------------|---------|----------|----------|
-| Pairing on pregenerated uncompressed random elements                                                       |             | 2.96ms                    | 74.00w  |          |          |
-| Miller loop on pregenerated uncompressed random elements                                                   |             | 1.58ms                    | 74.00w  |          |          |
-| Miller loop on three pregenerated couples of uncompressed random elements                                  |             | 6.20ms                    | 592.00w | 0.25w    | 0.25w    |
-| Miller loop on three pregenerated couples of uncompressed random elements followed by final exponentiation |             | 7.69ms                    | 668.00w | 0.13w    | 0.13w    |
-| Final exponentiation on pregenerated random element                                                        |             | 1.41ms                    | 76.00w  |          |          |
+| Pairing on pregenerated uncompressed random elements                                                       |             | 1_953.02us                | 74.00w  |          |          |
+| Miller loop on pregenerated uncompressed random elements                                                   |             | 620.66us                  | 74.00w  |          |          |
+| Miller loop on three pregenerated couples of uncompressed random elements                                  |             | 2_710.96us                | 304.00w | 0.17w    | 0.17w    |
+| Miller loop on three pregenerated couples of uncompressed random elements followed by final exponentiation |             | 4_267.86us                | 380.00w | 0.14w    | 0.14w    |
+| Final exponentiation on pregenerated random element                                                        |             | 1_508.32us                | 76.00w  |          |          |
