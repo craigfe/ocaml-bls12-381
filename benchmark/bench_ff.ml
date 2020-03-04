@@ -15,6 +15,21 @@ module FFBenchmark (F : Bls12_381.Ff_sig.T) = struct
 
   let generate_one () = ignore @@ F.one ()
 
+  let e1_bytes = F.to_bytes e1
+
+  let zero_bytes = F.to_bytes zero
+
+  let one_bytes = F.to_bytes one
+
+  let check_is_in_field_on_pregenerated_random_element () =
+    ignore @@ F.is_in_field e1_bytes
+
+  let check_is_in_field_on_pregenerated_zero_element () =
+    ignore @@ F.is_in_field zero_bytes
+
+  let check_is_in_field_on_pregenerated_one_element () =
+    ignore @@ F.is_in_field one_bytes
+
   let check_if_zero_on_pregenerated_random_element () = ignore @@ F.is_zero e1
 
   let check_if_zero_on_pregenerated_zero_element () = ignore @@ F.is_zero zero
@@ -75,6 +90,18 @@ module FFBenchmark (F : Bls12_381.Ff_sig.T) = struct
       Bench.Test.create
         ~name:(Printf.sprintf "%s one generation" ec_name)
         generate_one;
+      Bench.Test.create
+        ~name:
+          (Printf.sprintf "%s check is_in_field on pregenerated random" ec_name)
+        check_is_in_field_on_pregenerated_random_element;
+      Bench.Test.create
+        ~name:
+          (Printf.sprintf "%s check is_in_field on pregenerated zero" ec_name)
+        check_is_in_field_on_pregenerated_zero_element;
+      Bench.Test.create
+        ~name:
+          (Printf.sprintf "%s check is_in_field on pregenerated one" ec_name)
+        check_is_in_field_on_pregenerated_one_element;
       Bench.Test.create
         ~name:(Printf.sprintf "%s check if zero on pregenerated random" ec_name)
         check_if_zero_on_pregenerated_random_element;
