@@ -177,3 +177,15 @@ CAMLprim value ml_librustc_bls12_381_g1_compressed_mul(value buffer, value g, va
   rustc_bls12_381_g1_compressed_mul(Bytes_val(buffer), Bytes_val(g), Bytes_val(a));
   CAMLreturn(Val_unit);
 }
+
+
+extern bool rustc_bls12_381_g1_build_from_x_and_y(unsigned char *buffer,
+                                                  const unsigned char *x,
+                                                  const unsigned char *y);
+
+CAMLprim value ml_librustc_bls12_381_g1_build_from_x_and_y(value buffer, value x, value y) {
+  CAMLparam3(buffer, x, y);
+  bool res = rustc_bls12_381_g1_build_from_x_and_y(Bytes_val(buffer), Bytes_val(x),
+                                                   Bytes_val(y));
+  CAMLreturn(Val_bool(res));
+}
