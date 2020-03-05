@@ -77,6 +77,11 @@ external ml_bls12_381_g2_compressed_one : Bytes.t -> unit
   = "ml_librustc_bls12_381_g2_compressed_one"
   [@@noalloc]
 
+external ml_bls12_381_g2_build_from_components :
+  Bytes.t -> Bytes.t -> Bytes.t -> Bytes.t -> Bytes.t -> bool
+  = "ml_librustc_bls12_381_g2_build_from_components"
+  [@@noalloc]
+
 module Uncompressed = struct
   type t = Bytes.t
 
@@ -93,6 +98,17 @@ module Uncompressed = struct
   let of_bytes_opt bs = if is_on_curve bs then Some bs else None
 
   let of_bytes (g : Bytes.t) : t = g
+
+  let of_z_opt ~x ~y =
+   let (x_1, x_2) = x in
+   let (y_1, y_2) = y in
+   let x_1 = Bytes.of_string (Z.to_bits x_1) in
+   let x_2 = Bytes.of_string (Z.to_bits x_2) in
+   let y_1 = Bytes.of_string (Z.to_bits y_1) in
+   let y_2 = Bytes.of_string (Z.to_bits y_2) in
+   let buffer = empty () in
+   let res = ml_bls12_381_g2_build_from_components buffer x_1 x_2 y_1 y_2 in
+   if res = true then Some buffer else None
 
   let to_bytes g = g
 
