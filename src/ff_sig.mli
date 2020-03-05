@@ -11,6 +11,9 @@ module type T = sig
   (* Attempt to construct a point from a byte array *)
   val of_bytes_opt : Bytes.t -> t option
 
+  (** Order of the field *)
+  val order : Z.t
+
   val of_bytes : Bytes.t -> t
 
   val to_bytes : t -> Bytes.t

@@ -56,6 +56,10 @@ type t = Bytes.t
 
 let empty () = Bytes.create size
 
+let order =
+  let fq_order = Z.of_string "4002409555221667393417789825735904156556882819939007885332058136124031650490837864442687629129015664037894272559787" in
+  Z.pow fq_order 12
+
 let is_in_field bs =
   if Bytes.length bs = size then ml_bls12_381_fq12_is_in_field bs else false
 
