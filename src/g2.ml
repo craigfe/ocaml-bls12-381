@@ -100,15 +100,15 @@ module Uncompressed = struct
   let of_bytes (g : Bytes.t) : t = g
 
   let of_z_opt ~x ~y =
-   let (x_1, x_2) = x in
-   let (y_1, y_2) = y in
-   let x_1 = Bytes.of_string (Z.to_bits x_1) in
-   let x_2 = Bytes.of_string (Z.to_bits x_2) in
-   let y_1 = Bytes.of_string (Z.to_bits y_1) in
-   let y_2 = Bytes.of_string (Z.to_bits y_2) in
-   let buffer = empty () in
-   let res = ml_bls12_381_g2_build_from_components buffer x_1 x_2 y_1 y_2 in
-   if res = true then Some buffer else None
+    let (x_1, x_2) = x in
+    let (y_1, y_2) = y in
+    let x_1 = Bytes.of_string (Z.to_bits x_1) in
+    let x_2 = Bytes.of_string (Z.to_bits x_2) in
+    let y_1 = Bytes.of_string (Z.to_bits y_1) in
+    let y_2 = Bytes.of_string (Z.to_bits y_2) in
+    let buffer = empty () in
+    let res = ml_bls12_381_g2_build_from_components buffer x_1 x_2 y_1 y_2 in
+    if res = true then Some buffer else None
 
   let to_bytes g = g
 

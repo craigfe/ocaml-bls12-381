@@ -102,55 +102,56 @@ module Constructors = struct
   let test_vectors_generator_from_bytes () =
     let x_cs =
       [| Char.chr 0x5c;
-        Char.chr 0xb3;
-        Char.chr 0x87;
-        Char.chr 0x90;
-        Char.chr 0xfd;
-        Char.chr 0x53;
-        Char.chr 0x0c;
-        Char.chr 0x16;
-        Char.chr 0x78;
-        Char.chr 0x17;
-        Char.chr 0xfc;
-        Char.chr 0x67;
-        Char.chr 0x99;
-        Char.chr 0x76;
-        Char.chr 0xff;
-        Char.chr 0xf5;
-        Char.chr 0x15;
-        Char.chr 0x4f;
-        Char.chr 0x95;
-        Char.chr 0xc7;
-        Char.chr 0x14;
-        Char.chr 0x3b;
-        Char.chr 0xa1;
-        Char.chr 0xc1;
-        Char.chr 0xf0;
-        Char.chr 0xae;
-        Char.chr 0x6a;
-        Char.chr 0xcd;
-        Char.chr 0xf3;
-        Char.chr 0xd0;
-        Char.chr 0xe7;
-        Char.chr 0x47;
-        Char.chr 0xed;
-        Char.chr 0xce;
-        Char.chr 0x6e;
-        Char.chr 0xcc;
-        Char.chr 0x21;
-        Char.chr 0xdb;
-        Char.chr 0xf4;
-        Char.chr 0x40;
-        Char.chr 0x12;
-        Char.chr 0x01;
-        Char.chr 0x77;
-        Char.chr 0x41;
-        Char.chr 0x9e;
-        Char.chr 0x0b;
-        Char.chr 0xfb;
-        Char.chr 0x75 |]
+         Char.chr 0xb3;
+         Char.chr 0x87;
+         Char.chr 0x90;
+         Char.chr 0xfd;
+         Char.chr 0x53;
+         Char.chr 0x0c;
+         Char.chr 0x16;
+         Char.chr 0x78;
+         Char.chr 0x17;
+         Char.chr 0xfc;
+         Char.chr 0x67;
+         Char.chr 0x99;
+         Char.chr 0x76;
+         Char.chr 0xff;
+         Char.chr 0xf5;
+         Char.chr 0x15;
+         Char.chr 0x4f;
+         Char.chr 0x95;
+         Char.chr 0xc7;
+         Char.chr 0x14;
+         Char.chr 0x3b;
+         Char.chr 0xa1;
+         Char.chr 0xc1;
+         Char.chr 0xf0;
+         Char.chr 0xae;
+         Char.chr 0x6a;
+         Char.chr 0xcd;
+         Char.chr 0xf3;
+         Char.chr 0xd0;
+         Char.chr 0xe7;
+         Char.chr 0x47;
+         Char.chr 0xed;
+         Char.chr 0xce;
+         Char.chr 0x6e;
+         Char.chr 0xcc;
+         Char.chr 0x21;
+         Char.chr 0xdb;
+         Char.chr 0xf4;
+         Char.chr 0x40;
+         Char.chr 0x12;
+         Char.chr 0x01;
+         Char.chr 0x77;
+         Char.chr 0x41;
+         Char.chr 0x9e;
+         Char.chr 0x0b;
+         Char.chr 0xfb;
+         Char.chr 0x75
+      |]
     in
-    assert(Array.length x_cs = 48);
+    assert (Array.length x_cs = 48) ;
     let _x = Bytes.init 48 (fun i -> x_cs.(i)) in
     let y_cs =
       [| Char.chr 0xba;
@@ -200,9 +201,10 @@ module Constructors = struct
          Char.chr 0x50;
          Char.chr 0x08;
          Char.chr 0xa2;
-         Char.chr 0x6a |]
+         Char.chr 0x6a
+      |]
     in
-    assert(Array.length y_cs = 48);
+    assert (Array.length y_cs = 48) ;
     let _y = Bytes.init 48 (fun i -> y_cs.(i)) in
     let x = Z.of_bits (Bytes.to_string _x) in
     let y = Z.of_string (Bytes.to_string _y) in

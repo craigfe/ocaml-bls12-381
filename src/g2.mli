@@ -5,7 +5,7 @@ module Uncompressed : sig
       None is return. The points must be given modulo the order of Fq. The
       points are in the form (c0, c1) where x = c1 * X + c0 and y = c1 * X +
       c0. To create the point at infinity, use [zero ()] *)
-  val of_z_opt : x:(Z.t * Z.t) -> y:(Z.t * Z.t) -> t option
+  val of_z_opt : x:Z.t * Z.t -> y:Z.t * Z.t -> t option
 end
 
 module Compressed : sig
