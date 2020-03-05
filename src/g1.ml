@@ -78,7 +78,8 @@ external ml_bls12_381_g1_compressed_random : Bytes.t -> unit
   = "ml_librustc_bls12_381_g1_compressed_random"
   [@@noalloc]
 
-external ml_bls12_381_g1_build_from_x_and_y : Bytes.t -> Bytes.t -> Bytes.t -> bool
+external ml_bls12_381_g1_build_from_x_and_y :
+  Bytes.t -> Bytes.t -> Bytes.t -> bool
   = "ml_librustc_bls12_381_g1_build_from_x_and_y"
   [@@noalloc]
 
@@ -104,8 +105,7 @@ module Uncompressed = struct
     let y = Bytes.of_string (Z.to_bits y) in
     let buffer = empty () in
     let res = ml_bls12_381_g1_build_from_x_and_y buffer x y in
-    if res = true then Some (of_bytes buffer)
-    else None
+    if res = true then Some (of_bytes buffer) else None
 
   let to_bytes g = g
 
