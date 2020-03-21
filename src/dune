@@ -12,5 +12,5 @@
  (library_flags :standard -linkall -ccopt -pthread)
  (c_names bls12_381_stubs_fr bls12_381_stubs_fq12 bls12_381_stubs_g1 bls12_381_stubs_g2 bls12_381_stubs_pairing)
  (c_library_flags (:include flags.sexp))
- (preprocess (pps bisect_ppx --conditional))
+ ; (preprocess (pps bisect_ppx --conditional))
 )
