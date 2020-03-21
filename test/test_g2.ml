@@ -37,11 +37,6 @@ module Constructors = struct
   let get_tests () =
     let open Alcotest in
     ("From Z elements", [test_case "one (generator)" `Quick test_of_z_one])
-
-  (* test_case "test vectors 1" `Quick test_vectors_1;
-   * test_case "test vectors 2" `Quick test_vectors_2;
-   * test_case "test vectors 3" `Quick test_vectors_3; *)
-  (* test_case "test vectors add" `Quick test_vectors_add ] ) *)
 end
 
 let () =

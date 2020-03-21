@@ -99,6 +99,20 @@ module Constructors = struct
         )
     | _ -> assert false
 
+  let test_vectors_zero_and_2_not_on_curve () =
+    let x = Z.of_string "0" in
+    let y = Z.of_string "2" in
+    match Bls12_381.G1.Uncompressed.of_z_opt ~x ~y with
+    | Some _ -> assert false
+    | None -> assert true
+
+  let test_vectors_zero_and_minus_2_not_on_curve () =
+    let x = Z.of_string "0" in
+    let y = Z.neg @@ Z.of_string "2" in
+    match Bls12_381.G1.Uncompressed.of_z_opt ~x ~y with
+    | Some _ -> assert false
+    | None -> assert true
+
   let test_vectors_generator_from_bytes () =
     let x_cs =
       [| Char.chr 0x5c;
@@ -219,6 +233,14 @@ module Constructors = struct
         test_case "test vectors 1" `Quick test_vectors_1;
         test_case "test vectors 2" `Quick test_vectors_2;
         test_case "test vectors 3" `Quick test_vectors_3;
+        test_case
+          "test vectors zero and 2 not on curve"
+          `Quick
+          test_vectors_zero_and_2_not_on_curve;
+        test_case
+          "test vectors zero and minus 2 not on curve"
+          `Quick
+          test_vectors_zero_and_minus_2_not_on_curve;
         test_case "test vectors add" `Quick test_vectors_add ] )
 end
 
