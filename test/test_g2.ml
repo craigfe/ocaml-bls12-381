@@ -34,9 +34,23 @@ module Constructors = struct
           Bls12_381.G2.Uncompressed.eq (Bls12_381.G2.Uncompressed.one ()) g )
     | None -> assert false
 
+  let test_vectors_random_points_not_on_curve () =
+    let x = (Z.of_string "90809235435", Z.of_string "09809345809345809") in
+    let y =
+      (Z.of_string "8090843059809345", Z.of_string "908098039459089345")
+    in
+    match Bls12_381.G2.Uncompressed.of_z_opt ~x ~y with
+    | Some _ -> assert false
+    | None -> assert true
+
   let get_tests () =
     let open Alcotest in
-    ("From Z elements", [test_case "one (generator)" `Quick test_of_z_one])
+    ( "From Z elements",
+      [ test_case "one (generator)" `Quick test_of_z_one;
+        test_case
+          "random points not on curve"
+          `Quick
+          test_vectors_random_points_not_on_curve ] )
 end
 
 let () =
