@@ -1,4 +1,5 @@
-# THIS IS A WIP
+# OCaml implementation of BLS12-381
+
 
 ## Install
 
@@ -56,17 +57,6 @@ dune exec benchmark/bench_ff.exe
 dune exec benchmark/bench_pairing.exe
 ```
 
-## TODO
-
-- Use integer instead of void to handle errors in the C stubs
-
-
 ## Documentation
 
 - Use `dune build @doc` to generate the API documentation.
-
-## Test coverage
-
-```
-BISECT_ENABLE=yes dune runtest --force
-```
