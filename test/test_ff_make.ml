@@ -135,17 +135,17 @@ module MakeEquality (FiniteField : Bls12_381.Ff_sig.T) = struct
 end
 
 module MakeFieldProperties (FiniteField : Bls12_381.Ff_sig.T) = struct
-  (** Verify that a random point is in the field *)
-  let is_in_field_random () =
-    assert (FiniteField.(is_in_field @@ to_bytes @@ random ()))
+  (** Verify that a random point is valid *)
+  let check_bytes_random () =
+    assert (FiniteField.(check_bytes @@ to_bytes @@ random ()))
 
-  (** Verify that the zero point is in the field *)
-  let is_in_field_zero () =
-    assert (FiniteField.(is_in_field @@ to_bytes @@ zero ()))
+  (** Verify that the zero point is valid *)
+  let check_bytes_zero () =
+    assert (FiniteField.(check_bytes @@ to_bytes @@ zero ()))
 
-  (** Verify that the one point is in the field *)
-  let is_in_field_one () =
-    assert (FiniteField.(is_in_field @@ to_bytes @@ one ()))
+  (** Verify that the one point is valid *)
+  let check_bytes_one () =
+    assert (FiniteField.(check_bytes @@ to_bytes @@ one ()))
 
   let zero_nullifier_random () =
     (* 0 * g = 0 *)
@@ -256,9 +256,9 @@ module MakeFieldProperties (FiniteField : Bls12_381.Ff_sig.T) = struct
   let get_tests () =
     let open Alcotest in
     ( "Field properties",
-      [ test_case "is_in_field_random" `Quick (repeat 100 is_in_field_random);
-        test_case "is_in_field_zero" `Quick (repeat 100 is_in_field_zero);
-        test_case "is_in_field_one" `Quick (repeat 100 is_in_field_one);
+      [ test_case "check_bytes_random" `Quick (repeat 100 check_bytes_random);
+        test_case "check_bytes_zero" `Quick (repeat 100 check_bytes_zero);
+        test_case "check_bytes_one" `Quick (repeat 100 check_bytes_one);
         test_case "zero_nullifier_one" `Quick (repeat 1000 zero_nullifier_one);
         test_case "zero_nullifier_zero" `Quick (repeat 1000 zero_nullifier_zero);
         test_case
