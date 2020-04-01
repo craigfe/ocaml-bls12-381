@@ -1,9 +1,9 @@
-external ml_bls12_381_g1_uncompressed_is_on_curve : Bytes.t -> bool
-  = "ml_librustc_bls12_381_g1_uncompressed_is_on_curve"
+external ml_bls12_381_g1_uncompressed_check_bytes : Bytes.t -> bool
+  = "ml_librustc_bls12_381_g1_uncompressed_check_bytes"
   [@@noalloc]
 
-external ml_bls12_381_g1_compressed_is_on_curve : Bytes.t -> bool
-  = "ml_librustc_bls12_381_g1_compressed_is_on_curve"
+external ml_bls12_381_g1_compressed_check_bytes : Bytes.t -> bool
+  = "ml_librustc_bls12_381_g1_compressed_check_bytes"
   [@@noalloc]
 
 external ml_bls12_381_g1_compressed_of_uncompressed : Bytes.t -> Bytes.t -> unit
@@ -92,11 +92,11 @@ module Uncompressed = struct
 
   let empty () = Bytes.create size
 
-  let is_on_curve bs =
-    if Bytes.length bs = size then ml_bls12_381_g1_uncompressed_is_on_curve bs
+  let check_bytes bs =
+    if Bytes.length bs = size then ml_bls12_381_g1_uncompressed_check_bytes bs
     else false
 
-  let of_bytes_opt bs = if is_on_curve bs then Some bs else None
+  let of_bytes_opt bs = if check_bytes bs then Some bs else None
 
   let of_bytes (g : Bytes.t) : t = g
 
@@ -173,11 +173,11 @@ module Compressed = struct
     ml_bls12_381_g1_compressed_of_uncompressed g uncompressed ;
     g
 
-  let is_on_curve bs =
-    if Bytes.length bs = size then ml_bls12_381_g1_compressed_is_on_curve bs
+  let check_bytes bs =
+    if Bytes.length bs = size then ml_bls12_381_g1_compressed_check_bytes bs
     else false
 
-  let of_bytes_opt bs = if is_on_curve bs then Some bs else None
+  let of_bytes_opt bs = if check_bytes bs then Some bs else None
 
   let of_bytes g = g
 

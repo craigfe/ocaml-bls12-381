@@ -6,10 +6,10 @@
 #include <inttypes.h>
 #include <stdbool.h>
 
-extern bool rustc_bls12_381_fr_is_in_field(const unsigned char *element);
+extern bool rustc_bls12_381_fr_check_bytes(const unsigned char *element);
 
-CAMLprim value ml_librustc_bls12_381_fr_is_in_field(value element) {
-  bool res = rustc_bls12_381_fr_is_in_field(Bytes_val(element));
+CAMLprim value ml_librustc_bls12_381_fr_check_bytes(value element) {
+  bool res = rustc_bls12_381_fr_check_bytes(Bytes_val(element));
   return Val_bool(res);
 }
 

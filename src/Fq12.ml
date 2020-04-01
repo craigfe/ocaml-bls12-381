@@ -1,5 +1,5 @@
-external ml_bls12_381_fq12_is_in_field : Bytes.t -> bool
-  = "ml_librustc_bls12_381_fq12_is_in_field"
+external ml_bls12_381_fq12_check_bytes : Bytes.t -> bool
+  = "ml_librustc_bls12_381_fq12_check_bytes"
   [@@noalloc]
 
 external ml_bls12_381_fq12_is_zero : Bytes.t -> bool
@@ -63,10 +63,10 @@ let order =
   in
   Z.pow fq_order 12
 
-let is_in_field bs =
-  if Bytes.length bs = size then ml_bls12_381_fq12_is_in_field bs else false
+let check_bytes bs =
+  if Bytes.length bs = size then ml_bls12_381_fq12_check_bytes bs else false
 
-let of_bytes_opt bs = if is_in_field bs then Some bs else None
+let of_bytes_opt bs = if check_bytes bs then Some bs else None
 
 let of_bytes g = g
 
