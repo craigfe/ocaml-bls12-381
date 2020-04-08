@@ -5,33 +5,19 @@
 
 1. Setup environment
 ```
-opam switch create ./ 4.07.1
+opam switch create ./ 4.09.1 --deps-only
 eval $(opam env)
 ```
 
-2. Install Rust dependencies
+2. Install Rust dependencies and install the library
 
 
 ```
-# static library will be installed here
-mkdir ${OPAM_SWITCH_PREFIX}/lib/librustc-bls12-381/
-git clone https://gitlab.com/dannywillems/rustc-bls12-381 /tmp/rustc-bls12-381
-cd /tmp/rustc-bls12-381
-cargo build
+./build_deps.sh
+opam install . -y
 ```
 
-Then copy `target/debug/librustc_bls12_381.a` in `${OPAM_SWITCH_PREFIX}/lib/librustc-bls12-381`:
-```
-cp /tmp/rustc-bls12-381/target/debug/librustc_bls12_381.a ${OPAM_SWITCH_PREFIX}/lib/librustc-bls12-381
-```
-
-3. build
-
-```
-dune build
-```
-
-4. Play with utop
+3. Play with utop
 
 ```
 opam install utop

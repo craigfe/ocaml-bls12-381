@@ -18,11 +18,8 @@
     - opam depext -i -y zarith
     - opam install --deps-only --with-test -y .
     # Install the static library from rustc
-    - git clone https://gitlab.com/dannywillems/rustc-bls12-381 /tmp/rustc-bls12-381
-    - cd /tmp/rustc-bls12-381
-    - cargo build --release
-    - mkdir -p ${OPAM_SWITCH_PREFIX}/lib/librustc-bls12-381
-    - cp target/release/librustc_bls12_381.a ${OPAM_SWITCH_PREFIX}/lib/librustc-bls12-381/librustc_bls12_381.a
+    - ./build_deps.sh
+    # Install the package
     - opam install .
     # Run test
     - opam install alcotest

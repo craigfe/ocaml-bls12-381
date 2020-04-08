@@ -10,6 +10,7 @@ license: "MIT"
 depends: [
   "conf-rust" {build}
   "dune" {build & >= "1.7"}
+  "dune-configurator" {build}
   "zarith" {build & = "1.9.1"}
 ]
 build: [[ "dune" "build" "-j" jobs "-p" name "@install" ]]
