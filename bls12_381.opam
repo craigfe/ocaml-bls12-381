@@ -1,5 +1,5 @@
 opam-version: "2.0"
-name: "ocaml-bls12-381"
+name: "bls12-381"
 authors: [ "Danny Willems <be.danny.willems@gmail.com>" ]
 maintainer: [ "Danny Willems <be.danny.willems@gmail.com>" ]
 synopsis: "OCaml binding for bls12-381 from librustzcash"
@@ -9,12 +9,8 @@ bug-reports: "https://gitlab.com/dannywillems/ocaml-bls12-381/issues"
 license: "MIT"
 depends: [
   "conf-rust" {build}
-  "dune" {build & >= "1.7" & < "2.0.0" }
+  "dune" {build & >= "1.7"}
   "zarith" {build & = "1.9.1"}
-  # "bisect_ppx" {dev & >= "2.0.0"}
 ]
 build: [[ "dune" "build" "-j" jobs "-p" name "@install" ]]
-# pin-depends: [
-#   ["bisect_ppx.git" "git+https://github.com/aantron/bisect_ppx.git"]
-# ]
 run-test: [[ "dune" "runtest" "-p" name "-j" jobs ]]
