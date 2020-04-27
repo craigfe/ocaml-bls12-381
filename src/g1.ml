@@ -1,10 +1,8 @@
-external ml_bls12_381_g1_uncompressed_check_bytes :
-  Bytes.t -> bool
+external ml_bls12_381_g1_uncompressed_check_bytes : Bytes.t -> bool
   = "ml_librustc_bls12_381_g1_uncompressed_check_bytes"
   [@@noalloc]
 
-external ml_bls12_381_g1_compressed_check_bytes :
-  Bytes.t -> bool
+external ml_bls12_381_g1_compressed_check_bytes : Bytes.t -> bool
   = "ml_librustc_bls12_381_g1_compressed_check_bytes"
   [@@noalloc]
 
@@ -18,38 +16,31 @@ external ml_bls12_381_g1_uncompressed_of_compressed :
   = "ml_librustc_bls12_381_g1_uncompressed_of_compressed"
   [@@noalloc]
 
-external ml_bls12_381_g1_random :
-  Bytes.t -> unit
+external ml_bls12_381_g1_random : Bytes.t -> unit
   = "ml_librustc_bls12_381_g1_random"
   [@@noalloc]
 
-external ml_bls12_381_g1_add :
-  Bytes.t -> Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_g1_add : Bytes.t -> Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_g1_add"
   [@@noalloc]
 
-external ml_bls12_381_g1_negate :
-  Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_g1_negate : Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_g1_negate"
   [@@noalloc]
 
-external ml_bls12_381_g1_eq :
-  Bytes.t -> Bytes.t -> bool
+external ml_bls12_381_g1_eq : Bytes.t -> Bytes.t -> bool
   = "ml_librustc_bls12_381_g1_eq"
   [@@noalloc]
 
-external ml_bls12_381_g1_is_zero :
-  Bytes.t -> bool
+external ml_bls12_381_g1_is_zero : Bytes.t -> bool
   = "ml_librustc_bls12_381_g1_is_zero"
   [@@noalloc]
 
-external ml_bls12_381_g1_mul :
-  Bytes.t -> Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_g1_mul : Bytes.t -> Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_g1_mul"
   [@@noalloc]
 
-external ml_bls12_381_g1_zero :
-  Bytes.t -> unit
+external ml_bls12_381_g1_zero : Bytes.t -> unit
   = "ml_librustc_bls12_381_g1_zero"
   [@@noalloc]
 
@@ -57,43 +48,35 @@ external ml_bls12_381_g1_one : Bytes.t -> unit = "ml_librustc_bls12_381_g1_one"
   [@@noalloc]
 
 (* ---------------- G1 Compressed ------------ *)
-external ml_bls12_381_g1_compressed_add :
-  Bytes.t -> Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_g1_compressed_add : Bytes.t -> Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_g1_compressed_add"
   [@@noalloc]
 
-external ml_bls12_381_g1_compressed_negate :
-  Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_g1_compressed_negate : Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_g1_compressed_negate"
   [@@noalloc]
 
-external ml_bls12_381_g1_compressed_eq :
-  Bytes.t -> Bytes.t -> bool
+external ml_bls12_381_g1_compressed_eq : Bytes.t -> Bytes.t -> bool
   = "ml_librustc_bls12_381_g1_compressed_eq"
   [@@noalloc]
 
-external ml_bls12_381_g1_compressed_is_zero :
-  Bytes.t -> bool
+external ml_bls12_381_g1_compressed_is_zero : Bytes.t -> bool
   = "ml_librustc_bls12_381_g1_compressed_is_zero"
   [@@noalloc]
 
-external ml_bls12_381_g1_compressed_mul :
-  Bytes.t -> Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_g1_compressed_mul : Bytes.t -> Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_g1_compressed_mul"
   [@@noalloc]
 
-external ml_bls12_381_g1_compressed_zero :
-  Bytes.t -> unit
+external ml_bls12_381_g1_compressed_zero : Bytes.t -> unit
   = "ml_librustc_bls12_381_g1_compressed_zero"
   [@@noalloc]
 
-external ml_bls12_381_g1_compressed_one :
-  Bytes.t -> unit
+external ml_bls12_381_g1_compressed_one : Bytes.t -> unit
   = "ml_librustc_bls12_381_g1_compressed_one"
   [@@noalloc]
 
-external ml_bls12_381_g1_compressed_random :
-  Bytes.t -> unit
+external ml_bls12_381_g1_compressed_random : Bytes.t -> unit
   = "ml_librustc_bls12_381_g1_compressed_random"
   [@@noalloc]
 

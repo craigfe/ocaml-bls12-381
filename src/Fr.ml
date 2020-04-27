@@ -1,69 +1,56 @@
 (** External definition, must use `Bytes.t` to represent the field elements *)
-external ml_bls12_381_fr_check_bytes :
-  Bytes.t -> bool
+external ml_bls12_381_fr_check_bytes : Bytes.t -> bool
   = "ml_librustc_bls12_381_fr_check_bytes"
   [@@noalloc]
 
-external ml_bls12_381_fr_is_zero :
-  Bytes.t -> bool
+external ml_bls12_381_fr_is_zero : Bytes.t -> bool
   = "ml_librustc_bls12_381_fr_is_zero"
   [@@noalloc]
 
-external ml_bls12_381_fr_is_one :
-  Bytes.t -> bool
+external ml_bls12_381_fr_is_one : Bytes.t -> bool
   = "ml_librustc_bls12_381_fr_is_one"
   [@@noalloc]
 
-external ml_bls12_381_fr_zero :
-  Bytes.t -> unit
+external ml_bls12_381_fr_zero : Bytes.t -> unit
   = "ml_librustc_bls12_381_fr_zero"
   [@@noalloc]
 
 external ml_bls12_381_fr_one : Bytes.t -> unit = "ml_librustc_bls12_381_fr_one"
   [@@noalloc]
 
-external ml_bls12_381_fr_random :
-  Bytes.t -> unit
+external ml_bls12_381_fr_random : Bytes.t -> unit
   = "ml_librustc_bls12_381_fr_random"
   [@@noalloc]
 
-external ml_bls12_381_fr_add :
-  Bytes.t -> Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_fr_add : Bytes.t -> Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_fr_add"
   [@@noalloc]
 
-external ml_bls12_381_fr_mul :
-  Bytes.t -> Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_fr_mul : Bytes.t -> Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_fr_mul"
   [@@noalloc]
 
-external ml_bls12_381_fr_unsafe_inverse :
-  Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_fr_unsafe_inverse : Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_fr_unsafe_inverse"
   [@@noalloc]
 
-external ml_bls12_381_fr_negate :
-  Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_fr_negate : Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_fr_negate"
   [@@noalloc]
 
-external ml_bls12_381_fr_square :
-  Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_fr_square : Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_fr_square"
   [@@noalloc]
 
-external ml_bls12_381_fr_double :
-  Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_fr_double : Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_fr_double"
   [@@noalloc]
 
-external ml_bls12_381_fr_pow :
-  Bytes.t -> Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_fr_pow : Bytes.t -> Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_fr_pow"
   [@@noalloc]
 
-external ml_bls12_381_fr_eq :
-  Bytes.t -> Bytes.t -> bool
+external ml_bls12_381_fr_eq : Bytes.t -> Bytes.t -> bool
   = "ml_librustc_bls12_381_fr_eq"
   [@@noalloc]
 

@@ -1,70 +1,56 @@
-external ml_bls12_381_fq12_check_bytes :
-  Bytes.t -> bool
+external ml_bls12_381_fq12_check_bytes : Bytes.t -> bool
   = "ml_librustc_bls12_381_fq12_check_bytes"
   [@@noalloc]
 
-external ml_bls12_381_fq12_is_zero :
-  Bytes.t -> bool
+external ml_bls12_381_fq12_is_zero : Bytes.t -> bool
   = "ml_librustc_bls12_381_fq12_is_zero"
   [@@noalloc]
 
-external ml_bls12_381_fq12_is_one :
-  Bytes.t -> bool
+external ml_bls12_381_fq12_is_one : Bytes.t -> bool
   = "ml_librustc_bls12_381_fq12_is_one"
   [@@noalloc]
 
-external ml_bls12_381_fq12_random :
-  Bytes.t -> unit
+external ml_bls12_381_fq12_random : Bytes.t -> unit
   = "ml_librustc_bls12_381_fq12_random"
   [@@noalloc]
 
-external ml_bls12_381_fq12_one :
-  Bytes.t -> unit
+external ml_bls12_381_fq12_one : Bytes.t -> unit
   = "ml_librustc_bls12_381_fq12_one"
   [@@noalloc]
 
-external ml_bls12_381_fq12_zero :
-  Bytes.t -> unit
+external ml_bls12_381_fq12_zero : Bytes.t -> unit
   = "ml_librustc_bls12_381_fq12_zero"
   [@@noalloc]
 
-external ml_bls12_381_fq12_add :
-  Bytes.t -> Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_fq12_add : Bytes.t -> Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_fq12_add"
   [@@noalloc]
 
-external ml_bls12_381_fq12_mul :
-  Bytes.t -> Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_fq12_mul : Bytes.t -> Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_fq12_mul"
   [@@noalloc]
 
-external ml_bls12_381_fq12_unsafe_inverse :
-  Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_fq12_unsafe_inverse : Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_fq12_unsafe_inverse"
   [@@noalloc]
 
-external ml_bls12_381_fq12_eq :
-  Bytes.t -> Bytes.t -> bool
+external ml_bls12_381_fq12_eq : Bytes.t -> Bytes.t -> bool
   = "ml_librustc_bls12_381_fq12_eq"
   [@@noalloc]
 
-external ml_bls12_381_fq12_negate :
-  Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_fq12_negate : Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_fq12_negate"
   [@@noalloc]
 
-external ml_bls12_381_fq12_square :
-  Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_fq12_square : Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_fq12_square"
   [@@noalloc]
 
-external ml_bls12_381_fq12_double :
-  Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_fq12_double : Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_fq12_double"
   [@@noalloc]
 
-external ml_bls12_381_fq12_pow :
-  Bytes.t -> Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_fq12_pow : Bytes.t -> Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_fq12_pow"
   [@@noalloc]
 

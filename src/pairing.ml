@@ -70,8 +70,7 @@ external ml_bls12_381_pairing_miller_loop_6 :
   [@@noalloc]
 
 (** External definition, must use `Bytes.t` to represent the field elements *)
-external ml_bls12_381_pairing :
-  Bytes.t -> Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_pairing : Bytes.t -> Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_pairing"
   [@@noalloc]
 
