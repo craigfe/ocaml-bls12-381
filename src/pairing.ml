@@ -70,7 +70,8 @@ external ml_bls12_381_pairing_miller_loop_6 :
   [@@noalloc]
 
 (** External definition, must use `Bytes.t` to represent the field elements *)
-external ml_bls12_381_pairing : Bytes.t -> Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_pairing :
+  Bytes.t -> Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_pairing"
   [@@noalloc]
 
@@ -118,8 +119,10 @@ struct
     let rec f acc xs =
       let buffer = GT.empty () in
       match xs with
-      | [] -> acc
-      | [(g1, g2)] -> GT.mul (miller_loop_simple g1 g2) acc
+      | [] ->
+          acc
+      | [(g1, g2)] ->
+          GT.mul (miller_loop_simple g1 g2) acc
       | [(g1_1, g2_1); (g1_2, g2_2)] ->
           ml_bls12_381_pairing_miller_loop_2
             (GT.to_bytes buffer)
@@ -167,8 +170,8 @@ struct
           GT.mul buffer acc
       | (g1_1, g2_1)
         :: (g1_2, g2_2)
-           :: (g1_3, g2_3) :: (g1_4, g2_4) :: (g1_5, g2_5) :: (g1_6, g2_6) :: xs
-        ->
+           :: (g1_3, g2_3)
+              :: (g1_4, g2_4) :: (g1_5, g2_5) :: (g1_6, g2_6) :: xs ->
           ml_bls12_381_pairing_miller_loop_6
             (GT.to_bytes buffer)
             (G1.to_bytes g1_1)

@@ -25,8 +25,8 @@
     - opam install alcotest
     - cd ${CI_PROJECT_DIR}
     - dune runtest
-    # Lint
-    - opam install ocamlformat
+    # Lint. Use same version than Tezos
+    - opam install ocamlformat.0.10
     - ocamlformat --check src/*.ml*
     - ocamlformat --check test/*.ml*
     - ocamlformat --check benchmark/*.ml*

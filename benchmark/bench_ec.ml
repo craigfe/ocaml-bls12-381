@@ -53,7 +53,8 @@ module ECBenchmark (G : Bls12_381.Elliptic_curve_sig.T) = struct
   let compute_mul_on_pregenerated_random_element_and_scalar () =
     ignore @@ G.mul g1 scalar
 
-  let compute_opposite_of_pregenerated_random_element () = ignore @@ G.negate g1
+  let compute_opposite_of_pregenerated_random_element () =
+    ignore @@ G.negate g1
 
   let compute_opposite_of_zero () = ignore @@ G.negate zero
 
@@ -88,7 +89,8 @@ module ECBenchmark (G : Bls12_381.Elliptic_curve_sig.T) = struct
           (Printf.sprintf "%s check is_on_curve on pregenerated one" ec_name)
         check_is_on_curve_on_pregenerated_one_element;
       Bench.Test.create
-        ~name:(Printf.sprintf "%s check if zero on pregenerated random" ec_name)
+        ~name:
+          (Printf.sprintf "%s check if zero on pregenerated random" ec_name)
         check_is_zero_on_pregenerated_random;
       Bench.Test.create
         ~name:(Printf.sprintf "%s check if zero on pregenerated one" ec_name)
@@ -111,8 +113,7 @@ module ECBenchmark (G : Bls12_381.Elliptic_curve_sig.T) = struct
       Bench.Test.create
         ~name:
           (Printf.sprintf
-             "%s compute scalar multiplication on pregenerated random element \
-              and scalar"
+             "%s compute scalar multiplication on pregenerated random element and scalar"
              ec_name)
         compute_mul_on_pregenerated_random_element_and_scalar;
       Bench.Test.create

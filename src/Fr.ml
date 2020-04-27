@@ -1,52 +1,69 @@
 (** External definition, must use `Bytes.t` to represent the field elements *)
-external ml_bls12_381_fr_check_bytes : Bytes.t -> bool
+external ml_bls12_381_fr_check_bytes :
+  Bytes.t -> bool
   = "ml_librustc_bls12_381_fr_check_bytes"
   [@@noalloc]
 
-external ml_bls12_381_fr_is_zero : Bytes.t -> bool
+external ml_bls12_381_fr_is_zero :
+  Bytes.t -> bool
   = "ml_librustc_bls12_381_fr_is_zero"
   [@@noalloc]
 
-external ml_bls12_381_fr_is_one : Bytes.t -> bool
+external ml_bls12_381_fr_is_one :
+  Bytes.t -> bool
   = "ml_librustc_bls12_381_fr_is_one"
   [@@noalloc]
 
-external ml_bls12_381_fr_zero : Bytes.t -> unit
+external ml_bls12_381_fr_zero :
+  Bytes.t -> unit
   = "ml_librustc_bls12_381_fr_zero"
   [@@noalloc]
 
 external ml_bls12_381_fr_one : Bytes.t -> unit = "ml_librustc_bls12_381_fr_one"
   [@@noalloc]
 
-external ml_bls12_381_fr_random : Bytes.t -> unit
+external ml_bls12_381_fr_random :
+  Bytes.t -> unit
   = "ml_librustc_bls12_381_fr_random"
   [@@noalloc]
 
-external ml_bls12_381_fr_add : Bytes.t -> Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_fr_add :
+  Bytes.t -> Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_fr_add"
   [@@noalloc]
 
-external ml_bls12_381_fr_mul : Bytes.t -> Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_fr_mul :
+  Bytes.t -> Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_fr_mul"
   [@@noalloc]
 
-external ml_bls12_381_fr_unsafe_inverse : Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_fr_unsafe_inverse :
+  Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_fr_unsafe_inverse"
   [@@noalloc]
 
-external ml_bls12_381_fr_negate : Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_fr_negate :
+  Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_fr_negate"
   [@@noalloc]
 
-external ml_bls12_381_fr_square : Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_fr_square :
+  Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_fr_square"
   [@@noalloc]
 
-external ml_bls12_381_fr_double : Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_fr_double :
+  Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_fr_double"
   [@@noalloc]
 
-external ml_bls12_381_fr_eq : Bytes.t -> Bytes.t -> bool
+external ml_bls12_381_fr_pow :
+  Bytes.t -> Bytes.t -> Bytes.t -> unit
+  = "ml_librustc_bls12_381_fr_pow"
+  [@@noalloc]
+
+external ml_bls12_381_fr_eq :
+  Bytes.t -> Bytes.t -> bool
   = "ml_librustc_bls12_381_fr_eq"
   [@@noalloc]
 
@@ -80,32 +97,27 @@ let is_one g =
 
 let zero () =
   let g = Bytes.create size in
-  ml_bls12_381_fr_zero g ;
-  of_bytes g
+  ml_bls12_381_fr_zero g ; of_bytes g
 
 let one () =
   let g = Bytes.create size in
-  ml_bls12_381_fr_one g ;
-  of_bytes g
+  ml_bls12_381_fr_one g ; of_bytes g
 
 let random () =
   let g = Bytes.create size in
-  ml_bls12_381_fr_random g ;
-  of_bytes g
+  ml_bls12_381_fr_random g ; of_bytes g
 
 let add x y =
   assert (Bytes.length x = size) ;
   assert (Bytes.length y = size) ;
   let g = Bytes.create size in
-  ml_bls12_381_fr_add g x y ;
-  of_bytes g
+  ml_bls12_381_fr_add g x y ; of_bytes g
 
 let mul x y =
   assert (Bytes.length x = size) ;
   assert (Bytes.length y = size) ;
   let g = Bytes.create size in
-  ml_bls12_381_fr_mul g x y ;
-  of_bytes g
+  ml_bls12_381_fr_mul g x y ; of_bytes g
 
 let inverse g =
   assert (Bytes.length g = size) ;
@@ -148,25 +160,24 @@ let to_string a = Z.to_string (Z.of_bits (Bytes.to_string a))
 
 let to_z a = Z.of_bits (Bytes.to_string a)
 
-let two_z = Z.succ Z.one
-
-let rec pow g n =
-  if Z.equal n Z.zero then one ()
-  else if Z.equal n Z.one then g
+let pow x n =
+  if is_zero x then x
   else
-    let (a, r) = Z.div_rem n two_z in
-    let acc = pow g a in
-    let acc_square = mul acc acc in
-    if Z.equal r Z.zero then acc_square else mul acc_square g
+    let res = empty () in
+    let n = Z.rem n (Z.pred order) in
+    let n_bytes = Bytes.make size (char_of_int 0) in
+    (* sign is removed by to_bits, but that's fine because we used mod before *)
+    let n = Bytes.of_string (Z.to_bits n) in
+    Bytes.blit n 0 n_bytes 0 (Bytes.length n) ;
+    ml_bls12_381_fr_pow res (to_bytes x) n_bytes ;
+    res
 
 let of_string s =
   let g = empty () in
   let s = Bytes.of_string s in
-  Bytes.blit s 0 g 0 size ;
-  of_bytes s
+  Bytes.blit s 0 g 0 size ; of_bytes s
 
 let of_z z =
   let z = Bytes.of_string (Z.to_bits z) in
   let x = empty () in
-  Bytes.blit z 0 x 0 size ;
-  x
+  Bytes.blit z 0 x 0 size ; x

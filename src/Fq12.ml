@@ -1,53 +1,71 @@
-external ml_bls12_381_fq12_check_bytes : Bytes.t -> bool
+external ml_bls12_381_fq12_check_bytes :
+  Bytes.t -> bool
   = "ml_librustc_bls12_381_fq12_check_bytes"
   [@@noalloc]
 
-external ml_bls12_381_fq12_is_zero : Bytes.t -> bool
+external ml_bls12_381_fq12_is_zero :
+  Bytes.t -> bool
   = "ml_librustc_bls12_381_fq12_is_zero"
   [@@noalloc]
 
-external ml_bls12_381_fq12_is_one : Bytes.t -> bool
+external ml_bls12_381_fq12_is_one :
+  Bytes.t -> bool
   = "ml_librustc_bls12_381_fq12_is_one"
   [@@noalloc]
 
-external ml_bls12_381_fq12_random : Bytes.t -> unit
+external ml_bls12_381_fq12_random :
+  Bytes.t -> unit
   = "ml_librustc_bls12_381_fq12_random"
   [@@noalloc]
 
-external ml_bls12_381_fq12_one : Bytes.t -> unit
+external ml_bls12_381_fq12_one :
+  Bytes.t -> unit
   = "ml_librustc_bls12_381_fq12_one"
   [@@noalloc]
 
-external ml_bls12_381_fq12_zero : Bytes.t -> unit
+external ml_bls12_381_fq12_zero :
+  Bytes.t -> unit
   = "ml_librustc_bls12_381_fq12_zero"
   [@@noalloc]
 
-external ml_bls12_381_fq12_add : Bytes.t -> Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_fq12_add :
+  Bytes.t -> Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_fq12_add"
   [@@noalloc]
 
-external ml_bls12_381_fq12_mul : Bytes.t -> Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_fq12_mul :
+  Bytes.t -> Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_fq12_mul"
   [@@noalloc]
 
-external ml_bls12_381_fq12_unsafe_inverse : Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_fq12_unsafe_inverse :
+  Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_fq12_unsafe_inverse"
   [@@noalloc]
 
-external ml_bls12_381_fq12_eq : Bytes.t -> Bytes.t -> bool
+external ml_bls12_381_fq12_eq :
+  Bytes.t -> Bytes.t -> bool
   = "ml_librustc_bls12_381_fq12_eq"
   [@@noalloc]
 
-external ml_bls12_381_fq12_negate : Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_fq12_negate :
+  Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_fq12_negate"
   [@@noalloc]
 
-external ml_bls12_381_fq12_square : Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_fq12_square :
+  Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_fq12_square"
   [@@noalloc]
 
-external ml_bls12_381_fq12_double : Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_fq12_double :
+  Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_fq12_double"
+  [@@noalloc]
+
+external ml_bls12_381_fq12_pow :
+  Bytes.t -> Bytes.t -> Bytes.t -> unit
+  = "ml_librustc_bls12_381_fq12_pow"
   [@@noalloc]
 
 let size = 576
@@ -74,13 +92,11 @@ let to_bytes s = s
 
 let zero () =
   let g = Bytes.create size in
-  ml_bls12_381_fq12_zero g ;
-  g
+  ml_bls12_381_fq12_zero g ; g
 
 let one () =
   let g = Bytes.create size in
-  ml_bls12_381_fq12_one g ;
-  g
+  ml_bls12_381_fq12_one g ; g
 
 let is_zero g = ml_bls12_381_fq12_is_zero g
 
@@ -88,8 +104,7 @@ let is_one g = ml_bls12_381_fq12_is_one g
 
 let random () =
   let g = Bytes.create size in
-  ml_bls12_381_fq12_random g ;
-  g
+  ml_bls12_381_fq12_random g ; g
 
 let add g1 g2 =
   assert (Bytes.length g1 = size) ;
@@ -141,16 +156,17 @@ let inverse_opt g =
     ml_bls12_381_fq12_unsafe_inverse inverse_buffer g ;
     Some inverse_buffer
 
-let two_z = Z.succ Z.one
-
-let rec pow g n =
-  if Z.equal n Z.zero then one ()
-  else if Z.equal n Z.one then g
+let pow x n =
+  if is_zero x then x
   else
-    let (a, r) = Z.div_rem n two_z in
-    let acc = pow g a in
-    let acc_square = mul acc acc in
-    if Z.equal r Z.zero then acc_square else mul acc_square g
+    let res = empty () in
+    let n = Z.rem n (Z.pred order) in
+    let n_bytes = Bytes.make size (char_of_int 0) in
+    (* sign is removed by to_bits, but that's fine because we used mod before *)
+    let n = Bytes.of_string (Z.to_bits n) in
+    Bytes.blit n 0 n_bytes 0 (Bytes.length n) ;
+    ml_bls12_381_fq12_pow res (to_bytes x) n_bytes ;
+    res
 
 let unsafe_of_z x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 =
   let x0 = Bytes.of_string (Z.to_bits x0) in
