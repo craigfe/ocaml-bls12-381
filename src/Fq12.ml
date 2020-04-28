@@ -143,16 +143,17 @@ let inverse_opt g =
     Some inverse_buffer
 
 let pow x n =
-  if is_zero x then x
-  else
-    let res = empty () in
-    let n = Z.rem n (Z.pred order) in
-    let n_bytes = Bytes.make size (char_of_int 0) in
-    (* sign is removed by to_bits, but that's fine because we used mod before *)
-    let n = Bytes.of_string (Z.to_bits n) in
-    Bytes.blit n 0 n_bytes 0 (Bytes.length n) ;
-    ml_bls12_381_fq12_pow res (to_bytes x) n_bytes ;
-    res
+  let res = empty () in
+  let n = Z.erem n (Z.pred order) in
+  (* sign is removed by to_bits, but that's fine because we used mod before *)
+  let n = Bytes.of_string (Z.to_bits n) in
+  let bytes_size_n = Bytes.length n in
+  let padded_n =
+    Bytes.init size (fun i ->
+        if i < bytes_size_n then Bytes.get n i else char_of_int 0)
+  in
+  ml_bls12_381_fq12_pow res (to_bytes x) padded_n ;
+  res
 
 let unsafe_of_z x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 =
   let x0 = Bytes.of_string (Z.to_bits x0) in

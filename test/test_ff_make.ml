@@ -236,6 +236,21 @@ module MakeFieldProperties (FiniteField : Bls12_381.Ff_sig.T) = struct
         (FiniteField.mul (FiniteField.mul g1 g2) g3)
         (FiniteField.mul (FiniteField.mul g2 g3) g1) )
 
+  (** 0**0 = 1 *)
+  let pow_zero_to_zero_is_one () =
+    assert (
+      FiniteField.eq
+        (FiniteField.pow (FiniteField.zero ()) Z.zero)
+        (FiniteField.one ()) )
+
+  (** 0 ** n = 0, n != 0 *)
+  let pow_zero_to_non_null_exponent_is_zero () =
+    let n = Z.of_int (Random.int 1_000_000_000) in
+    assert (
+      FiniteField.eq
+        (FiniteField.pow (FiniteField.zero ()) n)
+        (FiniteField.zero ()) )
+
   let pow_zero_on_random_equals_one () =
     let r = FiniteField.random () in
     assert (FiniteField.eq (FiniteField.pow r Z.zero) (FiniteField.one ()))
@@ -253,6 +268,15 @@ module MakeFieldProperties (FiniteField : Bls12_381.Ff_sig.T) = struct
     assert (
       FiniteField.eq (FiniteField.pow e (Z.succ Z.one)) (FiniteField.square e)
     )
+
+  (** x**(-n) = x**(g - 1 - n) where g is the order of the additive group *)
+  let pow_to_negative_exponent () =
+    let x = FiniteField.random () in
+    let n = Z.of_int (Random.int 1_000_000_000) in
+    assert (
+      FiniteField.eq
+        (FiniteField.pow x (Z.neg n))
+        (FiniteField.pow x (Z.sub (Z.pred FiniteField.order) n)) )
 
   let pow_addition_property () =
     let g = FiniteField.random () in
@@ -354,6 +378,18 @@ module MakeFieldProperties (FiniteField : Bls12_381.Ff_sig.T) = struct
           "pow element to a random power plus the additive group order"
           `Quick
           (repeat 1000 pow_add_multiplicative_group_order_to_a_random_power);
+        test_case
+          "pow zero to zero is one"
+          `Quick
+          (repeat 1 pow_zero_to_zero_is_one);
+        test_case
+          "pow zero to non null exponent is zero"
+          `Quick
+          (repeat 1000 pow_zero_to_non_null_exponent_is_zero);
+        test_case
+          "pow to negative exponent"
+          `Quick
+          (repeat 1000 pow_to_negative_exponent);
         test_case
           "pow addition property"
           `Quick
