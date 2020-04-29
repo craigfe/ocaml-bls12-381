@@ -41,13 +41,11 @@ let () =
            compute_miller_loop_on_pregenerated_random_elements;
          Bench.Test.create
            ~name:
-             "Miller loop on three pregenerated couples of uncompressed random \
-              elements"
+             "Miller loop on three pregenerated couples of uncompressed random elements"
            compute_miller_loop_on_three_pregenerated_couple_of_uncompressed_random_elements;
          Bench.Test.create
            ~name:
-             "Miller loop on three pregenerated couples of uncompressed random \
-              elements followed by final exponentiation"
+             "Miller loop on three pregenerated couples of uncompressed random elements followed by final exponentiation"
            compute_miller_loop_on_three_pregenerated_couple_of_uncompressed_random_elements_followed_by_final_exponentiation;
          Bench.Test.create
            ~name:"Final exponentiation on pregenerated random element"

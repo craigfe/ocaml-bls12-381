@@ -6,11 +6,13 @@ external ml_bls12_381_g2_compressed_check_bytes : Bytes.t -> bool
   = "ml_librustc_bls12_381_g2_compressed_check_bytes"
   [@@noalloc]
 
-external ml_bls12_381_g2_compressed_of_uncompressed : Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_g2_compressed_of_uncompressed :
+  Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_g2_compressed_of_uncompressed"
   [@@noalloc]
 
-external ml_bls12_381_g2_uncompressed_of_compressed : Bytes.t -> Bytes.t -> unit
+external ml_bls12_381_g2_uncompressed_of_compressed :
+  Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_g2_uncompressed_of_compressed"
   [@@noalloc]
 
@@ -114,18 +116,15 @@ module Uncompressed = struct
 
   let zero () =
     let g = empty () in
-    ml_bls12_381_g2_zero g ;
-    of_bytes g
+    ml_bls12_381_g2_zero g ; of_bytes g
 
   let one () =
     let g = empty () in
-    ml_bls12_381_g2_one g ;
-    of_bytes g
+    ml_bls12_381_g2_one g ; of_bytes g
 
   let random () =
     let g = empty () in
-    ml_bls12_381_g2_random g ;
-    of_bytes g
+    ml_bls12_381_g2_random g ; of_bytes g
 
   let add g1 g2 =
     assert (Bytes.length g1 = size) ;

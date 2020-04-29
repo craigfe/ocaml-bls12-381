@@ -167,8 +167,7 @@ let () =
             `Quick
             (repeat 10 test_vectors_one_one);
           test_case
-            "test result pairing with miller loop simple followed by final \
-             exponentiation"
+            "test result pairing with miller loop simple followed by final exponentiation"
             `Quick
             (repeat
                10

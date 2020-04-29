@@ -46,6 +46,10 @@ external ml_bls12_381_fr_double : Bytes.t -> Bytes.t -> unit
   = "ml_librustc_bls12_381_fr_double"
   [@@noalloc]
 
+external ml_bls12_381_fr_pow : Bytes.t -> Bytes.t -> Bytes.t -> unit
+  = "ml_librustc_bls12_381_fr_pow"
+  [@@noalloc]
+
 external ml_bls12_381_fr_eq : Bytes.t -> Bytes.t -> bool
   = "ml_librustc_bls12_381_fr_eq"
   [@@noalloc]
@@ -80,32 +84,27 @@ let is_one g =
 
 let zero () =
   let g = Bytes.create size in
-  ml_bls12_381_fr_zero g ;
-  of_bytes g
+  ml_bls12_381_fr_zero g ; of_bytes g
 
 let one () =
   let g = Bytes.create size in
-  ml_bls12_381_fr_one g ;
-  of_bytes g
+  ml_bls12_381_fr_one g ; of_bytes g
 
 let random () =
   let g = Bytes.create size in
-  ml_bls12_381_fr_random g ;
-  of_bytes g
+  ml_bls12_381_fr_random g ; of_bytes g
 
 let add x y =
   assert (Bytes.length x = size) ;
   assert (Bytes.length y = size) ;
   let g = Bytes.create size in
-  ml_bls12_381_fr_add g x y ;
-  of_bytes g
+  ml_bls12_381_fr_add g x y ; of_bytes g
 
 let mul x y =
   assert (Bytes.length x = size) ;
   assert (Bytes.length y = size) ;
   let g = Bytes.create size in
-  ml_bls12_381_fr_mul g x y ;
-  of_bytes g
+  ml_bls12_381_fr_mul g x y ; of_bytes g
 
 let inverse g =
   assert (Bytes.length g = size) ;
@@ -148,25 +147,25 @@ let to_string a = Z.to_string (Z.of_bits (Bytes.to_string a))
 
 let to_z a = Z.of_bits (Bytes.to_string a)
 
-let two_z = Z.succ Z.one
-
-let rec pow g n =
-  if Z.equal n Z.zero then one ()
-  else if Z.equal n Z.one then g
-  else
-    let (a, r) = Z.div_rem n two_z in
-    let acc = pow g a in
-    let acc_square = mul acc acc in
-    if Z.equal r Z.zero then acc_square else mul acc_square g
+let pow x n =
+  let res = empty () in
+  let n = Z.erem n (Z.pred order) in
+  (* sign is removed by to_bits, but that's fine because we used mod before *)
+  let n = Bytes.of_string (Z.to_bits n) in
+  let bytes_size_n = Bytes.length n in
+  let padded_n =
+    Bytes.init size (fun i ->
+        if i < bytes_size_n then Bytes.get n i else char_of_int 0)
+  in
+  ml_bls12_381_fr_pow res (to_bytes x) padded_n ;
+  res
 
 let of_string s =
   let g = empty () in
   let s = Bytes.of_string s in
-  Bytes.blit s 0 g 0 size ;
-  of_bytes s
+  Bytes.blit s 0 g 0 size ; of_bytes s
 
 let of_z z =
   let z = Bytes.of_string (Z.to_bits z) in
   let x = empty () in
-  Bytes.blit z 0 x 0 size ;
-  x
+  Bytes.blit z 0 x 0 size ; x

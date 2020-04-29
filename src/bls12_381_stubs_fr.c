@@ -115,3 +115,14 @@ CAMLprim value ml_librustc_bls12_381_fr_double(value buffer, value x) {
   rustc_bls12_381_fr_double(Bytes_val(buffer), Bytes_val(x));
   CAMLreturn(Val_unit);
 }
+
+
+extern void rustc_bls12_381_fr_pow(unsigned char *buffer,
+                                   const unsigned char *x,
+                                   const unsigned char *n);
+
+CAMLprim value ml_librustc_bls12_381_fr_pow(value buffer, value x, value n) {
+  CAMLparam3(buffer, x, n);
+  rustc_bls12_381_fr_pow(Bytes_val(buffer), Bytes_val(x), Bytes_val(n));
+  CAMLreturn(Val_unit);
+}
