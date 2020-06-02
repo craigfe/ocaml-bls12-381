@@ -8,8 +8,7 @@ function build_rustc_bls12_381 () {
   #directory where this script lives
   local dir_script=$(cd $(dirname $0) && pwd)
 
-  # Tag 0.4.0
-  local commit="0ce98b95e598c9314417c0f30dfa1cb7e2732fb8"
+  local commit="3c45daa1b4afbb8031d99b266866665d581bf421"
   local repository_name="rustc-bls12-381"
   local repository="https://gitlab.com/dannywillems/rustc-bls12-381"
   local install_dir="${OPAM_SWITCH_PREFIX}/lib/librustc-bls12-381"
