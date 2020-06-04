@@ -13,6 +13,8 @@ depends: [
   "dune" {build & >= "1.7"}
   "dune-configurator" {build}
   "zarith" {build & = "1.9.1"}
+  "ctypes" {build & = "0.17.1"}
+  "ctypes-foreign" {build & = "0.4.0"}
   "alcotest" {with-test}
 ]
 build: [[ "dune" "build" "-j" jobs "-p" name "@install" ]]

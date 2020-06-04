@@ -5,7 +5,7 @@
     - sudo apt-get update && sudo apt-get upgrade -y
     - eval $(opam env)
     - opam update
-    - opam depext -i -y conf-rust
+    - opam depext -i -y conf-rust conf-pkg-config conf-libffi
     # Install rustup to manage different Rust versions. -y is required to bypass
     # conf-rust installing cargo globally
     - curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y

@@ -1,58 +1,4 @@
-(** External definition, must use `Bytes.t` to represent the field elements *)
-external ml_bls12_381_fr_check_bytes : Bytes.t -> bool
-  = "ml_librustc_bls12_381_fr_check_bytes"
-  [@@noalloc]
-
-external ml_bls12_381_fr_is_zero : Bytes.t -> bool
-  = "ml_librustc_bls12_381_fr_is_zero"
-  [@@noalloc]
-
-external ml_bls12_381_fr_is_one : Bytes.t -> bool
-  = "ml_librustc_bls12_381_fr_is_one"
-  [@@noalloc]
-
-external ml_bls12_381_fr_zero : Bytes.t -> unit
-  = "ml_librustc_bls12_381_fr_zero"
-  [@@noalloc]
-
-external ml_bls12_381_fr_one : Bytes.t -> unit = "ml_librustc_bls12_381_fr_one"
-  [@@noalloc]
-
-external ml_bls12_381_fr_random : Bytes.t -> unit
-  = "ml_librustc_bls12_381_fr_random"
-  [@@noalloc]
-
-external ml_bls12_381_fr_add : Bytes.t -> Bytes.t -> Bytes.t -> unit
-  = "ml_librustc_bls12_381_fr_add"
-  [@@noalloc]
-
-external ml_bls12_381_fr_mul : Bytes.t -> Bytes.t -> Bytes.t -> unit
-  = "ml_librustc_bls12_381_fr_mul"
-  [@@noalloc]
-
-external ml_bls12_381_fr_unsafe_inverse : Bytes.t -> Bytes.t -> unit
-  = "ml_librustc_bls12_381_fr_unsafe_inverse"
-  [@@noalloc]
-
-external ml_bls12_381_fr_negate : Bytes.t -> Bytes.t -> unit
-  = "ml_librustc_bls12_381_fr_negate"
-  [@@noalloc]
-
-external ml_bls12_381_fr_square : Bytes.t -> Bytes.t -> unit
-  = "ml_librustc_bls12_381_fr_square"
-  [@@noalloc]
-
-external ml_bls12_381_fr_double : Bytes.t -> Bytes.t -> unit
-  = "ml_librustc_bls12_381_fr_double"
-  [@@noalloc]
-
-external ml_bls12_381_fr_pow : Bytes.t -> Bytes.t -> Bytes.t -> unit
-  = "ml_librustc_bls12_381_fr_pow"
-  [@@noalloc]
-
-external ml_bls12_381_fr_eq : Bytes.t -> Bytes.t -> bool
-  = "ml_librustc_bls12_381_fr_eq"
-  [@@noalloc]
+module Fr_stubs = Rustc_bls12_381_bindings.Fr (Rustc_bls12_381_stubs)
 
 (** High level (OCaml) definitions/logic *)
 let size = 32
@@ -66,7 +12,9 @@ type t = Bytes.t
 let empty () = Bytes.create size
 
 let check_bytes bs =
-  if Bytes.length bs = size then ml_bls12_381_fr_check_bytes bs else false
+  if Bytes.length bs = size then
+    Fr_stubs.check_bytes (Ctypes.ocaml_bytes_start bs)
+  else false
 
 let of_bytes_opt bs = if check_bytes bs then Some bs else None
 
@@ -76,40 +24,53 @@ let to_bytes g = g
 
 let is_zero g =
   assert (Bytes.length g = size) ;
-  ml_bls12_381_fr_is_zero g
+  Fr_stubs.is_zero (Ctypes.ocaml_bytes_start g)
 
 let is_one g =
   assert (Bytes.length g = size) ;
-  ml_bls12_381_fr_is_one g
+  Fr_stubs.is_one (Ctypes.ocaml_bytes_start g)
 
 let zero () =
   let g = Bytes.create size in
-  ml_bls12_381_fr_zero g ; of_bytes g
+  Fr_stubs.zero (Ctypes.ocaml_bytes_start g) ;
+  of_bytes g
 
 let one () =
   let g = Bytes.create size in
-  ml_bls12_381_fr_one g ; of_bytes g
+  Fr_stubs.one (Ctypes.ocaml_bytes_start g) ;
+  of_bytes g
 
 let random () =
   let g = Bytes.create size in
-  ml_bls12_381_fr_random g ; of_bytes g
+  Fr_stubs.random (Ctypes.ocaml_bytes_start g) ;
+  of_bytes g
 
 let add x y =
   assert (Bytes.length x = size) ;
   assert (Bytes.length y = size) ;
   let g = Bytes.create size in
-  ml_bls12_381_fr_add g x y ; of_bytes g
+  Fr_stubs.add
+    (Ctypes.ocaml_bytes_start g)
+    (Ctypes.ocaml_bytes_start x)
+    (Ctypes.ocaml_bytes_start y) ;
+  of_bytes g
 
 let mul x y =
   assert (Bytes.length x = size) ;
   assert (Bytes.length y = size) ;
   let g = Bytes.create size in
-  ml_bls12_381_fr_mul g x y ; of_bytes g
+  Fr_stubs.mul
+    (Ctypes.ocaml_bytes_start g)
+    (Ctypes.ocaml_bytes_start x)
+    (Ctypes.ocaml_bytes_start y) ;
+  of_bytes g
 
 let inverse g =
   assert (Bytes.length g = size) ;
   let buffer = Bytes.create size in
-  ml_bls12_381_fr_unsafe_inverse buffer g ;
+  Fr_stubs.unsafe_inverse
+    (Ctypes.ocaml_bytes_start buffer)
+    (Ctypes.ocaml_bytes_start g) ;
   of_bytes buffer
 
 let inverse_opt g =
@@ -117,31 +78,39 @@ let inverse_opt g =
   if is_zero g then None
   else
     let buffer = Bytes.create size in
-    ml_bls12_381_fr_unsafe_inverse buffer g ;
+    Fr_stubs.unsafe_inverse
+      (Ctypes.ocaml_bytes_start buffer)
+      (Ctypes.ocaml_bytes_start g) ;
     Some (of_bytes buffer)
 
 let negate g =
   assert (Bytes.length g = size) ;
   let buffer = Bytes.create size in
-  ml_bls12_381_fr_negate buffer g ;
+  Fr_stubs.negate
+    (Ctypes.ocaml_bytes_start buffer)
+    (Ctypes.ocaml_bytes_start g) ;
   of_bytes buffer
 
 let square g =
   assert (Bytes.length g = size) ;
   let buffer = Bytes.create size in
-  ml_bls12_381_fr_square buffer g ;
+  Fr_stubs.square
+    (Ctypes.ocaml_bytes_start buffer)
+    (Ctypes.ocaml_bytes_start g) ;
   of_bytes buffer
 
 let double g =
   assert (Bytes.length g = size) ;
   let buffer = Bytes.create size in
-  ml_bls12_381_fr_double buffer g ;
+  Fr_stubs.double
+    (Ctypes.ocaml_bytes_start buffer)
+    (Ctypes.ocaml_bytes_start g) ;
   of_bytes buffer
 
 let eq x y =
   (* IMPORTANT: DO NOT USE THE BYTES representation because we use 384 bits
      instead of 381 bits. We trust the binding offered by the library *)
-  ml_bls12_381_fr_eq x y
+  Fr_stubs.eq (Ctypes.ocaml_bytes_start x) (Ctypes.ocaml_bytes_start y)
 
 let to_string a = Z.to_string (Z.of_bits (Bytes.to_string a))
 
@@ -157,7 +126,10 @@ let pow x n =
     Bytes.init size (fun i ->
         if i < bytes_size_n then Bytes.get n i else char_of_int 0)
   in
-  ml_bls12_381_fr_pow res (to_bytes x) padded_n ;
+  Fr_stubs.pow
+    (Ctypes.ocaml_bytes_start res)
+    (Ctypes.ocaml_bytes_start (to_bytes x))
+    (Ctypes.ocaml_bytes_start padded_n) ;
   res
 
 let of_string s =
