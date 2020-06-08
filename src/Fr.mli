@@ -9,5 +9,8 @@ val to_z : t -> Z.t
 (** Returns the decimal representation as a string *)
 val to_string : t -> String.t
 
-(** Constructors from the decimal representation of the element *)
+(** Constructor from the decimal representation of the element
+    Undefined behaviours if the given element is not in the field or any other
+    representation than decimal is used. Use this function carefully.
+ *)
 val of_string : String.t -> t
