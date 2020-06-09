@@ -20,7 +20,9 @@ let check_bytes bs =
 
 let of_bytes_opt bs = if check_bytes bs then Some bs else None
 
-let of_bytes g = g
+let of_bytes g =
+  assert (Bytes.length g = size) ;
+  g
 
 let to_bytes s = s
 
