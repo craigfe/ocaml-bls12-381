@@ -137,9 +137,11 @@ let pow x n =
 let of_string s =
   let g = empty () in
   let s = Bytes.of_string (Z.to_bits (Z.erem (Z.of_string s) order)) in
-  Bytes.blit s 0 g 0 size ; of_bytes s
+  Bytes.blit s 0 g 0 (min (Bytes.length s) size) ;
+  of_bytes s
 
 let of_z z =
   let z = Bytes.of_string (Z.to_bits (Z.erem z order)) in
   let x = empty () in
-  Bytes.blit z 0 x 0 size ; x
+  Bytes.blit z 0 x 0 (min (Bytes.length z) size) ;
+  x

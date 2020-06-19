@@ -141,18 +141,18 @@ let of_z x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 =
   let x10 = Bytes.of_string (Z.to_bits x10) in
   let x11 = Bytes.of_string (Z.to_bits x11) in
   let g = empty () in
-  Bytes.blit x0 0 g 0 48 ;
-  Bytes.blit x1 0 g 48 48 ;
-  Bytes.blit x2 0 g 96 48 ;
-  Bytes.blit x3 0 g 144 48 ;
-  Bytes.blit x4 0 g 192 48 ;
-  Bytes.blit x5 0 g 240 48 ;
-  Bytes.blit x6 0 g 288 48 ;
-  Bytes.blit x7 0 g 336 48 ;
-  Bytes.blit x8 0 g 384 48 ;
-  Bytes.blit x9 0 g 432 48 ;
-  Bytes.blit x10 0 g 480 48 ;
-  Bytes.blit x11 0 g 528 48 ;
+  Bytes.blit x0 0 g 0 (min (Bytes.length x0) 48) ;
+  Bytes.blit x1 0 g 48 (min (Bytes.length x1) 48) ;
+  Bytes.blit x2 0 g 96 (min (Bytes.length x2) 48) ;
+  Bytes.blit x3 0 g 144 (min (Bytes.length x3) 48) ;
+  Bytes.blit x4 0 g 192 (min (Bytes.length x4) 48) ;
+  Bytes.blit x5 0 g 240 (min (Bytes.length x5) 48) ;
+  Bytes.blit x6 0 g 288 (min (Bytes.length x6) 48) ;
+  Bytes.blit x7 0 g 336 (min (Bytes.length x7) 48) ;
+  Bytes.blit x8 0 g 384 (min (Bytes.length x8) 48) ;
+  Bytes.blit x9 0 g 432 (min (Bytes.length x9) 48) ;
+  Bytes.blit x10 0 g 480 (min (Bytes.length x10) 48) ;
+  Bytes.blit x11 0 g 528 (min (Bytes.length x11) 48) ;
   of_bytes g
 
 let of_string x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 =
@@ -169,16 +169,16 @@ let of_string x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 =
   let x10 = Bytes.of_string (Z.to_bits (Z.of_string x10)) in
   let x11 = Bytes.of_string (Z.to_bits (Z.of_string x11)) in
   let g = empty () in
-  Bytes.blit x0 0 g 0 48 ;
-  Bytes.blit x1 0 g 48 48 ;
-  Bytes.blit x2 0 g 96 48 ;
-  Bytes.blit x3 0 g 144 48 ;
-  Bytes.blit x4 0 g 192 48 ;
-  Bytes.blit x5 0 g 240 48 ;
-  Bytes.blit x6 0 g 288 48 ;
-  Bytes.blit x7 0 g 336 48 ;
-  Bytes.blit x8 0 g 384 48 ;
-  Bytes.blit x9 0 g 432 48 ;
-  Bytes.blit x10 0 g 480 48 ;
-  Bytes.blit x11 0 g 528 48 ;
+  Bytes.blit x0 0 g 0 (min (Bytes.length x0) 48) ;
+  Bytes.blit x1 0 g 48 (min (Bytes.length x1) 48) ;
+  Bytes.blit x2 0 g 96 (min (Bytes.length x2) 48) ;
+  Bytes.blit x3 0 g 144 (min (Bytes.length x3) 48) ;
+  Bytes.blit x4 0 g 192 (min (Bytes.length x4) 48) ;
+  Bytes.blit x5 0 g 240 (min (Bytes.length x5) 48) ;
+  Bytes.blit x6 0 g 288 (min (Bytes.length x6) 48) ;
+  Bytes.blit x7 0 g 336 (min (Bytes.length x7) 48) ;
+  Bytes.blit x8 0 g 384 (min (Bytes.length x8) 48) ;
+  Bytes.blit x9 0 g 432 (min (Bytes.length x9) 48) ;
+  Bytes.blit x10 0 g 480 (min (Bytes.length x10) 48) ;
+  Bytes.blit x11 0 g 528 (min (Bytes.length x11) 48) ;
   of_bytes g
