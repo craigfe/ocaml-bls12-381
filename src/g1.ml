@@ -92,7 +92,7 @@ module Compressed = struct
 
   module Scalar = Fr
 
-  let empty () = Bytes.init size (fun _ -> char_of_int 0)
+  let empty () = Bytes.make size '\000'
 
   let to_uncompressed (compressed : t) : Uncompressed.t =
     let g = Uncompressed.empty () in
