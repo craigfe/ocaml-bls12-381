@@ -138,7 +138,7 @@ let of_string s =
   let g = empty () in
   let s = Bytes.of_string (Z.to_bits (Z.erem (Z.of_string s) order)) in
   Bytes.blit s 0 g 0 (min (Bytes.length s) size) ;
-  of_bytes s
+  of_bytes g
 
 let of_z z =
   let z = Bytes.of_string (Z.to_bits (Z.erem z order)) in
