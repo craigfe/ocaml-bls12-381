@@ -4,7 +4,7 @@ let size = 576
 
 type t = Bytes.t
 
-let empty () = Bytes.create size
+let empty () = Bytes.init size (fun _ -> char_of_int 0)
 
 let order =
   let fq_order =
@@ -27,12 +27,12 @@ let of_bytes g =
 let to_bytes s = s
 
 let zero () =
-  let g = Bytes.create size in
+  let g = empty () in
   Fq12_stubs.zero (Ctypes.ocaml_bytes_start g) ;
   g
 
 let one () =
-  let g = Bytes.create size in
+  let g = empty () in
   Fq12_stubs.one (Ctypes.ocaml_bytes_start g) ;
   g
 
@@ -41,14 +41,14 @@ let is_zero g = Fq12_stubs.is_zero (Ctypes.ocaml_bytes_start g)
 let is_one g = Fq12_stubs.is_one (Ctypes.ocaml_bytes_start g)
 
 let random () =
-  let g = Bytes.create size in
+  let g = empty () in
   Fq12_stubs.random (Ctypes.ocaml_bytes_start g) ;
   g
 
 let add g1 g2 =
   assert (Bytes.length g1 = size) ;
   assert (Bytes.length g2 = size) ;
-  let g = Bytes.create size in
+  let g = empty () in
   Fq12_stubs.add
     (Ctypes.ocaml_bytes_start g)
     (Ctypes.ocaml_bytes_start g1)
@@ -58,7 +58,7 @@ let add g1 g2 =
 let mul g1 g2 =
   assert (Bytes.length g1 = size) ;
   assert (Bytes.length g2 = size) ;
-  let g = Bytes.create size in
+  let g = empty () in
   Fq12_stubs.mul
     (Ctypes.ocaml_bytes_start g)
     (Ctypes.ocaml_bytes_start g1)
@@ -72,7 +72,7 @@ let eq g1 g2 =
 
 let negate g =
   assert (Bytes.length g = size) ;
-  let opposite_buffer = Bytes.create size in
+  let opposite_buffer = empty () in
   Fq12_stubs.negate
     (Ctypes.ocaml_bytes_start opposite_buffer)
     (Ctypes.ocaml_bytes_start g) ;
@@ -80,7 +80,7 @@ let negate g =
 
 let square g =
   assert (Bytes.length g = size) ;
-  let buffer = Bytes.create size in
+  let buffer = empty () in
   Fq12_stubs.square
     (Ctypes.ocaml_bytes_start buffer)
     (Ctypes.ocaml_bytes_start g) ;
@@ -88,7 +88,7 @@ let square g =
 
 let double g =
   assert (Bytes.length g = size) ;
-  let buffer = Bytes.create size in
+  let buffer = empty () in
   Fq12_stubs.double
     (Ctypes.ocaml_bytes_start buffer)
     (Ctypes.ocaml_bytes_start g) ;
@@ -96,7 +96,7 @@ let double g =
 
 let inverse g =
   assert (Bytes.length g = size) ;
-  let inverse_buffer = Bytes.create size in
+  let inverse_buffer = empty () in
   Fq12_stubs.unsafe_inverse
     (Ctypes.ocaml_bytes_start inverse_buffer)
     (Ctypes.ocaml_bytes_start g) ;
@@ -105,7 +105,7 @@ let inverse g =
 let inverse_opt g =
   if is_zero g then None
   else
-    let inverse_buffer = Bytes.create size in
+    let inverse_buffer = empty () in
     Fq12_stubs.unsafe_inverse
       (Ctypes.ocaml_bytes_start inverse_buffer)
       (Ctypes.ocaml_bytes_start g) ;
