@@ -9,7 +9,7 @@ let order =
 
 type t = Bytes.t
 
-let empty () = Bytes.init size (fun _ -> char_of_int 0)
+let empty () = Bytes.make size '\000'
 
 let check_bytes bs =
   if Bytes.length bs = size then

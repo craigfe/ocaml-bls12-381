@@ -4,7 +4,7 @@ let size = 576
 
 type t = Bytes.t
 
-let empty () = Bytes.init size (fun _ -> char_of_int 0)
+let empty () = Bytes.make size '\000'
 
 let order =
   let fq_order =
