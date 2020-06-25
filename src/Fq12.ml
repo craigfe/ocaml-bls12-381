@@ -153,7 +153,11 @@ let of_z x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 =
   Bytes.blit x9 0 g 432 (min (Bytes.length x9) 48) ;
   Bytes.blit x10 0 g 480 (min (Bytes.length x10) 48) ;
   Bytes.blit x11 0 g 528 (min (Bytes.length x11) 48) ;
-  of_bytes g
+  match of_bytes_opt g with
+  | Some g ->
+      g
+  | None ->
+      failwith "Error while creating a Fq12 element from Zarith elements"
 
 let of_string x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 =
   let x0 = Bytes.of_string (Z.to_bits (Z.of_string x0)) in
@@ -181,4 +185,8 @@ let of_string x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 =
   Bytes.blit x9 0 g 432 (min (Bytes.length x9) 48) ;
   Bytes.blit x10 0 g 480 (min (Bytes.length x10) 48) ;
   Bytes.blit x11 0 g 528 (min (Bytes.length x11) 48) ;
-  of_bytes g
+  match of_bytes_opt g with
+  | Some g ->
+      g
+  | None ->
+      failwith "Error while creating a Fq12 element from string"
