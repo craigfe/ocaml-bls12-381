@@ -29,11 +29,7 @@ module MakeEquality (G : Bls12_381.Elliptic_curve_sig.T) = struct
 end
 
 module MakeValueGeneration (G : Bls12_381.Elliptic_curve_sig.T) = struct
-  let zero () = ignore @@ G.zero
-
   let random () = ignore @@ G.random ()
-
-  let one () = ignore @@ G.one
 
   let negation_with_random () =
     let random = G.random () in
@@ -47,8 +43,7 @@ module MakeValueGeneration (G : Bls12_381.Elliptic_curve_sig.T) = struct
   let get_tests () =
     let open Alcotest in
     ( "value generation",
-      [ test_case "zero" `Quick (repeat 100 zero);
-        test_case "random" `Quick (repeat 100 random);
+      [ test_case "random" `Quick (repeat 100 random);
         test_case "negate_with_one" `Quick (repeat 100 negation_with_one);
         test_case "negate_with_zero" `Quick (repeat 100 negation_with_zero);
         test_case "negate_with_random" `Quick (repeat 100 negation_with_random)

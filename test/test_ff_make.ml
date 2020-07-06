@@ -8,11 +8,7 @@ let rec repeat n f =
 
 (** Check the routine generators do not raise any exception *)
 module MakeValueGeneration (FiniteField : Bls12_381.Ff_sig.T) = struct
-  let zero () = ignore @@ FiniteField.zero
-
   let random () = ignore @@ FiniteField.random ()
-
-  let one () = ignore @@ FiniteField.one
 
   let rec inverse_with_random_not_null () =
     let random = FiniteField.random () in
@@ -50,8 +46,7 @@ module MakeValueGeneration (FiniteField : Bls12_381.Ff_sig.T) = struct
   let get_tests () =
     let open Alcotest in
     ( "value generation",
-      [ test_case "zero" `Quick (repeat 1 zero);
-        test_case "random" `Quick (repeat 1000 random);
+      [ test_case "random" `Quick (repeat 1000 random);
         test_case
           "inverse_random_not_null"
           `Quick
