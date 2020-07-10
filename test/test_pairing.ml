@@ -41,7 +41,15 @@ module Properties = struct
         (Pairing.unsafe_final_exponentiation
            (Pairing.miller_loop_simple
               (G1.Uncompressed.mul g1 b)
-              (G2.Uncompressed.mul g2 a))) )
+              (G2.Uncompressed.mul g2 a))) ) ;
+    assert (
+      Fq12.eq
+        (Pairing.unsafe_final_exponentiation
+           (Pairing.miller_loop
+              [(G1.Uncompressed.mul g1 a, G2.Uncompressed.mul g2 b)]))
+        (Pairing.unsafe_final_exponentiation
+           (Pairing.miller_loop
+              [(G1.Uncompressed.mul g1 b, G2.Uncompressed.mul g2 a)])) )
 
   let linearity_commutativity_scalar_with_only_one_scalar () =
     (* pairing(a * g_{1}, g_{2}) = pairing(a * g_{1}, g_{2})*)
@@ -57,7 +65,13 @@ module Properties = struct
         (Pairing.unsafe_final_exponentiation
            (Pairing.miller_loop_simple g1 (G2.Uncompressed.mul g2 a)))
         (Pairing.unsafe_final_exponentiation
-           (Pairing.miller_loop_simple (G1.Uncompressed.mul g1 a) g2)) )
+           (Pairing.miller_loop_simple (G1.Uncompressed.mul g1 a) g2)) ) ;
+    assert (
+      Fq12.eq
+        (Pairing.unsafe_final_exponentiation
+           (Pairing.miller_loop [(g1, G2.Uncompressed.mul g2 a)]))
+        (Pairing.unsafe_final_exponentiation
+           (Pairing.miller_loop [(G1.Uncompressed.mul g1 a, g2)])) )
 
   let linearity_scalar_in_scalar_with_only_one_scalar () =
     (* pairing(a * g_{1}, g_{2}) = pairing(g_{1}, g_{2}) ^ a*)
@@ -72,6 +86,11 @@ module Properties = struct
       Fq12.eq
         (Pairing.unsafe_final_exponentiation
            (Pairing.miller_loop_simple g1 (G2.Uncompressed.mul g2 a)))
+        (Fq12.pow (Pairing.pairing g1 g2) (Fr.to_z a)) ) ;
+    assert (
+      Fq12.eq
+        (Pairing.unsafe_final_exponentiation
+           (Pairing.miller_loop [(g1, G2.Uncompressed.mul g2 a)]))
         (Fq12.pow (Pairing.pairing g1 g2) (Fr.to_z a)) )
 
   let full_linearity () =
@@ -106,6 +125,24 @@ module Properties = struct
         (Fq12.pow
            (Pairing.unsafe_final_exponentiation
               (Pairing.miller_loop_simple g1 g2))
+           (Fr.to_z (Fr.mul a b))) ) ;
+    assert (
+      Fq12.eq
+        (Pairing.unsafe_final_exponentiation
+           (Pairing.miller_loop
+              [(G1.Uncompressed.mul g1 a, G2.Uncompressed.mul g2 b)]))
+        (Fq12.pow
+           (Pairing.unsafe_final_exponentiation
+              (Pairing.miller_loop [(g1, g2)]))
+           (Z.mul (Fr.to_z a) (Fr.to_z b))) ) ;
+    assert (
+      Fq12.eq
+        (Pairing.unsafe_final_exponentiation
+           (Pairing.miller_loop
+              [(G1.Uncompressed.mul g1 a, G2.Uncompressed.mul g2 b)]))
+        (Fq12.pow
+           (Pairing.unsafe_final_exponentiation
+              (Pairing.miller_loop [(g1, g2)]))
            (Fr.to_z (Fr.mul a b))) )
 
   let result_pairing_with_miller_loop_followed_by_final_exponentiation () =
@@ -119,7 +156,13 @@ module Properties = struct
         (Pairing.unsafe_final_exponentiation
            (Pairing.miller_loop_simple
               (G1.Uncompressed.mul g1 a)
-              (G2.Uncompressed.mul g2 b))) )
+              (G2.Uncompressed.mul g2 b))) ) ;
+    assert (
+      Fq12.eq
+        (Pairing.pairing (G1.Uncompressed.mul g1 a) (G2.Uncompressed.mul g2 b))
+        (Pairing.unsafe_final_exponentiation
+           (Pairing.miller_loop
+              [(G1.Uncompressed.mul g1 a, G2.Uncompressed.mul g2 b)])) )
 end
 
 let result_pairing_one_one =
@@ -152,6 +195,11 @@ let test_vectors_one_one () =
     not
       (Fq12.eq
          (Pairing.miller_loop_simple G1.Uncompressed.one G2.Uncompressed.one)
+         result_pairing_one_one) ) ;
+  assert (
+    not
+      (Fq12.eq
+         (Pairing.miller_loop [(G1.Uncompressed.one, G2.Uncompressed.one)])
          result_pairing_one_one) )
 
 let test_vectors_one_one_two_miller_loop () =
@@ -187,6 +235,46 @@ let test_vectors_one_one_random_times_miller_loop () =
     Fq12.eq
       (Pairing.unsafe_final_exponentiation (Pairing.miller_loop point_list))
       expected_result )
+
+let rec test_miller_loop_pairing_random_number_of_points () =
+  (* Check miller_loop followed by final exponentiation equals the product of
+     the individual pairings, using a random number of random points *)
+  (* NB: may fail if one point is null (because of
+     unsafe_final_exponentiation), but happens with very low probability.
+     Prefer to have a clean test code than verifying if one point is null. If it
+     does happen, restart the test *)
+  let number_of_points = Random.int 50 in
+  if number_of_points = 0 then
+    test_miller_loop_pairing_random_number_of_points ()
+  else
+    (* Generate random points *)
+    let points =
+      List.init number_of_points (fun _i ->
+          (G1.Uncompressed.random (), G2.Uncompressed.random ()))
+    in
+    (* Generate random scalars *)
+    let scalars =
+      List.init number_of_points (fun _i -> (Fr.random (), Fr.random ()))
+    in
+    (* Compute a * g1 and b * g2 for the pairing *)
+    let points =
+      List.map
+        (fun ((g1, g2), (a, b)) ->
+          (G1.Uncompressed.mul g1 a, G2.Uncompressed.mul g2 b))
+        (List.combine points scalars)
+    in
+    (* Compute the result using miller loop followed by the final exponentiation *)
+    let res_miller_loop =
+      Pairing.unsafe_final_exponentiation (Pairing.miller_loop points)
+    in
+    (* Compute the product of pairings *)
+    let res_pairing =
+      List.fold_left
+        (fun acc b -> Fq12.mul acc b)
+        Fq12.one
+        (List.map (fun (g1, g2) -> Pairing.pairing g1 g2) points)
+    in
+    assert (Fq12.eq res_pairing res_miller_loop)
 
 let () =
   let open Alcotest in
@@ -236,6 +324,10 @@ let () =
                10
                Properties
                .result_pairing_with_miller_loop_followed_by_final_exponentiation);
+          test_case
+            "test result pairing with miller loop nb random points"
+            `Quick
+            (repeat 10 test_miller_loop_pairing_random_number_of_points);
           test_case
             "linearity commutativity scalar"
             `Quick
