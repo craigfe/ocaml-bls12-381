@@ -113,8 +113,6 @@ struct
           f acc xs
     in
     if List.length xs = 0 then failwith "Empty list of points given"
-      (* it is fine to use unsafe because we should not have any nnull values,
-         otherwise the pairing would be null everywhere *)
     else f GT.one xs
 end
 
