@@ -5,7 +5,7 @@ module type T = sig
   type t
 
   (** The size of a point representation, in bytes *)
-  val size : int
+  val size_in_bytes : int
 
   module Scalar : Ff_sig.T
 

@@ -2,11 +2,11 @@ module Fq12_stubs = Rustc_bls12_381_bindings.Fq12 (Rustc_bls12_381_stubs)
 
 exception Not_in_field of Bytes.t
 
-let size = 576
+let size_in_bytes = 576
 
 type t = Bytes.t
 
-let empty () = Bytes.make size '\000'
+let empty () = Bytes.make size_in_bytes '\000'
 
 let order =
   let fq_order =
@@ -16,7 +16,7 @@ let order =
   Z.pow fq_order 12
 
 let check_bytes bs =
-  if Bytes.length bs = size then
+  if Bytes.length bs = size_in_bytes then
     Fq12_stubs.check_bytes (Ctypes.ocaml_bytes_start bs)
   else false
 
@@ -46,8 +46,8 @@ let random () =
   g
 
 let add g1 g2 =
-  assert (Bytes.length g1 = size) ;
-  assert (Bytes.length g2 = size) ;
+  assert (Bytes.length g1 = size_in_bytes) ;
+  assert (Bytes.length g2 = size_in_bytes) ;
   let g = empty () in
   Fq12_stubs.add
     (Ctypes.ocaml_bytes_start g)
@@ -55,9 +55,11 @@ let add g1 g2 =
     (Ctypes.ocaml_bytes_start g2) ;
   g
 
+let ( + ) = add
+
 let mul g1 g2 =
-  assert (Bytes.length g1 = size) ;
-  assert (Bytes.length g2 = size) ;
+  assert (Bytes.length g1 = size_in_bytes) ;
+  assert (Bytes.length g2 = size_in_bytes) ;
   let g = empty () in
   Fq12_stubs.mul
     (Ctypes.ocaml_bytes_start g)
@@ -65,21 +67,25 @@ let mul g1 g2 =
     (Ctypes.ocaml_bytes_start g2) ;
   g
 
+let ( * ) = mul
+
 let eq g1 g2 =
-  assert (Bytes.length g1 = size) ;
-  assert (Bytes.length g2 = size) ;
+  assert (Bytes.length g1 = size_in_bytes) ;
+  assert (Bytes.length g2 = size_in_bytes) ;
   Fq12_stubs.eq (Ctypes.ocaml_bytes_start g1) (Ctypes.ocaml_bytes_start g2)
 
 let negate g =
-  assert (Bytes.length g = size) ;
+  assert (Bytes.length g = size_in_bytes) ;
   let opposite_buffer = empty () in
   Fq12_stubs.negate
     (Ctypes.ocaml_bytes_start opposite_buffer)
     (Ctypes.ocaml_bytes_start g) ;
   opposite_buffer
 
+let ( - ) = negate
+
 let square g =
-  assert (Bytes.length g = size) ;
+  assert (Bytes.length g = size_in_bytes) ;
   let buffer = empty () in
   Fq12_stubs.square
     (Ctypes.ocaml_bytes_start buffer)
@@ -87,7 +93,7 @@ let square g =
   buffer
 
 let double g =
-  assert (Bytes.length g = size) ;
+  assert (Bytes.length g = size_in_bytes) ;
   let buffer = empty () in
   Fq12_stubs.double
     (Ctypes.ocaml_bytes_start buffer)
@@ -95,7 +101,7 @@ let double g =
   buffer
 
 let inverse_exn g =
-  assert (Bytes.length g = size) ;
+  assert (Bytes.length g = size_in_bytes) ;
   let inverse_buffer = empty () in
   Fq12_stubs.unsafe_inverse
     (Ctypes.ocaml_bytes_start inverse_buffer)
@@ -118,7 +124,7 @@ let pow x n =
   let n = Bytes.of_string (Z.to_bits n) in
   let bytes_size_n = Bytes.length n in
   let padded_n =
-    Bytes.init size (fun i ->
+    Bytes.init size_in_bytes (fun i ->
         if i < bytes_size_n then Bytes.get n i else char_of_int 0)
   in
   Fq12_stubs.pow
@@ -126,6 +132,8 @@ let pow x n =
     (Ctypes.ocaml_bytes_start (to_bytes x))
     (Ctypes.ocaml_bytes_start padded_n) ;
   res
+
+let ( ** ) = pow
 
 let of_z x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 =
   let x0 = Bytes.of_string (Z.to_bits x0) in
@@ -182,3 +190,12 @@ let of_string x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 =
   Bytes.blit x10 0 g 480 (min (Bytes.length x10) 48) ;
   Bytes.blit x11 0 g 528 (min (Bytes.length x11) 48) ;
   of_bytes_exn g
+
+let div_exn a b =
+  if b = zero then raise Division_by_zero else mul a (inverse_exn b)
+
+let div_opt a b = if b = zero then None else Some (mul a (inverse_exn b))
+
+let ( / ) = div_exn
+
+let ( = ) = eq
