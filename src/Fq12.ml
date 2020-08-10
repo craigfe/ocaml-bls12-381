@@ -45,6 +45,10 @@ let random () =
   Fq12_stubs.random (Ctypes.ocaml_bytes_start g) ;
   g
 
+let rec non_null_random () =
+  let r = random () in
+  if is_zero r then non_null_random () else r
+
 let add g1 g2 =
   assert (Bytes.length g1 = size_in_bytes) ;
   assert (Bytes.length g2 = size_in_bytes) ;

@@ -37,6 +37,9 @@ module type T = sig
 
   val random : unit -> t
 
+  (** [non_null_random ()] returns a non null random element of the field *)
+  val non_null_random : unit -> t
+
   val add : t -> t -> t
 
   (** Infix operator for [add] *)

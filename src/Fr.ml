@@ -48,6 +48,10 @@ let random () =
   Fr_stubs.random (Ctypes.ocaml_bytes_start g) ;
   g
 
+let rec non_null_random () =
+  let r = random () in
+  if is_zero r then non_null_random () else r
+
 let add x y =
   assert (Bytes.length x = size_in_bytes) ;
   assert (Bytes.length y = size_in_bytes) ;
