@@ -318,7 +318,8 @@ let () =
             `Quick
             (repeat 10 test_vectors_one_one_random_times_miller_loop);
           test_case
-            "test result pairing with miller loop simple followed by final exponentiation"
+            "test result pairing with miller loop simple followed by final \
+             exponentiation"
             `Quick
             (repeat
                10

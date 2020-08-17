@@ -42,10 +42,8 @@ struct
     let rec f acc xs =
       let buffer = GT.empty () in
       match xs with
-      | [] ->
-          acc
-      | [(g1, g2)] ->
-          GT.mul (miller_loop_simple g1 g2) acc
+      | [] -> acc
+      | [(g1, g2)] -> GT.mul (miller_loop_simple g1 g2) acc
       | [(g1_1, g2_1); (g1_2, g2_2)] ->
           Pairing_stubs.miller_loop_2
             (Ctypes.ocaml_bytes_start (GT.to_bytes buffer))
@@ -93,8 +91,8 @@ struct
           GT.mul buffer acc
       | (g1_1, g2_1)
         :: (g1_2, g2_2)
-           :: (g1_3, g2_3)
-              :: (g1_4, g2_4) :: (g1_5, g2_5) :: (g1_6, g2_6) :: xs ->
+           :: (g1_3, g2_3) :: (g1_4, g2_4) :: (g1_5, g2_5) :: (g1_6, g2_6) :: xs
+        ->
           Pairing_stubs.miller_loop_6
             (Ctypes.ocaml_bytes_start (GT.to_bytes buffer))
             (Ctypes.ocaml_bytes_start (G1.to_bytes g1_1))

@@ -58,10 +58,7 @@ module MakeValueGeneration (FiniteField : Bls12_381.Ff_sig.T) = struct
         test_case "double_with_random" `Quick (repeat 1000 double_with_random);
         test_case "square_with_one" `Quick (repeat 1 square_with_one);
         test_case "square_with_random" `Quick (repeat 1000 square_with_random);
-        test_case
-          "negate_with_random"
-          `Quick
-          (repeat 1000 negation_with_random);
+        test_case "negate_with_random" `Quick (repeat 1000 negation_with_random);
         test_case
           "double_is_same_than_multiply_by_same_element"
           `Quick
@@ -97,10 +94,8 @@ module MakeEquality (FiniteField : Bls12_381.Ff_sig.T) = struct
     ( "equality",
       [ test_case "zero" `Quick (repeat 1 zero);
         test_case "one" `Quick (repeat 1 one);
-        test_case
-          "random_same_objects"
-          `Quick
-          (repeat 1000 random_same_objects) ] )
+        test_case "random_same_objects" `Quick (repeat 1000 random_same_objects)
+      ] )
 end
 
 module MakeFieldProperties (FiniteField : Bls12_381.Ff_sig.T) = struct
@@ -123,8 +118,7 @@ module MakeFieldProperties (FiniteField : Bls12_381.Ff_sig.T) = struct
   let zero_nullifier_zero () =
     (* Special case 0 * 0 = 0 *)
     assert (
-      FiniteField.is_zero (FiniteField.mul FiniteField.zero FiniteField.zero)
-    )
+      FiniteField.is_zero (FiniteField.mul FiniteField.zero FiniteField.zero) )
 
   let zero_nullifier_one () =
     (* Special case 0 * 1 = 0 *)
@@ -138,20 +132,16 @@ module MakeFieldProperties (FiniteField : Bls12_381.Ff_sig.T) = struct
 
   let zero_has_no_inverse () =
     match FiniteField.inverse_opt FiniteField.zero with
-    | Some _ ->
-        assert false
-    | None ->
-        assert true
+    | Some _ -> assert false
+    | None -> assert true
 
   let rec inverse_of_non_null_does_exist () =
     let random = FiniteField.random () in
     if FiniteField.is_zero random then inverse_of_non_null_does_exist ()
     else
       match FiniteField.inverse_opt random with
-      | Some _ ->
-          assert true
-      | None ->
-          assert false
+      | Some _ -> assert true
+      | None -> assert false
 
   let inverse_property () =
     let random = FiniteField.random () in
@@ -221,8 +211,7 @@ module MakeFieldProperties (FiniteField : Bls12_381.Ff_sig.T) = struct
   (** 0 ** n = 0, n != 0 *)
   let pow_zero_to_non_null_exponent_is_zero () =
     let n = Z.of_int (Random.int 1_000_000_000) in
-    assert (
-      FiniteField.eq (FiniteField.pow FiniteField.zero n) FiniteField.zero )
+    assert (FiniteField.eq (FiniteField.pow FiniteField.zero n) FiniteField.zero)
 
   let pow_zero_on_random_equals_one () =
     let r = FiniteField.random () in
@@ -230,8 +219,7 @@ module MakeFieldProperties (FiniteField : Bls12_381.Ff_sig.T) = struct
 
   let pow_zero_on_one_equals_one () =
     assert (
-      FiniteField.eq (FiniteField.pow FiniteField.one Z.zero) FiniteField.one
-    )
+      FiniteField.eq (FiniteField.pow FiniteField.one Z.zero) FiniteField.one )
 
   let pow_one_on_random_element_equals_the_random_element () =
     let e = FiniteField.random () in

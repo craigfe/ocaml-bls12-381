@@ -97,9 +97,7 @@ let inverse_opt g =
 let negate g =
   assert (Bytes.length g = size_in_bytes) ;
   let buffer = empty () in
-  Fr_stubs.negate
-    (Ctypes.ocaml_bytes_start buffer)
-    (Ctypes.ocaml_bytes_start g) ;
+  Fr_stubs.negate (Ctypes.ocaml_bytes_start buffer) (Ctypes.ocaml_bytes_start g) ;
   buffer
 
 let ( - ) = negate
@@ -107,17 +105,13 @@ let ( - ) = negate
 let square g =
   assert (Bytes.length g = size_in_bytes) ;
   let buffer = empty () in
-  Fr_stubs.square
-    (Ctypes.ocaml_bytes_start buffer)
-    (Ctypes.ocaml_bytes_start g) ;
+  Fr_stubs.square (Ctypes.ocaml_bytes_start buffer) (Ctypes.ocaml_bytes_start g) ;
   buffer
 
 let double g =
   assert (Bytes.length g = size_in_bytes) ;
   let buffer = empty () in
-  Fr_stubs.double
-    (Ctypes.ocaml_bytes_start buffer)
-    (Ctypes.ocaml_bytes_start g) ;
+  Fr_stubs.double (Ctypes.ocaml_bytes_start buffer) (Ctypes.ocaml_bytes_start g) ;
   buffer
 
 let eq x y =

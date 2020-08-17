@@ -42,8 +42,7 @@ module FFBenchmark (F : Bls12_381.Ff_sig.T) = struct
 
   let check_if_one_on_pregenerated_one_element () = ignore @@ F.is_one one
 
-  let compute_addition_on_pregenerated_random_element () =
-    ignore @@ F.add e1 e2
+  let compute_addition_on_pregenerated_random_element () = ignore @@ F.add e1 e2
 
   let compute_multiplication_on_pregenerated_random_element () =
     ignore @@ F.mul e1 e2
@@ -56,13 +55,11 @@ module FFBenchmark (F : Bls12_381.Ff_sig.T) = struct
 
   let compute_eq_on_same_pregenerated_random_element () = ignore @@ F.eq e1 e1
 
-  let compute_opposite_on_pregenerated_random_element () =
-    ignore @@ F.negate e1
+  let compute_opposite_on_pregenerated_random_element () = ignore @@ F.negate e1
 
   let compute_opposite_on_pregenerated_one_element () = ignore @@ F.negate one
 
-  let compute_opposite_on_pregenerated_zero_element () =
-    ignore @@ F.negate zero
+  let compute_opposite_on_pregenerated_zero_element () = ignore @@ F.negate zero
 
   let compute_inverse_on_pregenerated_random_element () =
     ignore @@ F.inverse_exn e1
@@ -108,8 +105,7 @@ module FFBenchmark (F : Bls12_381.Ff_sig.T) = struct
           (Printf.sprintf "%s check check_bytes on pregenerated one" ec_name)
         check_check_bytes_on_pregenerated_one_element;
       Bench.Test.create
-        ~name:
-          (Printf.sprintf "%s check if zero on pregenerated random" ec_name)
+        ~name:(Printf.sprintf "%s check if zero on pregenerated random" ec_name)
         check_if_zero_on_pregenerated_random_element;
       Bench.Test.create
         ~name:(Printf.sprintf "%s check if zero on pregenerated one" ec_name)
@@ -137,12 +133,10 @@ module FFBenchmark (F : Bls12_381.Ff_sig.T) = struct
              ec_name)
         compute_multiplication_on_pregenerated_random_element;
       Bench.Test.create
-        ~name:
-          (Printf.sprintf "%s compute square on pregenerate random" ec_name)
+        ~name:(Printf.sprintf "%s compute square on pregenerate random" ec_name)
         compute_square_on_pregenerated_random_element;
       Bench.Test.create
-        ~name:
-          (Printf.sprintf "%s compute double on pregenerate random" ec_name)
+        ~name:(Printf.sprintf "%s compute double on pregenerate random" ec_name)
         compute_double_on_pregenerated_random_element;
       Bench.Test.create
         ~name:(Printf.sprintf "%s compute equality on random" ec_name)

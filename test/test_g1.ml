@@ -27,8 +27,7 @@ module Constructors = struct
     match g with
     | Some g ->
         assert (Bls12_381.G1.Uncompressed.eq Bls12_381.G1.Uncompressed.one g)
-    | None ->
-        assert false
+    | None -> assert false
 
   (* https://github.com/zcash/librustzcash/blob/0.1.0/pairing/src/bls12_381/ec.rs#L1196 *)
   (* https://github.com/zcash/librustzcash/blob/0.1.0/pairing/src/bls12_381/ec.rs#L1245 *)
@@ -95,38 +94,30 @@ module Constructors = struct
     match (res, p1, p2) with
     | (Some res, Some p1, Some p2) ->
         assert (
-          Bls12_381.G1.Uncompressed.eq
-            res
-            (Bls12_381.G1.Uncompressed.add p1 p2) )
-    | _ ->
-        assert false
+          Bls12_381.G1.Uncompressed.eq res (Bls12_381.G1.Uncompressed.add p1 p2)
+        )
+    | _ -> assert false
 
   let test_vectors_zero_and_2_not_on_curve () =
     let x = Z.of_string "0" in
     let y = Z.of_string "2" in
     match Bls12_381.G1.Uncompressed.of_z_opt ~x ~y with
-    | Some _ ->
-        assert false
-    | None ->
-        assert true
+    | Some _ -> assert false
+    | None -> assert true
 
   let test_vectors_zero_and_minus_2_not_on_curve () =
     let x = Z.of_string "0" in
     let y = Z.neg @@ Z.of_string "2" in
     match Bls12_381.G1.Uncompressed.of_z_opt ~x ~y with
-    | Some _ ->
-        assert false
-    | None ->
-        assert true
+    | Some _ -> assert false
+    | None -> assert true
 
   let test_vectors_random_points_not_on_curve () =
     let x = Z.of_string "90809235435" in
     let y = Z.neg @@ Z.of_string "8090843059809345" in
     match Bls12_381.G1.Uncompressed.of_z_opt ~x ~y with
-    | Some _ ->
-        assert false
-    | None ->
-        assert true
+    | Some _ -> assert false
+    | None -> assert true
 
   let test_vectors_generator_from_bytes () =
     let x_cs =
@@ -177,7 +168,8 @@ module Constructors = struct
          Char.chr 0x9e;
          Char.chr 0x0b;
          Char.chr 0xfb;
-         Char.chr 0x75 |]
+         Char.chr 0x75
+      |]
     in
     assert (Array.length x_cs = 48) ;
     let _x = Bytes.init 48 (fun i -> x_cs.(i)) in
@@ -229,7 +221,8 @@ module Constructors = struct
          Char.chr 0x50;
          Char.chr 0x08;
          Char.chr 0xa2;
-         Char.chr 0x6a |]
+         Char.chr 0x6a
+      |]
     in
     assert (Array.length y_cs = 48) ;
     let _y = Bytes.init 48 (fun i -> y_cs.(i)) in
