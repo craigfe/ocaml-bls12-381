@@ -19,7 +19,7 @@ let compute_miller_loop_on_pregenerated_random_elements () =
   Bls12_381.Pairing.miller_loop_simple g1 g2
 
 let compute_final_exponentiation_on_pregenerated_random_element () =
-  Bls12_381.Pairing.final_exponentiation a
+  Bls12_381.Pairing.final_exponentiation_opt a
 
 let compute_miller_loop_on_three_pregenerated_couple_of_uncompressed_random_elements
     () =
@@ -27,7 +27,7 @@ let compute_miller_loop_on_three_pregenerated_couple_of_uncompressed_random_elem
 
 let compute_miller_loop_on_three_pregenerated_couple_of_uncompressed_random_elements_followed_by_final_exponentiation
     () =
-  Bls12_381.Pairing.final_exponentiation
+  Bls12_381.Pairing.final_exponentiation_opt
   @@ Bls12_381.Pairing.miller_loop three_g1_and_g2
 
 let () =

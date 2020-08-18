@@ -6,6 +6,8 @@ module Make
     (G2 : Elliptic_curve_sig.T)
     (GT : Ff_sig.T) =
 struct
+  exception FailToComputeFinalExponentiation of GT.t
+
   let miller_loop_simple (g1 : G1.t) (g2 : G2.t) : GT.t =
     let buffer = GT.empty () in
     Pairing_stubs.miller_loop_simple
@@ -22,14 +24,16 @@ struct
       (Ctypes.ocaml_bytes_start (G2.to_bytes g2)) ;
     buffer
 
-  let unsafe_final_exponentiation (e : GT.t) : GT.t =
+  let final_exponentiation_exn (e : GT.t) : GT.t =
     let buffer = GT.empty () in
-    Pairing_stubs.final_exponentiation
-      (Ctypes.ocaml_bytes_start (GT.to_bytes buffer))
-      (Ctypes.ocaml_bytes_start (GT.to_bytes e)) ;
-    buffer
+    if GT.is_zero e then raise (FailToComputeFinalExponentiation e)
+    else (
+      Pairing_stubs.final_exponentiation
+        (Ctypes.ocaml_bytes_start (GT.to_bytes buffer))
+        (Ctypes.ocaml_bytes_start (GT.to_bytes e)) ;
+      buffer )
 
-  let final_exponentiation (e : GT.t) : GT.t option =
+  let final_exponentiation_opt (e : GT.t) : GT.t option =
     if GT.is_zero e then None
     else
       let buffer = GT.empty () in

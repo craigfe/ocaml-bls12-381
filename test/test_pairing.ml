@@ -34,20 +34,20 @@ module Properties = struct
     ) ;
     assert (
       Fq12.eq
-        (Pairing.unsafe_final_exponentiation
+        (Pairing.final_exponentiation_exn
            (Pairing.miller_loop_simple
               (G1.Uncompressed.mul g1 a)
               (G2.Uncompressed.mul g2 b)))
-        (Pairing.unsafe_final_exponentiation
+        (Pairing.final_exponentiation_exn
            (Pairing.miller_loop_simple
               (G1.Uncompressed.mul g1 b)
               (G2.Uncompressed.mul g2 a))) ) ;
     assert (
       Fq12.eq
-        (Pairing.unsafe_final_exponentiation
+        (Pairing.final_exponentiation_exn
            (Pairing.miller_loop
               [(G1.Uncompressed.mul g1 a, G2.Uncompressed.mul g2 b)]))
-        (Pairing.unsafe_final_exponentiation
+        (Pairing.final_exponentiation_exn
            (Pairing.miller_loop
               [(G1.Uncompressed.mul g1 b, G2.Uncompressed.mul g2 a)])) )
 
@@ -62,15 +62,15 @@ module Properties = struct
         (Pairing.pairing (G1.Uncompressed.mul g1 a) g2) ) ;
     assert (
       Fq12.eq
-        (Pairing.unsafe_final_exponentiation
+        (Pairing.final_exponentiation_exn
            (Pairing.miller_loop_simple g1 (G2.Uncompressed.mul g2 a)))
-        (Pairing.unsafe_final_exponentiation
+        (Pairing.final_exponentiation_exn
            (Pairing.miller_loop_simple (G1.Uncompressed.mul g1 a) g2)) ) ;
     assert (
       Fq12.eq
-        (Pairing.unsafe_final_exponentiation
+        (Pairing.final_exponentiation_exn
            (Pairing.miller_loop [(g1, G2.Uncompressed.mul g2 a)]))
-        (Pairing.unsafe_final_exponentiation
+        (Pairing.final_exponentiation_exn
            (Pairing.miller_loop [(G1.Uncompressed.mul g1 a, g2)])) )
 
   let linearity_scalar_in_scalar_with_only_one_scalar () =
@@ -84,12 +84,12 @@ module Properties = struct
         (Fq12.pow (Pairing.pairing g1 g2) (Fr.to_z a)) ) ;
     assert (
       Fq12.eq
-        (Pairing.unsafe_final_exponentiation
+        (Pairing.final_exponentiation_exn
            (Pairing.miller_loop_simple g1 (G2.Uncompressed.mul g2 a)))
         (Fq12.pow (Pairing.pairing g1 g2) (Fr.to_z a)) ) ;
     assert (
       Fq12.eq
-        (Pairing.unsafe_final_exponentiation
+        (Pairing.final_exponentiation_exn
            (Pairing.miller_loop [(g1, G2.Uncompressed.mul g2 a)]))
         (Fq12.pow (Pairing.pairing g1 g2) (Fr.to_z a)) )
 
@@ -108,41 +108,37 @@ module Properties = struct
         (Fq12.pow (Pairing.pairing g1 g2) (Fr.to_z (Fr.mul a b))) ) ;
     assert (
       Fq12.eq
-        (Pairing.unsafe_final_exponentiation
+        (Pairing.final_exponentiation_exn
            (Pairing.miller_loop_simple
               (G1.Uncompressed.mul g1 a)
               (G2.Uncompressed.mul g2 b)))
         (Fq12.pow
-           (Pairing.unsafe_final_exponentiation
-              (Pairing.miller_loop_simple g1 g2))
+           (Pairing.final_exponentiation_exn (Pairing.miller_loop_simple g1 g2))
            (Z.mul (Fr.to_z a) (Fr.to_z b))) ) ;
     assert (
       Fq12.eq
-        (Pairing.unsafe_final_exponentiation
+        (Pairing.final_exponentiation_exn
            (Pairing.miller_loop_simple
               (G1.Uncompressed.mul g1 a)
               (G2.Uncompressed.mul g2 b)))
         (Fq12.pow
-           (Pairing.unsafe_final_exponentiation
-              (Pairing.miller_loop_simple g1 g2))
+           (Pairing.final_exponentiation_exn (Pairing.miller_loop_simple g1 g2))
            (Fr.to_z (Fr.mul a b))) ) ;
     assert (
       Fq12.eq
-        (Pairing.unsafe_final_exponentiation
+        (Pairing.final_exponentiation_exn
            (Pairing.miller_loop
               [(G1.Uncompressed.mul g1 a, G2.Uncompressed.mul g2 b)]))
         (Fq12.pow
-           (Pairing.unsafe_final_exponentiation
-              (Pairing.miller_loop [(g1, g2)]))
+           (Pairing.final_exponentiation_exn (Pairing.miller_loop [(g1, g2)]))
            (Z.mul (Fr.to_z a) (Fr.to_z b))) ) ;
     assert (
       Fq12.eq
-        (Pairing.unsafe_final_exponentiation
+        (Pairing.final_exponentiation_exn
            (Pairing.miller_loop
               [(G1.Uncompressed.mul g1 a, G2.Uncompressed.mul g2 b)]))
         (Fq12.pow
-           (Pairing.unsafe_final_exponentiation
-              (Pairing.miller_loop [(g1, g2)]))
+           (Pairing.final_exponentiation_exn (Pairing.miller_loop [(g1, g2)]))
            (Fr.to_z (Fr.mul a b))) )
 
   let result_pairing_with_miller_loop_followed_by_final_exponentiation () =
@@ -153,14 +149,14 @@ module Properties = struct
     assert (
       Fq12.eq
         (Pairing.pairing (G1.Uncompressed.mul g1 a) (G2.Uncompressed.mul g2 b))
-        (Pairing.unsafe_final_exponentiation
+        (Pairing.final_exponentiation_exn
            (Pairing.miller_loop_simple
               (G1.Uncompressed.mul g1 a)
               (G2.Uncompressed.mul g2 b))) ) ;
     assert (
       Fq12.eq
         (Pairing.pairing (G1.Uncompressed.mul g1 a) (G2.Uncompressed.mul g2 b))
-        (Pairing.unsafe_final_exponentiation
+        (Pairing.final_exponentiation_exn
            (Pairing.miller_loop
               [(G1.Uncompressed.mul g1 a, G2.Uncompressed.mul g2 b)])) )
 end
@@ -187,7 +183,7 @@ let test_vectors_one_one () =
       result_pairing_one_one ) ;
   assert (
     Fq12.eq
-      (Pairing.unsafe_final_exponentiation
+      (Pairing.final_exponentiation_exn
          (Pairing.miller_loop_simple G1.Uncompressed.one G2.Uncompressed.one))
       result_pairing_one_one ) ;
   (* We check the final exponentiation is not done already *)
@@ -211,7 +207,7 @@ let test_vectors_one_one_two_miller_loop () =
   in
   assert (
     Fq12.eq
-      (Pairing.unsafe_final_exponentiation
+      (Pairing.final_exponentiation_exn
          (Pairing.miller_loop
             [ (G1.Uncompressed.one, G2.Uncompressed.one);
               (G1.Uncompressed.one, G2.Uncompressed.one) ]))
@@ -233,14 +229,14 @@ let test_vectors_one_one_random_times_miller_loop () =
   in
   assert (
     Fq12.eq
-      (Pairing.unsafe_final_exponentiation (Pairing.miller_loop point_list))
+      (Pairing.final_exponentiation_exn (Pairing.miller_loop point_list))
       expected_result )
 
 let rec test_miller_loop_pairing_random_number_of_points () =
   (* Check miller_loop followed by final exponentiation equals the product of
      the individual pairings, using a random number of random points *)
   (* NB: may fail if one point is null (because of
-     unsafe_final_exponentiation), but happens with very low probability.
+     final_exponentiation_exn), but happens with very low probability.
      Prefer to have a clean test code than verifying if one point is null. If it
      does happen, restart the test *)
   let number_of_points = Random.int 50 in
@@ -265,7 +261,7 @@ let rec test_miller_loop_pairing_random_number_of_points () =
     in
     (* Compute the result using miller loop followed by the final exponentiation *)
     let res_miller_loop =
-      Pairing.unsafe_final_exponentiation (Pairing.miller_loop points)
+      Pairing.final_exponentiation_exn (Pairing.miller_loop points)
     in
     (* Compute the product of pairings *)
     let res_pairing =
