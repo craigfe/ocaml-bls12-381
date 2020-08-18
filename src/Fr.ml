@@ -43,12 +43,14 @@ let one =
   Fr_stubs.one (Ctypes.ocaml_bytes_start g) ;
   g
 
-let random () =
+let random ?state () =
+  ignore state ;
   let g = empty () in
   Fr_stubs.random (Ctypes.ocaml_bytes_start g) ;
   g
 
-let rec non_null_random () =
+let rec non_null_random ?state () =
+  ignore state ;
   let r = random () in
   if is_zero r then non_null_random () else r
 

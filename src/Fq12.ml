@@ -40,12 +40,14 @@ let is_zero g = Fq12_stubs.is_zero (Ctypes.ocaml_bytes_start g)
 
 let is_one g = Fq12_stubs.is_one (Ctypes.ocaml_bytes_start g)
 
-let random () =
+let random ?state () =
+  ignore state ;
   let g = empty () in
   Fq12_stubs.random (Ctypes.ocaml_bytes_start g) ;
   g
 
-let rec non_null_random () =
+let rec non_null_random ?state () =
+  ignore state ;
   let r = random () in
   if is_zero r then non_null_random () else r
 

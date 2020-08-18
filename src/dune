@@ -3,8 +3,8 @@
 (library
  (public_name bls12-381)
  (name bls12_381)
- (modules_without_implementation ff_sig elliptic_curve_sig)
- (libraries zarith ctypes ctypes.foreign)
+ (modules_without_implementation elliptic_curve_sig)
+ (libraries zarith ctypes ctypes.foreign ff)
  (library_flags :standard -linkall -ccopt -pthread)
  (foreign_stubs
   (language c)

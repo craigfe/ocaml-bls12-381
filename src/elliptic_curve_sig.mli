@@ -7,7 +7,7 @@ module type T = sig
   (** The size of a point representation, in bytes *)
   val size_in_bytes : int
 
-  module Scalar : Ff_sig.T
+  module Scalar : Ff.BASE
 
   (** Create an empty value to store an element of the curve. DO NOT USE THIS TO
       DO COMPUTATIONS WITH, UNDEFINED BEHAVIORS MAY HAPPEN *)
