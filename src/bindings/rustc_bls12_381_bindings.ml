@@ -125,6 +125,11 @@ struct
       (Printf.sprintf "rustc_bls12_381_%s_add" S.group_name)
       (ocaml_bytes @-> ocaml_bytes @-> ocaml_bytes @-> returning void)
 
+  let double =
+    foreign
+      (Printf.sprintf "rustc_bls12_381_%s_double" S.group_name)
+      (ocaml_bytes @-> ocaml_bytes @-> returning void)
+
   let negate =
     foreign
       (Printf.sprintf "rustc_bls12_381_%s_negate" S.group_name)
@@ -179,6 +184,11 @@ struct
     foreign
       (Printf.sprintf "rustc_bls12_381_%s_compressed_is_zero" S.group_name)
       (ocaml_bytes @-> returning bool)
+
+  let compressed_double =
+    foreign
+      (Printf.sprintf "rustc_bls12_381_%s_compressed_double" S.group_name)
+      (ocaml_bytes @-> ocaml_bytes @-> returning void)
 
   let compressed_mul =
     foreign

@@ -77,6 +77,14 @@ module Uncompressed = struct
     assert (Bytes.length g = size_in_bytes) ;
     G1_stubs.is_zero (Ctypes.ocaml_bytes_start g)
 
+  let double g =
+    assert (Bytes.length g = size_in_bytes) ;
+    let buffer = empty () in
+    G1_stubs.double
+      (Ctypes.ocaml_bytes_start buffer)
+      (Ctypes.ocaml_bytes_start g) ;
+    buffer
+
   let mul (g : t) (a : Scalar.t) : t =
     assert (Bytes.length g = size_in_bytes) ;
     assert (Bytes.length (Scalar.to_bytes a) = Scalar.size_in_bytes) ;
@@ -167,6 +175,14 @@ module Compressed = struct
     G1_stubs.compressed_eq
       (Ctypes.ocaml_bytes_start g1)
       (Ctypes.ocaml_bytes_start g2)
+
+  let double g =
+    assert (Bytes.length g = size_in_bytes) ;
+    let buffer = empty () in
+    G1_stubs.compressed_double
+      (Ctypes.ocaml_bytes_start buffer)
+      (Ctypes.ocaml_bytes_start g) ;
+    buffer
 
   let mul (g : t) (a : Scalar.t) : t =
     assert (Bytes.length g = size_in_bytes) ;
