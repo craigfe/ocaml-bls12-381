@@ -12,7 +12,7 @@ depends: [
   "conf-rust" {build}
   "dune" {build & >= "1.7"}
   "dune-configurator" {build}
-  "ff" {= "0.2.2"}
+  "ff" {>= "0.3.0" & < "0.4.0"}
   "zarith" {build & = "1.9.1"}
   "ctypes" {build & = "0.17.1"}
   "ctypes-foreign" {build & = "0.4.0"}
@@ -21,5 +21,5 @@ depends: [
 build: [[ "dune" "build" "-j" jobs "-p" name "@install" ]]
 run-test: [[ "dune" "runtest" "-p" name "-j" jobs ]]
 pin-depends: [
-  ["ff.0.2.2" "git+https://gitlab.com/dannywillems/ocaml-ff.git#442c3a8f7be69591e86a0d1a93a507426184ca19"]
+  ["ff.0.3.0" "git+https://gitlab.com/dannywillems/ocaml-ff.git#0.3.0"]
 ]
