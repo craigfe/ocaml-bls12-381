@@ -25,14 +25,14 @@ module ECBenchmark (G : Bls12_381.Elliptic_curve_sig.T) = struct
 
   let generate_one () = ignore @@ G.one
 
-  let check_check_bytes_on_pregenerated_random_element () =
-    ignore @@ G.check_bytes g1_bytes
+  let check_of_bytes_exn_on_pregenerated_random_element () =
+    ignore @@ G.of_bytes_exn g1_bytes
 
-  let check_check_bytes_on_pregenerated_zero_element () =
-    ignore @@ G.check_bytes zero_bytes
+  let check_of_bytes_exn_on_pregenerated_zero_element () =
+    ignore @@ G.of_bytes_exn zero_bytes
 
-  let check_check_bytes_on_pregenerated_one_element () =
-    ignore @@ G.check_bytes one_bytes
+  let check_of_bytes_exn_on_pregenerated_one_element () =
+    ignore @@ G.of_bytes_exn one_bytes
 
   let check_is_zero_on_pregenerated_random () = ignore @@ G.is_zero g1
 
@@ -77,16 +77,18 @@ module ECBenchmark (G : Bls12_381.Elliptic_curve_sig.T) = struct
         generate_one;
       Bench.Test.create
         ~name:
-          (Printf.sprintf "%s check check_bytes on pregenerated random" ec_name)
-        check_check_bytes_on_pregenerated_random_element;
+          (Printf.sprintf
+             "%s check of_bytes_exn on pregenerated random"
+             ec_name)
+        check_of_bytes_exn_on_pregenerated_random_element;
       Bench.Test.create
         ~name:
-          (Printf.sprintf "%s check check_bytes on pregenerated zero" ec_name)
-        check_check_bytes_on_pregenerated_zero_element;
+          (Printf.sprintf "%s check of_bytes_exn on pregenerated zero" ec_name)
+        check_of_bytes_exn_on_pregenerated_zero_element;
       Bench.Test.create
         ~name:
-          (Printf.sprintf "%s check check_bytes on pregenerated one" ec_name)
-        check_check_bytes_on_pregenerated_one_element;
+          (Printf.sprintf "%s check of_bytes_exn on pregenerated one" ec_name)
+        check_of_bytes_exn_on_pregenerated_one_element;
       Bench.Test.create
         ~name:(Printf.sprintf "%s check if zero on pregenerated random" ec_name)
         check_is_zero_on_pregenerated_random;
