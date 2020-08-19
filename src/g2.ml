@@ -51,7 +51,8 @@ module Uncompressed = struct
     G2_stubs.one (Ctypes.ocaml_bytes_start g) ;
     g
 
-  let random () =
+  let random ?state () =
+    ignore state ;
     let g = empty () in
     G2_stubs.random (Ctypes.ocaml_bytes_start g) ;
     g
@@ -148,7 +149,8 @@ module Compressed = struct
     G2_stubs.compressed_one (Ctypes.ocaml_bytes_start g) ;
     g
 
-  let random () =
+  let random ?state () =
+    ignore state ;
     let g = empty () in
     G2_stubs.compressed_random (Ctypes.ocaml_bytes_start g) ;
     g
