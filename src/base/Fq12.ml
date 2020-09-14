@@ -69,7 +69,7 @@ module type T = sig
 end
 
 module MakeFq12 (Stubs : Ff_sig.RAW_BASE) : T = struct
-  include Ff_sig.Make(Stubs)
+  include Ff_sig.Make (Stubs)
 
   let empty () = Bytes.make size_in_bytes '\000'
 

@@ -42,7 +42,8 @@ module Make (Stubs : RAW_BASE) : Ff.BASE = struct
   let size_in_bytes = Stubs.size_in_bytes
 
   let check_bytes bs =
-    if Int.equal (Bytes.length bs) Stubs.size_in_bytes then Stubs.check_bytes bs else false
+    if Int.equal (Bytes.length bs) Stubs.size_in_bytes then Stubs.check_bytes bs
+    else false
 
   let of_bytes_opt bs = if check_bytes bs then Some bs else None
 

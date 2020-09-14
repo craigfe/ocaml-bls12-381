@@ -6,9 +6,11 @@ let () =
       (Unsafe.js_expr {| import ("@dannywillems/rustc-bls12-381") |})
   in
   let on_resolved m =
-    Firebug.console##log (Jsoo_lib.ESModule.to_any_js m);
-    let module StubsFr = Bls12_381_js.Fr.MakeStubs(struct let rust_module = m end) in
-    let module Fr = Bls12_381_base.Fr.MakeFr(StubsFr) in
+    Firebug.console##log (Jsoo_lib.ESModule.to_any_js m) ;
+    let module StubsFr = Bls12_381_js.Fr.MakeStubs (struct
+      let rust_module = m
+    end) in
+    let module Fr = Bls12_381_base.Fr.MakeFr (StubsFr) in
     let a = Fr.random () in
     (* let b = Fr.random () in
      * let sum = Fr.add a b in *)
