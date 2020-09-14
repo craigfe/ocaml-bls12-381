@@ -3,7 +3,7 @@
 (library
  (public_name bls12-381)
  (name bls12_381)
- (libraries zarith ctypes ctypes.foreign ff bls12_381_base)
+ (libraries zarith ctypes ctypes.foreign ff bls12-381-base)
  (library_flags :standard -linkall -ccopt -pthread)
  (foreign_stubs
   (language c)
