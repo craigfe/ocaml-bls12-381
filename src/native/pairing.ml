@@ -2,8 +2,8 @@ module Pairing_stubs = Rustc_bls12_381_bindings.Pairing (Rustc_bls12_381_stubs)
 
 (* The pairing goes in a finite field, not a group. We strengthen the signature *)
 module Make
-    (G1 : Elliptic_curve_sig.T)
-    (G2 : Elliptic_curve_sig.T)
+    (G1 : Bls12_381_base.Elliptic_curve_sig.T)
+    (G2 : Bls12_381_base.Elliptic_curve_sig.T)
     (GT : Ff.BASE) =
 struct
   exception FailToComputeFinalExponentiation of GT.t

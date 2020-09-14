@@ -1,0 +1,6 @@
+(library
+ (public_name bls12-381-base)
+ (name bls12_381_base)
+ (modules Fr Fq12 Elliptic_curve_sig G1 G2 Ff_sig)
+ (libraries zarith ff)
+)
