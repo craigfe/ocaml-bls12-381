@@ -1,0 +1,37 @@
+;; We build first the bytecode to be used by the jsoo compiler
+(executable
+ (name lib)
+ (libraries js_of_ocaml
+            js_of_ocaml-compiler
+            js_of_ocaml-ppx
+            zarith
+            zarith_stubs_js
+            integers
+            integers_stubs_js
+            jsoo-lib
+            jsoo-lib-rust-wasm
+            bls12-381-base
+            bls12-381-js
+ )
+ (modes byte)
+ (preprocess (pps js_of_ocaml-ppx))
+ (flags (:standard ))
+)
+
+;; Stanza to build lib.js, result of the jsoo compilation.
+(rule
+ (targets lib.js)
+ (deps index.html package.json webpack.config.js .npmrc)
+ (action
+  (run %{bin:js_of_ocaml}
+    %{lib:zarith_stubs_js:biginteger.js}
+    %{lib:zarith_stubs_js:runtime.js}
+    %{lib:integers_stubs_js:runtime.js}
+    ;; Options for debugging purposes
+    %{dep:lib.bc} --pretty --no-inline -o lib.js
+  )
+ )
+)
+
+;; default alias that's gonna be used when using dune build
+(alias (name default) (deps lib.js))

@@ -46,3 +46,12 @@ dune exec benchmark/bench_pairing.exe
 ## Documentation
 
 - Use `dune build @doc` to generate the API documentation.
+
+
+## JavaScript
+
+```
+opam install js_of_ocaml js_of_ocaml-ppx js_of_ocaml-compiler -y
+opam pin add jsoo-lib.0.0.3 https://gitlab.com/dannywillems/jsoo-lib.git#0.0.3 -y
+opam pin add jsoo-lib-rust-wasm.0.0.3 https://gitlab.com/dannywillems/jsoo-lib.git#0.0.3 -y
+```

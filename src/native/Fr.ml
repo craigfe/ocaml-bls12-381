@@ -1,58 +1,90 @@
 module Fr_stubs = Rustc_bls12_381_bindings.Fr (Rustc_bls12_381_stubs)
 
 module Stubs = struct
+  (** High level (OCaml) definitions/logic *)
+  let size_in_bytes = 32
+
+  let order =
+    Z.of_string
+      "52435875175126190479447740508185965837690552500527637822603658699938581184513"
+
+  let empty () = Bytes.make size_in_bytes '\000'
+
   let check_bytes bs = Fr_stubs.check_bytes (Ctypes.ocaml_bytes_start bs)
 
   let is_zero bs = Fr_stubs.is_zero (Ctypes.ocaml_bytes_start bs)
 
   let is_one bs = Fr_stubs.is_one (Ctypes.ocaml_bytes_start bs)
 
-  let zero bs = Fr_stubs.zero (Ctypes.ocaml_bytes_start bs)
+  let zero () =
+    let bs = empty () in
+    Fr_stubs.zero (Ctypes.ocaml_bytes_start bs) ;
+    bs
 
-  let one bs = Fr_stubs.one (Ctypes.ocaml_bytes_start bs)
+  let one () =
+    let bs = empty () in
+    Fr_stubs.one (Ctypes.ocaml_bytes_start bs) ;
+    bs
 
-  let random bs = Fr_stubs.random (Ctypes.ocaml_bytes_start bs)
+  let random () =
+    let bs = empty () in
+    Fr_stubs.random (Ctypes.ocaml_bytes_start bs) ;
+    bs
 
-  let add buffer x y =
+  let add x y =
+    let buffer = empty () in
     Fr_stubs.add
       (Ctypes.ocaml_bytes_start buffer)
       (Ctypes.ocaml_bytes_start x)
-      (Ctypes.ocaml_bytes_start y)
+      (Ctypes.ocaml_bytes_start y) ;
+    buffer
 
-  let mul buffer x y =
+  let mul x y =
+    let buffer = empty () in
     Fr_stubs.mul
       (Ctypes.ocaml_bytes_start buffer)
       (Ctypes.ocaml_bytes_start x)
-      (Ctypes.ocaml_bytes_start y)
+      (Ctypes.ocaml_bytes_start y) ;
+    buffer
 
-  let unsafe_inverse buffer x =
+  let unsafe_inverse x =
+    let buffer = empty () in
     Fr_stubs.unsafe_inverse
       (Ctypes.ocaml_bytes_start buffer)
-      (Ctypes.ocaml_bytes_start x)
+      (Ctypes.ocaml_bytes_start x) ;
+    buffer
 
   let eq x y =
     Fr_stubs.eq (Ctypes.ocaml_bytes_start x) (Ctypes.ocaml_bytes_start y)
 
-  let negate buffer x =
+  let negate x =
+    let buffer = empty () in
     Fr_stubs.negate
       (Ctypes.ocaml_bytes_start buffer)
-      (Ctypes.ocaml_bytes_start x)
+      (Ctypes.ocaml_bytes_start x) ;
+    buffer
 
-  let square buffer x =
+  let square x =
+    let buffer = empty () in
     Fr_stubs.square
       (Ctypes.ocaml_bytes_start buffer)
-      (Ctypes.ocaml_bytes_start x)
+      (Ctypes.ocaml_bytes_start x) ;
+    buffer
 
-  let double buffer x =
+  let double x =
+    let buffer = empty () in
     Fr_stubs.double
       (Ctypes.ocaml_bytes_start buffer)
-      (Ctypes.ocaml_bytes_start x)
+      (Ctypes.ocaml_bytes_start x) ;
+    buffer
 
-  let pow buffer x n =
+  let pow x n =
+    let buffer = empty () in
     Fr_stubs.pow
       (Ctypes.ocaml_bytes_start buffer)
       (Ctypes.ocaml_bytes_start x)
-      (Ctypes.ocaml_bytes_start n)
+      (Ctypes.ocaml_bytes_start n) ;
+    buffer
 end
 
 include Bls12_381_base.Fr.MakeFr (Stubs)

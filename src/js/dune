@@ -1,0 +1,8 @@
+(library
+ (public_name bls12-381-js)
+ (name bls12_381_js)
+ (modules Fr)
+ (modes byte)
+ (preprocess (pps js_of_ocaml-ppx))
+ (libraries bls12_381_base zarith ff js_of_ocaml js_of_ocaml-ppx jsoo-lib jsoo-lib-rust-wasm integers)
+)

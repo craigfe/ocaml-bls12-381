@@ -3,7 +3,6 @@
 (library
  (public_name bls12-381)
  (name bls12_381)
- ; (modules Fr Fq12 G1 G2 Rustc_bls12_381_stubs Rustc_bls12_381_bindings)
  (libraries zarith ctypes ctypes.foreign ff bls12_381_base)
  (library_flags :standard -linkall -ccopt -pthread)
  (foreign_stubs
