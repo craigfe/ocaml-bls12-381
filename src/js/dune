@@ -4,5 +4,5 @@
  (modules Fr)
  (modes byte)
  (preprocess (pps js_of_ocaml-ppx))
- (libraries bls12_381_base zarith ff js_of_ocaml js_of_ocaml-ppx jsoo-lib jsoo-lib-rust-wasm integers)
+ (libraries bls12-381-base zarith ff js_of_ocaml js_of_ocaml-ppx jsoo-lib jsoo-lib-rust-wasm integers)
 )
