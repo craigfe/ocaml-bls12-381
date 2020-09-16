@@ -3,91 +3,117 @@ module G2_stubs = Rustc_bls12_381_bindings.G2 (Rustc_bls12_381_stubs)
 module Uncompressed_Stubs = struct
   let size_in_bytes = 192
 
+  let empty () = Bytes.make size_in_bytes '\000'
+
   let check_bytes bs =
     G2_stubs.uncompressed_check_bytes (Ctypes.ocaml_bytes_start bs)
 
   let is_zero bs = G2_stubs.is_zero (Ctypes.ocaml_bytes_start bs)
 
-  let zero bs = G2_stubs.zero (Ctypes.ocaml_bytes_start bs)
+  let zero () =
+    let bs = empty () in G2_stubs.zero (Ctypes.ocaml_bytes_start bs); bs
 
-  let one bs = G2_stubs.one (Ctypes.ocaml_bytes_start bs)
+  let one () =
+    let bs = empty () in G2_stubs.one (Ctypes.ocaml_bytes_start bs); bs
 
-  let random bs = G2_stubs.random (Ctypes.ocaml_bytes_start bs)
+  let random () =
+    let bs = empty () in G2_stubs.random (Ctypes.ocaml_bytes_start bs); bs
 
-  let add buffer x y =
+  let add x y =
+    let buffer = empty () in
     G2_stubs.add
       (Ctypes.ocaml_bytes_start buffer)
       (Ctypes.ocaml_bytes_start x)
-      (Ctypes.ocaml_bytes_start y)
+      (Ctypes.ocaml_bytes_start y);
+   buffer
 
-  let mul buffer x y =
+  let mul x y =
+    let buffer = empty () in
     G2_stubs.mul
       (Ctypes.ocaml_bytes_start buffer)
       (Ctypes.ocaml_bytes_start x)
-      (Ctypes.ocaml_bytes_start y)
+      (Ctypes.ocaml_bytes_start y) ;
+    buffer
 
   let eq x y =
     G2_stubs.eq (Ctypes.ocaml_bytes_start x) (Ctypes.ocaml_bytes_start y)
 
-  let negate buffer x =
+  let negate x =
+    let buffer = empty () in
     G2_stubs.negate
       (Ctypes.ocaml_bytes_start buffer)
-      (Ctypes.ocaml_bytes_start x)
+      (Ctypes.ocaml_bytes_start x) ;
+    buffer
 
-  let double buffer x =
+  let double x =
+    let buffer = empty () in
     G2_stubs.double
       (Ctypes.ocaml_bytes_start buffer)
-      (Ctypes.ocaml_bytes_start x)
+      (Ctypes.ocaml_bytes_start x) ;
+    buffer
 
-  let build_from_components buffer x_1 x_2 y_1 y_2 =
-    G2_stubs.build_from_components
+  let build_from_components x_1 x_2 y_1 y_2 =
+    let buffer = empty () in
+    let res = G2_stubs.build_from_components
       (Ctypes.ocaml_bytes_start buffer)
       (Ctypes.ocaml_bytes_start x_1)
       (Ctypes.ocaml_bytes_start x_2)
       (Ctypes.ocaml_bytes_start y_1)
-      (Ctypes.ocaml_bytes_start y_2)
+      (Ctypes.ocaml_bytes_start y_2) in
+    if res = false then None else Some buffer
 end
 
 module Compressed_Stubs = struct
   let size_in_bytes = 96
+
+  let empty () = Bytes.make size_in_bytes '\000'
 
   let check_bytes bs =
     G2_stubs.compressed_check_bytes (Ctypes.ocaml_bytes_start bs)
 
   let is_zero bs = G2_stubs.compressed_is_zero (Ctypes.ocaml_bytes_start bs)
 
-  let zero bs = G2_stubs.compressed_zero (Ctypes.ocaml_bytes_start bs)
+  let zero () =
+    let bs = empty () in G2_stubs.compressed_zero (Ctypes.ocaml_bytes_start bs); bs
 
-  let one bs = G2_stubs.compressed_zero (Ctypes.ocaml_bytes_start bs)
+  let one () =
+    let bs = empty () in G2_stubs.compressed_one (Ctypes.ocaml_bytes_start bs); bs
 
-  let random bs = G2_stubs.compressed_random (Ctypes.ocaml_bytes_start bs)
+  let random () =
+    let bs = empty () in G2_stubs.compressed_random (Ctypes.ocaml_bytes_start bs); bs
 
-  let add buffer x y =
+  let add x y =
+    let buffer = empty () in
     G2_stubs.compressed_add
       (Ctypes.ocaml_bytes_start buffer)
       (Ctypes.ocaml_bytes_start x)
-      (Ctypes.ocaml_bytes_start y)
+      (Ctypes.ocaml_bytes_start y);
+   buffer
 
-  let mul buffer x y =
+  let mul x y =
+    let buffer = empty () in
     G2_stubs.compressed_mul
       (Ctypes.ocaml_bytes_start buffer)
       (Ctypes.ocaml_bytes_start x)
-      (Ctypes.ocaml_bytes_start y)
+      (Ctypes.ocaml_bytes_start y) ;
+    buffer
 
   let eq x y =
-    G2_stubs.compressed_eq
-      (Ctypes.ocaml_bytes_start x)
-      (Ctypes.ocaml_bytes_start y)
+    G2_stubs.compressed_eq (Ctypes.ocaml_bytes_start x) (Ctypes.ocaml_bytes_start y)
 
-  let negate buffer x =
+  let negate x =
+    let buffer = empty () in
     G2_stubs.compressed_negate
       (Ctypes.ocaml_bytes_start buffer)
-      (Ctypes.ocaml_bytes_start x)
+      (Ctypes.ocaml_bytes_start x) ;
+    buffer
 
-  let double buffer x =
+  let double x =
+    let buffer = empty () in
     G2_stubs.compressed_double
       (Ctypes.ocaml_bytes_start buffer)
-      (Ctypes.ocaml_bytes_start x)
+      (Ctypes.ocaml_bytes_start x) ;
+    buffer
 end
 
 module Uncompressed =

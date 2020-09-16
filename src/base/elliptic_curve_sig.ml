@@ -62,19 +62,19 @@ module type RAW_BASE = sig
 
   val is_zero : Bytes.t -> bool
 
-  val random : Bytes.t -> unit
+  val random : unit -> Bytes.t
 
-  val zero : Bytes.t -> unit
+  val zero : unit -> Bytes.t
 
-  val one : Bytes.t -> unit
+  val one : unit -> Bytes.t
 
-  val add : Bytes.t -> Bytes.t -> Bytes.t -> unit
+  val add : Bytes.t -> Bytes.t -> Bytes.t
 
-  val mul : Bytes.t -> Bytes.t -> Bytes.t -> unit
+  val mul : Bytes.t -> Bytes.t -> Bytes.t
 
   val eq : Bytes.t -> Bytes.t -> bool
 
-  val negate : Bytes.t -> Bytes.t -> unit
+  val negate : Bytes.t -> Bytes.t
 
-  val double : Bytes.t -> Bytes.t -> unit
+  val double : Bytes.t -> Bytes.t
 end

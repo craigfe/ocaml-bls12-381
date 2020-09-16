@@ -50,28 +50,22 @@ module MakeValueGeneration (FiniteField : Ff.BASE) = struct
     assert (FiniteField.eq (FiniteField.double g) (FiniteField.add g g))
 
   let get_tests () =
-    let open Alcotest in
     ( "Value generation",
-      [ test_case "zero" `Quick (repeat zero);
-        test_case "random" `Quick (repeat random);
-        test_case "non null random" `Quick (repeat ~n:100 non_null_random);
-        test_case
-          "inverse_random_not_null"
-          `Quick
-          (repeat inverse_with_random_not_null);
-        test_case "negate_with_one" `Quick (repeat negation_with_one);
-        test_case "negate_with_zero" `Quick (repeat negation_with_zero);
-        test_case "double_with_one" `Quick (repeat double_with_one);
-        test_case "double_with_zero" `Quick (repeat double_with_zero);
-        test_case "double_with_random" `Quick (repeat double_with_random);
-        test_case "square_with_one" `Quick (repeat square_with_one);
-        test_case "square_with_random" `Quick (repeat square_with_random);
-        test_case "negate_with_random" `Quick (repeat negation_with_random);
-        test_case
-          "double_is_same_than_multiply_by_same_element"
-          `Quick
-          (repeat double_is_same_than_multiply_by_same_element);
-        test_case "inverse_one" `Quick (repeat inverse_with_one) ] )
+      [ ("zero", repeat zero);
+        ("random", repeat random);
+        ("non null random", repeat ~n:100 non_null_random);
+        ("inverse_random_not_null", repeat inverse_with_random_not_null);
+        ("negate_with_one", repeat negation_with_one);
+        ("negate_with_zero", repeat negation_with_zero);
+        ("double_with_one", repeat double_with_one);
+        ("double_with_zero", repeat double_with_zero);
+        ("double_with_random", repeat double_with_random);
+        ("square_with_one", repeat square_with_one);
+        ("square_with_random", repeat square_with_random);
+        ("negate_with_random", repeat negation_with_random);
+        ( "double_is_same_than_multiply_by_same_element",
+          repeat double_is_same_than_multiply_by_same_element );
+        ("inverse_one", repeat inverse_with_one) ] )
 end
 
 module MakeIsZero (FiniteField : Ff.BASE) = struct
@@ -83,10 +77,9 @@ module MakeIsZero (FiniteField : Ff.BASE) = struct
     else assert (FiniteField.is_zero x = false)
 
   let get_tests () =
-    let open Alcotest in
     ( "is_zero",
-      [ test_case "with zero value" `Quick (repeat with_zero_value);
-        test_case "with random value" `Quick (repeat with_random_value) ] )
+      [ ("with zero value", repeat with_zero_value);
+        ("with random value", repeat with_random_value) ] )
 end
 
 module MakeEquality (FiniteField : Ff.BASE) = struct
@@ -105,12 +98,11 @@ module MakeEquality (FiniteField : Ff.BASE) = struct
     assert (not (FiniteField.eq (FiniteField.random ()) (FiniteField.random ())))
 
   let get_tests () =
-    let open Alcotest in
     ( "Equality",
-      [ test_case "zero_same_objects" `Quick (repeat zero_same_objects);
-        test_case "one_same_objects" `Quick (repeat one_same_objects);
-        test_case "random_not_equal" `Quick (repeat ~n:10 two_random_objects_not_equal);
-        test_case "random_same_objects" `Quick (repeat random_same_objects) ] )
+      [ ("zero_same_objects", repeat zero_same_objects);
+        ("one_same_objects", repeat one_same_objects);
+        ("random_not_equal", repeat ~n:10 two_random_objects_not_equal);
+        ("random_same_objects", repeat random_same_objects) ] )
 end
 
 module MakeFieldProperties (FiniteField : Ff.BASE) = struct
@@ -281,75 +273,40 @@ module MakeFieldProperties (FiniteField : Ff.BASE) = struct
     )
 
   let get_tests () =
-    let open Alcotest in
     ( "Field properties",
-      [ test_case "zero_nullifier_one" `Quick (repeat zero_nullifier_one);
-        test_case "zero_nullifier_zero" `Quick (repeat zero_nullifier_zero);
-        test_case "zero_nullifier_random" `Quick (repeat zero_nullifier_random);
-        test_case
-          "inverse_of_non_null_does_exist"
-          `Quick
-          (repeat inverse_of_non_null_does_exist);
-        test_case "inverse_of_one_is_one" `Quick (repeat inverse_of_one_is_one);
-        test_case "zero_has_no_inverse" `Quick (repeat zero_has_no_inverse);
-        test_case "inverse_of_inverse" `Quick (repeat inverse_of_inverse);
-        test_case "opposite_of_opposite" `Quick (repeat opposite_of_opposite);
-        test_case
-          "opposite_of_zero_is_zero"
-          `Quick
-          (repeat opposite_of_zero_is_zero);
-        test_case
-          "additive_associativity"
-          `Quick
-          (repeat additive_associativity);
-        test_case "distributivity" `Quick (repeat distributivity);
-        test_case
-          "pow zero on random element equals one"
-          `Quick
-          (repeat pow_zero_on_random_equals_one);
-        test_case
-          "pow zero on one equals one"
-          `Quick
-          (repeat pow_zero_on_one_equals_one);
-        test_case
-          "pow one on random element equals the same element"
-          `Quick
-          (repeat pow_one_on_random_element_equals_the_random_element);
-        test_case
-          "pow two on random element equals the square"
-          `Quick
-          (repeat pow_one_on_random_element_equals_the_random_element);
-        test_case
-          "pow element to the additive group order"
-          `Quick
-          (repeat pow_to_the_additive_group_order_equals_same_element);
-        test_case
-          "pow element to the multiplicative group order"
-          `Quick
-          (repeat pow_to_the_multiplicative_group_order_equals_one);
-        test_case
-          "pow element to a random power plus the additive group order"
-          `Quick
-          (repeat pow_add_multiplicative_group_order_to_a_random_power);
-        test_case
-          "pow zero to zero is one"
-          `Quick
-          (repeat ~n:1 pow_zero_to_zero_is_one);
-        test_case
-          "pow zero to non null exponent is zero"
-          `Quick
-          (repeat pow_zero_to_non_null_exponent_is_zero);
-        test_case
-          "pow to negative exponent"
-          `Quick
-          (repeat pow_to_negative_exponent);
-        test_case "opposite property" `Quick (repeat opposite_property);
-        test_case "inverse property" `Quick (repeat inverse_property);
-        test_case "pow addition property" `Quick (repeat pow_addition_property);
-        test_case
-          "multiplicative_associativity"
-          `Quick
-          (repeat multiplicative_associativity) ] )
+      [ ("zero_nullifier_one", repeat zero_nullifier_one);
+        ("zero_nullifier_zero", repeat zero_nullifier_zero);
+        ("zero_nullifier_random", repeat zero_nullifier_random);
+        ("inverse_of_non_null_does_exist", repeat inverse_of_non_null_does_exist);
+        ("inverse_of_one_is_one", repeat inverse_of_one_is_one);
+        ("zero_has_no_inverse", repeat zero_has_no_inverse);
+        ("inverse_of_inverse", repeat inverse_of_inverse);
+        ("opposite_of_opposite", repeat opposite_of_opposite);
+        ("opposite_of_zero_is_zero", repeat opposite_of_zero_is_zero);
+        ("additive_associativity", repeat additive_associativity);
+        ("distributivity", repeat distributivity);
+        ( "pow zero on random element equals one",
+          repeat pow_zero_on_random_equals_one );
+        ("pow zero on one equals one", repeat pow_zero_on_one_equals_one);
+        ( "pow one on random element equals the same element",
+          repeat pow_one_on_random_element_equals_the_random_element );
+        ( "pow two on random element equals the square",
+          repeat pow_one_on_random_element_equals_the_random_element );
+        ( "pow element to the additive group order",
+          repeat pow_to_the_additive_group_order_equals_same_element );
+        ( "pow element to the multiplicative group order",
+          repeat pow_to_the_multiplicative_group_order_equals_one );
+        ( "pow element to a random power plus the additive group order",
+          repeat pow_add_multiplicative_group_order_to_a_random_power );
+        ("pow zero to zero is one", repeat ~n:1 pow_zero_to_zero_is_one);
+        ( "pow zero to non null exponent is zero",
+          repeat pow_zero_to_non_null_exponent_is_zero );
+        ("pow to negative exponent", repeat pow_to_negative_exponent);
+        ("opposite property", repeat opposite_property);
+        ("inverse property", repeat inverse_property);
+        ("pow addition property", repeat pow_addition_property);
+        ("multiplicative_associativity", repeat multiplicative_associativity) ]
+    )
 end
 
 module MakeMemoryRepresentation (FiniteField : Ff.BASE) = struct
@@ -364,14 +321,9 @@ module MakeMemoryRepresentation (FiniteField : Ff.BASE) = struct
     assert (FiniteField.eq x (FiniteField.of_bytes_exn x_bytes))
 
   let get_tests () =
-    let open Alcotest in
     ( "Memory representation",
-      [ test_case
-          "to_bytes returns the correct number of bytes"
-          `Quick
-          (repeat test_to_bytes_has_correct_size);
-        test_case
-          "to_bytes and of bytes are inverses"
-          `Quick
-          (repeat test_to_bytes_of_bytes_inverse) ] )
+      [ ( "to_bytes returns the correct number of bytes",
+          repeat test_to_bytes_has_correct_size );
+        ( "to_bytes and of bytes are inverses",
+          repeat test_to_bytes_of_bytes_inverse ) ] )
 end

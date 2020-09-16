@@ -1,36 +1,12 @@
-module type RAW_BASE = sig
-  val size_in_bytes : int
-
-  val check_bytes : Bytes.t -> bool
-
-  val is_zero : Bytes.t -> bool
-
-  val random : Bytes.t -> unit
-
-  val zero : Bytes.t -> unit
-
-  val one : Bytes.t -> unit
-
-  val add : Bytes.t -> Bytes.t -> Bytes.t -> unit
-
-  val mul : Bytes.t -> Bytes.t -> Bytes.t -> unit
-
-  val eq : Bytes.t -> Bytes.t -> bool
-
-  val negate : Bytes.t -> Bytes.t -> unit
-
-  val double : Bytes.t -> Bytes.t -> unit
-end
-
 module type RAW_UNCOMPRESSED = sig
-  include RAW_BASE
+  include Elliptic_curve_sig.RAW_BASE
 
   val build_from_components :
-    Bytes.t -> Bytes.t -> Bytes.t -> Bytes.t -> Bytes.t -> bool
+    Bytes.t -> Bytes.t -> Bytes.t -> Bytes.t -> Bytes.t option
 end
 
 module type RAW_COMPRESSED = sig
-  include RAW_BASE
+  include Elliptic_curve_sig.RAW_BASE
 end
 
 module type BASE = sig
@@ -51,7 +27,7 @@ module type COMPRESSED = sig
   include BASE
 end
 
-module MakeBase (Scalar : Fr.T) (Stubs : RAW_BASE) :
+module MakeBase (Scalar : Fr.T) (Stubs : Elliptic_curve_sig.RAW_BASE) :
   BASE with module Scalar = Scalar = struct
   exception Not_on_curve of Bytes.t
 
@@ -74,33 +50,30 @@ module MakeBase (Scalar : Fr.T) (Stubs : RAW_BASE) :
   let to_bytes g = g
 
   let zero =
-    let g = empty () in
-    Stubs.zero g ;
-    g
+    let res = Stubs.zero () in
+    res
 
   let one =
-    let g = empty () in
-    Stubs.one g ;
-    g
+    let res = Stubs.one () in
+    res
 
   let random ?state () =
     ignore state ;
-    let g = empty () in
-    Stubs.random g ;
-    g
+    let res = Stubs.random () in
+    res
 
   let add g1 g2 =
     assert (Bytes.length g1 = size_in_bytes) ;
     assert (Bytes.length g2 = size_in_bytes) ;
-    let g = empty () in
-    Stubs.add g g1 g2 ;
-    g
+    let res = Stubs.add g1 g2 in
+    assert (Bytes.length res = size_in_bytes) ;
+    res
 
   let negate g =
     assert (Bytes.length g = size_in_bytes) ;
-    let buffer = empty () in
-    Stubs.negate buffer g ;
-    buffer
+    let res = Stubs.negate g in
+    assert (Bytes.length res = size_in_bytes) ;
+    res
 
   let eq g1 g2 =
     assert (Bytes.length g1 = size_in_bytes) ;
@@ -113,16 +86,16 @@ module MakeBase (Scalar : Fr.T) (Stubs : RAW_BASE) :
 
   let double g =
     assert (Bytes.length g = size_in_bytes) ;
-    let buffer = empty () in
-    Stubs.double buffer g ;
-    buffer
+    let res = Stubs.double g in
+    assert (Bytes.length res = size_in_bytes) ;
+    res
 
   let mul (g : t) (a : Scalar.t) : t =
     assert (Bytes.length g = size_in_bytes) ;
     assert (Bytes.length (Scalar.to_bytes a) = Scalar.size_in_bytes) ;
-    let buffer = empty () in
-    Stubs.mul buffer g (Scalar.to_bytes a) ;
-    buffer
+    let res = Stubs.mul g (Scalar.to_bytes a) in
+    assert (Bytes.length res = size_in_bytes) ;
+    res
 end
 
 module MakeUncompressed (Scalar : Fr.T) (Stubs : RAW_UNCOMPRESSED) :
@@ -136,9 +109,8 @@ module MakeUncompressed (Scalar : Fr.T) (Stubs : RAW_UNCOMPRESSED) :
     let x_2 = Bytes.of_string (Z.to_bits x_2) in
     let y_1 = Bytes.of_string (Z.to_bits y_1) in
     let y_2 = Bytes.of_string (Z.to_bits y_2) in
-    let buffer = empty () in
-    let res = Stubs.build_from_components (to_bytes buffer) x_1 x_2 y_1 y_2 in
-    if res = true then Some buffer else None
+    let res = Stubs.build_from_components x_1 x_2 y_1 y_2 in
+    match res with None -> None | Some res -> Some (of_bytes_exn res)
 end
 
 module MakeCompressed (Scalar : Fr.T) (Stubs : RAW_COMPRESSED) :
