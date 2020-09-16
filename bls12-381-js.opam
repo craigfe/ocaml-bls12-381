@@ -25,6 +25,6 @@ run-test: [[ "dune" "runtest" "-p" name "-j" jobs ]]
 pin-depends: [
   ["ff.0.4.0" "git+https://gitlab.com/dannywillems/ocaml-ff.git#0.4.0"]
   ["integers_stubs_js.1.0" "git+https://github.com/o1-labs/integers_stubs_js.git#1.0"]
-  ["jsoo-lib.0.0.3" "git+https://gitlab.com/dannywillems/jsoo-lib.git#05640d5535e89f785400899b91efe261c604be89"]
-  ["jsoo-lib-rust-wasm.0.0.3" "git+https://gitlab.com/dannywillems/jsoo-lib.git#05640d5535e89f785400899b91efe261c604be89"]
+  ["jsoo-lib.0.0.3" "git+https://gitlab.com/dannywillems/jsoo-lib.git#ab1e3c435e62e74a8602e65f2131418ee3742deb"]
+  ["jsoo-lib-rust-wasm.0.0.3" "git+https://gitlab.com/dannywillems/jsoo-lib.git#ab1e3c435e62e74a8602e65f2131418ee3742deb"]
 ]
