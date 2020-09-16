@@ -10,6 +10,7 @@ lint:
     - eval $(opam env)
   script:
     - ocamlformat --check benchmark/*.ml*
+    - ocamlformat --check src/base/*.ml*
     - ocamlformat --check src/native/*.ml*
     - ocamlformat --check src/js/*.ml*
     - ocamlformat --check test/native/*.ml*
@@ -26,6 +27,12 @@ lint:
     - eval $(opam env)
     - opam update
     - opam depext -i -y conf-pkg-config conf-libffi
+    # Install NVM for the JS test
+    - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+    - export NVM_DIR="$HOME/.nvm"
+    - . "$NVM_DIR/nvm.sh"
+    - nvm install 12.16.1
+    - nvm use 12.16.1
   script:
     # Install external dependencies
     - opam depext -i -y zarith
@@ -39,6 +46,7 @@ lint:
     # Install the packages
     - opam install bls12-381-base -y
     - opam install bls12-381 -y
+
     - opam install bls12-381-js -y
     # Run test
     - opam install alcotest -y
