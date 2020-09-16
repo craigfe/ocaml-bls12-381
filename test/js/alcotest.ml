@@ -1,3 +1,5 @@
+let test_case name _ fn = (name, fn)
+
 let run_test_group (group_name, tests) =
   let open Js_of_ocaml in
   Firebug.console##log

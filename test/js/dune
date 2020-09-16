@@ -1,6 +1,6 @@
 (executables
- (names test_fq12 test_fr)
- (modules test_fq12 test_fr test_ff_make alcotest)
+ (names test_fq12 test_fr test_g1 test_g2)
+ (modules test_fq12 test_fr test_g1 test_g2 test_ff_make test_ec_make alcotest)
  (libraries js_of_ocaml
             js_of_ocaml-compiler
             js_of_ocaml-ppx
@@ -42,5 +42,28 @@
  )
 )
 
-(rule (alias runtest) (deps package.json .npmrc test_fq12.js test_fr.js) (action (bash "npm run test")))
-; (alias (name default) (deps test_fr.js test_fq12.js package.json .npmrc))
+(rule
+ (targets test_g1.js)
+ (action
+  ( run %{bin:js_of_ocaml}
+     %{lib:zarith_stubs_js:biginteger.js}
+     %{lib:zarith_stubs_js:runtime.js}
+     %{lib:integers_stubs_js:runtime.js}
+     ;; Options for debugging purposes
+     %{dep:test_g1.bc} --pretty --no-inline -o test_g1.js)
+ )
+)
+
+(rule
+ (targets test_g2.js)
+ (action
+  ( run %{bin:js_of_ocaml}
+     %{lib:zarith_stubs_js:biginteger.js}
+     %{lib:zarith_stubs_js:runtime.js}
+     %{lib:integers_stubs_js:runtime.js}
+     ;; Options for debugging purposes
+     %{dep:test_g2.bc} --pretty --no-inline -o test_g2.js)
+ )
+)
+
+(rule (alias runtest) (deps package.json .npmrc test_fq12.js test_fr.js test_g1.js test_g2.js) (action (bash "npm run test")))
