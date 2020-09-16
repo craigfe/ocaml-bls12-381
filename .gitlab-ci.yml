@@ -30,7 +30,11 @@ lint:
     - opam install --deps-only --with-test -y .
     # Install the static library from rustc
     - ./build_deps.sh
-    # Install the package
+    # Pin the packages
+    - opam pin add bls12-381-base . --no-action
+    - opam pin add bls12-381 . --no-action
+    - opam pin add bls12-381-js . --no-action
+    # Install the packages
     - opam install bls12-381-base -y
     - opam install bls12-381 -y
     - opam install bls12-381-js -y
