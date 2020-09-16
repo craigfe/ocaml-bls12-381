@@ -10,8 +10,10 @@ lint:
     - eval $(opam env)
   script:
     - ocamlformat --check benchmark/*.ml*
-    - ocamlformat --check src/*.ml*
-    - ocamlformat --check test/*.ml*
+    - ocamlformat --check src/native/*.ml*
+    - ocamlformat --check src/js/*.ml*
+    - ocamlformat --check test/native/*.ml*
+    - ocamlformat --check test/js/*.ml*
 
 .build-test: &build_definition
   stage: build
