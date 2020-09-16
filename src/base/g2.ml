@@ -105,11 +105,21 @@ module MakeUncompressed (Scalar : Fr.T) (Stubs : RAW_UNCOMPRESSED) :
   let of_z_opt ~x ~y =
     let (x_1, x_2) = x in
     let (y_1, y_2) = y in
+    let x_1_bytes = Bytes.make 48 '\000' in
     let x_1 = Bytes.of_string (Z.to_bits x_1) in
+    Bytes.blit x_1 0 x_1_bytes 0 (min (Bytes.length x_1) 48) ;
+    let x_2_bytes = Bytes.make 48 '\000' in
     let x_2 = Bytes.of_string (Z.to_bits x_2) in
+    Bytes.blit x_2 0 x_2_bytes 0 (min (Bytes.length x_2) 48) ;
+    let y_1_bytes = Bytes.make 48 '\000' in
     let y_1 = Bytes.of_string (Z.to_bits y_1) in
+    Bytes.blit y_1 0 y_1_bytes 0 (min (Bytes.length y_1) 48) ;
+    let y_2_bytes = Bytes.make 48 '\000' in
     let y_2 = Bytes.of_string (Z.to_bits y_2) in
-    let res = Stubs.build_from_components x_1 x_2 y_1 y_2 in
+    Bytes.blit y_2 0 y_2_bytes 0 (min (Bytes.length y_2) 48) ;
+    let res =
+      Stubs.build_from_components x_1_bytes x_2_bytes y_1_bytes y_2_bytes
+    in
     match res with None -> None | Some res -> Some (of_bytes_exn res)
 end
 

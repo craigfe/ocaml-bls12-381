@@ -101,12 +101,14 @@ module MakeUncompressed (Scalar : Fr.T) (Stubs : RAW_UNCOMPRESSED) :
   include MakeBase (Scalar) (Stubs)
 
   let of_z_opt ~x ~y =
+    let x_bytes = Bytes.make 48 '\000' in
     let x = Bytes.of_string (Z.to_bits x) in
+    Bytes.blit x 0 x_bytes 0 (min (Bytes.length x) 48) ;
+    let y_bytes = Bytes.make 48 '\000' in
     let y = Bytes.of_string (Z.to_bits y) in
-    let res = Stubs.build_from_components x y in
-    match res with
-    | None -> None
-    | Some res -> Some (of_bytes_exn res)
+    Bytes.blit y 0 y_bytes 0 (min (Bytes.length y) 48) ;
+    let res = Stubs.build_from_components x_bytes y_bytes in
+    match res with None -> None | Some res -> Some (of_bytes_exn res)
 end
 
 module MakeCompressed (Scalar : Fr.T) (Stubs : RAW_COMPRESSED) :
