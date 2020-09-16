@@ -36,7 +36,8 @@ module ValueGeneration = Test_ff_make.MakeValueGeneration (Bls12_381.Fr)
 module IsZero = Test_ff_make.MakeIsZero (Bls12_381.Fr)
 module Equality = Test_ff_make.MakeEquality (Bls12_381.Fr)
 module FieldProperties = Test_ff_make.MakeFieldProperties (Bls12_381.Fr)
-module MemoryRepresentation = Test_ff_make.MakeMemoryRepresentation (Bls12_381.Fr)
+module MemoryRepresentation =
+  Test_ff_make.MakeMemoryRepresentation (Bls12_381.Fr)
 
 module StringRepresentation = struct
   let test_to_string_one () =

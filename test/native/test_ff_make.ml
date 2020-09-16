@@ -109,7 +109,10 @@ module MakeEquality (FiniteField : Ff.BASE) = struct
     ( "Equality",
       [ test_case "zero_same_objects" `Quick (repeat zero_same_objects);
         test_case "one_same_objects" `Quick (repeat one_same_objects);
-        test_case "random_not_equal" `Quick (repeat ~n:10 two_random_objects_not_equal);
+        test_case
+          "random_not_equal"
+          `Quick
+          (repeat ~n:10 two_random_objects_not_equal);
         test_case "random_same_objects" `Quick (repeat random_same_objects) ] )
 end
 
