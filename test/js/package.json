@@ -3,6 +3,6 @@
         "@dannywillems/rustc-bls12-381-node": "0.8.0"
     },
     "scripts": {
-        "test": "npm install && node --experimental-modules --experimental-wasm-modules test_fr.js && node --experimental-modules --experimental-wasm-modules test_fq12.js && node --experimental-modules --experimental-wasm-modules test_g1.js && node --experimental-modules --experimental-wasm-modules test_g2.js "
+        "test": "npm install && node --experimental-modules --experimental-wasm-modules test_fr.js && node --experimental-modules --experimental-wasm-modules test_fq12.js && node --experimental-modules --experimental-wasm-modules test_g1.js && node --experimental-modules --experimental-wasm-modules test_g2.js && node --experimental-modules --experimental-wasm-modules test_pairing.js"
     }
 }
