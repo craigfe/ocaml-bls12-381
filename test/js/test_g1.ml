@@ -1,24 +1,10 @@
-open Js_of_ocaml.Js
-
-module StubsNode = struct
-  let rust_module : Jsoo_lib.ESModule.t =
-    Jsoo_lib.ESModule.of_js
-      (Unsafe.js_expr {| require("@dannywillems/rustc-bls12-381-node") |})
-
-  let wasm_memory_buffer =
-    Jsoo_lib_rust_wasm.Memory.Buffer.of_js
-      (Unsafe.get
-         (Unsafe.get (Unsafe.get rust_module "__wasm") "memory")
-         "buffer")
-end
-
 let () =
   (* let on_resolved m = *)
-  let module StubsFr = Bls12_381_js.Fr.MakeStubs (StubsNode) in
+  let module StubsFr = Bls12_381_js.Fr.MakeStubs (Stubs_node) in
   let module Fr = Bls12_381_base.Fr.MakeFr (StubsFr) in
   let module StubsG1Uncompressed =
-    Bls12_381_js.G1.MakeUncompressedStubs (StubsNode) in
-  let module StubsG1Compressed = Bls12_381_js.G1.MakeCompressedStubs (StubsNode) in
+    Bls12_381_js.G1.MakeUncompressedStubs (Stubs_node) in
+  let module StubsG1Compressed = Bls12_381_js.G1.MakeCompressedStubs (Stubs_node) in
   let module G1Uncompressed =
     Bls12_381_base.G1.MakeUncompressed (Fr) (StubsG1Uncompressed)
   in

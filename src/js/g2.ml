@@ -1,7 +1,7 @@
 module MakeUncompressedStubs (M : sig
   val rust_module : Jsoo_lib.ESModule.t
 
-  val wasm_memory_buffer : Jsoo_lib_rust_wasm.Memory.Buffer.t
+  val get_wasm_memory_buffer : unit -> Jsoo_lib_rust_wasm.Memory.Buffer.t
 end) : Bls12_381_base.G2.RAW_UNCOMPRESSED = struct
   open Js_of_ocaml
   open Js_of_ocaml.Js.Unsafe
@@ -10,7 +10,7 @@ end) : Bls12_381_base.G2.RAW_UNCOMPRESSED = struct
 
   let check_bytes bs =
     Jsoo_lib_rust_wasm.Memory.copy_in_buffer
-      M.wasm_memory_buffer
+      (M.get_wasm_memory_buffer ())
       bs
       0
       0
@@ -22,7 +22,7 @@ end) : Bls12_381_base.G2.RAW_UNCOMPRESSED = struct
 
   let is_zero bs =
     Jsoo_lib_rust_wasm.Memory.copy_in_buffer
-      M.wasm_memory_buffer
+      (M.get_wasm_memory_buffer ())
       bs
       0
       0
@@ -35,7 +35,7 @@ end) : Bls12_381_base.G2.RAW_UNCOMPRESSED = struct
     @@ fun_call (get M.rust_module "rustc_bls12_381_g2_zero") [| inject 0 |] ;
     let res =
       Jsoo_lib_rust_wasm.Memory.Buffer.slice
-        M.wasm_memory_buffer
+        (M.get_wasm_memory_buffer ())
         0
         size_in_bytes
     in
@@ -46,7 +46,7 @@ end) : Bls12_381_base.G2.RAW_UNCOMPRESSED = struct
     @@ fun_call (get M.rust_module "rustc_bls12_381_g2_one") [| inject 0 |] ;
     let res =
       Jsoo_lib_rust_wasm.Memory.Buffer.slice
-        M.wasm_memory_buffer
+        (M.get_wasm_memory_buffer ())
         0
         size_in_bytes
     in
@@ -57,7 +57,7 @@ end) : Bls12_381_base.G2.RAW_UNCOMPRESSED = struct
     @@ fun_call (get M.rust_module "rustc_bls12_381_g2_random") [| inject 0 |] ;
     let res =
       Jsoo_lib_rust_wasm.Memory.Buffer.slice
-        M.wasm_memory_buffer
+        (M.get_wasm_memory_buffer ())
         0
         size_in_bytes
     in
@@ -65,13 +65,13 @@ end) : Bls12_381_base.G2.RAW_UNCOMPRESSED = struct
 
   let add x y =
     Jsoo_lib_rust_wasm.Memory.copy_in_buffer
-      M.wasm_memory_buffer
+      (M.get_wasm_memory_buffer ())
       x
       0
       size_in_bytes
       size_in_bytes ;
     Jsoo_lib_rust_wasm.Memory.copy_in_buffer
-      M.wasm_memory_buffer
+      (M.get_wasm_memory_buffer ())
       y
       0
       (2 * size_in_bytes)
@@ -82,7 +82,7 @@ end) : Bls12_381_base.G2.RAW_UNCOMPRESSED = struct
          [| inject 0; inject size_in_bytes; inject (2 * size_in_bytes) |] ;
     let res =
       Jsoo_lib_rust_wasm.Memory.Buffer.slice
-        M.wasm_memory_buffer
+        (M.get_wasm_memory_buffer ())
         0
         size_in_bytes
     in
@@ -90,13 +90,13 @@ end) : Bls12_381_base.G2.RAW_UNCOMPRESSED = struct
 
   let mul x y =
     Jsoo_lib_rust_wasm.Memory.copy_in_buffer
-      M.wasm_memory_buffer
+      (M.get_wasm_memory_buffer ())
       x
       0
       size_in_bytes
       size_in_bytes ;
     Jsoo_lib_rust_wasm.Memory.copy_in_buffer
-      M.wasm_memory_buffer
+      (M.get_wasm_memory_buffer ())
       y
       0
       (2 * size_in_bytes)
@@ -107,7 +107,7 @@ end) : Bls12_381_base.G2.RAW_UNCOMPRESSED = struct
          [| inject 0; inject size_in_bytes; inject (2 * size_in_bytes) |] ;
     let res =
       Jsoo_lib_rust_wasm.Memory.Buffer.slice
-        M.wasm_memory_buffer
+        (M.get_wasm_memory_buffer ())
         0
         size_in_bytes
     in
@@ -115,13 +115,13 @@ end) : Bls12_381_base.G2.RAW_UNCOMPRESSED = struct
 
   let eq x y =
     Jsoo_lib_rust_wasm.Memory.copy_in_buffer
-      M.wasm_memory_buffer
+      (M.get_wasm_memory_buffer ())
       x
       0
       0
       size_in_bytes ;
     Jsoo_lib_rust_wasm.Memory.copy_in_buffer
-      M.wasm_memory_buffer
+      (M.get_wasm_memory_buffer ())
       y
       0
       size_in_bytes
@@ -133,7 +133,7 @@ end) : Bls12_381_base.G2.RAW_UNCOMPRESSED = struct
 
   let negate x =
     Jsoo_lib_rust_wasm.Memory.copy_in_buffer
-      M.wasm_memory_buffer
+      (M.get_wasm_memory_buffer ())
       x
       0
       size_in_bytes
@@ -144,7 +144,7 @@ end) : Bls12_381_base.G2.RAW_UNCOMPRESSED = struct
          [| inject 0; inject size_in_bytes |] ;
     let res =
       Jsoo_lib_rust_wasm.Memory.Buffer.slice
-        M.wasm_memory_buffer
+        (M.get_wasm_memory_buffer ())
         0
         size_in_bytes
     in
@@ -152,7 +152,7 @@ end) : Bls12_381_base.G2.RAW_UNCOMPRESSED = struct
 
   let double x =
     Jsoo_lib_rust_wasm.Memory.copy_in_buffer
-      M.wasm_memory_buffer
+      (M.get_wasm_memory_buffer ())
       x
       0
       size_in_bytes
@@ -163,7 +163,7 @@ end) : Bls12_381_base.G2.RAW_UNCOMPRESSED = struct
          [| inject 0; inject size_in_bytes |] ;
     let res =
       Jsoo_lib_rust_wasm.Memory.Buffer.slice
-        M.wasm_memory_buffer
+        (M.get_wasm_memory_buffer ())
         0
         size_in_bytes
     in
@@ -171,25 +171,25 @@ end) : Bls12_381_base.G2.RAW_UNCOMPRESSED = struct
 
   let build_from_components x_1 x_2 y_1 y_2 =
     Jsoo_lib_rust_wasm.Memory.copy_in_buffer
-      M.wasm_memory_buffer
+      (M.get_wasm_memory_buffer ())
       x_1
       0
       size_in_bytes
       48 ;
     Jsoo_lib_rust_wasm.Memory.copy_in_buffer
-      M.wasm_memory_buffer
+      (M.get_wasm_memory_buffer ())
       x_2
       0
       (size_in_bytes + 48)
       48 ;
     Jsoo_lib_rust_wasm.Memory.copy_in_buffer
-      M.wasm_memory_buffer
+      (M.get_wasm_memory_buffer ())
       y_1
       0
       (size_in_bytes + (2 * 48))
       48 ;
     Jsoo_lib_rust_wasm.Memory.copy_in_buffer
-      M.wasm_memory_buffer
+      (M.get_wasm_memory_buffer ())
       y_2
       0
       (size_in_bytes + (3 * 48))
@@ -208,7 +208,7 @@ end) : Bls12_381_base.G2.RAW_UNCOMPRESSED = struct
     if res then
       let res =
         Jsoo_lib_rust_wasm.Memory.Buffer.slice
-          M.wasm_memory_buffer
+          (M.get_wasm_memory_buffer ())
           0
           size_in_bytes
       in
@@ -219,7 +219,7 @@ end
 module MakeCompressedStubs (M : sig
   val rust_module : Jsoo_lib.ESModule.t
 
-  val wasm_memory_buffer : Jsoo_lib_rust_wasm.Memory.Buffer.t
+  val get_wasm_memory_buffer : unit -> Jsoo_lib_rust_wasm.Memory.Buffer.t
 end) : Bls12_381_base.G2.RAW_COMPRESSED = struct
   open Js_of_ocaml
   open Js_of_ocaml.Js.Unsafe
@@ -228,7 +228,7 @@ end) : Bls12_381_base.G2.RAW_COMPRESSED = struct
 
   let check_bytes bs =
     Jsoo_lib_rust_wasm.Memory.copy_in_buffer
-      M.wasm_memory_buffer
+      (M.get_wasm_memory_buffer ())
       bs
       0
       0
@@ -240,7 +240,7 @@ end) : Bls12_381_base.G2.RAW_COMPRESSED = struct
 
   let is_zero bs =
     Jsoo_lib_rust_wasm.Memory.copy_in_buffer
-      M.wasm_memory_buffer
+      (M.get_wasm_memory_buffer ())
       bs
       0
       0
@@ -257,7 +257,7 @@ end) : Bls12_381_base.G2.RAW_COMPRESSED = struct
          [| inject 0 |] ;
     let res =
       Jsoo_lib_rust_wasm.Memory.Buffer.slice
-        M.wasm_memory_buffer
+        (M.get_wasm_memory_buffer ())
         0
         size_in_bytes
     in
@@ -270,7 +270,7 @@ end) : Bls12_381_base.G2.RAW_COMPRESSED = struct
          [| inject 0 |] ;
     let res =
       Jsoo_lib_rust_wasm.Memory.Buffer.slice
-        M.wasm_memory_buffer
+        (M.get_wasm_memory_buffer ())
         0
         size_in_bytes
     in
@@ -283,7 +283,7 @@ end) : Bls12_381_base.G2.RAW_COMPRESSED = struct
          [| inject 0 |] ;
     let res =
       Jsoo_lib_rust_wasm.Memory.Buffer.slice
-        M.wasm_memory_buffer
+        (M.get_wasm_memory_buffer ())
         0
         size_in_bytes
     in
@@ -291,13 +291,13 @@ end) : Bls12_381_base.G2.RAW_COMPRESSED = struct
 
   let add x y =
     Jsoo_lib_rust_wasm.Memory.copy_in_buffer
-      M.wasm_memory_buffer
+      (M.get_wasm_memory_buffer ())
       x
       0
       size_in_bytes
       size_in_bytes ;
     Jsoo_lib_rust_wasm.Memory.copy_in_buffer
-      M.wasm_memory_buffer
+      (M.get_wasm_memory_buffer ())
       y
       0
       (2 * size_in_bytes)
@@ -308,7 +308,7 @@ end) : Bls12_381_base.G2.RAW_COMPRESSED = struct
          [| inject 0; inject size_in_bytes; inject (2 * size_in_bytes) |] ;
     let res =
       Jsoo_lib_rust_wasm.Memory.Buffer.slice
-        M.wasm_memory_buffer
+        (M.get_wasm_memory_buffer ())
         0
         size_in_bytes
     in
@@ -316,13 +316,13 @@ end) : Bls12_381_base.G2.RAW_COMPRESSED = struct
 
   let mul x y =
     Jsoo_lib_rust_wasm.Memory.copy_in_buffer
-      M.wasm_memory_buffer
+      (M.get_wasm_memory_buffer ())
       x
       0
       size_in_bytes
       size_in_bytes ;
     Jsoo_lib_rust_wasm.Memory.copy_in_buffer
-      M.wasm_memory_buffer
+      (M.get_wasm_memory_buffer ())
       y
       0
       (2 * size_in_bytes)
@@ -333,7 +333,7 @@ end) : Bls12_381_base.G2.RAW_COMPRESSED = struct
          [| inject 0; inject size_in_bytes; inject (2 * size_in_bytes) |] ;
     let res =
       Jsoo_lib_rust_wasm.Memory.Buffer.slice
-        M.wasm_memory_buffer
+        (M.get_wasm_memory_buffer ())
         0
         size_in_bytes
     in
@@ -341,13 +341,13 @@ end) : Bls12_381_base.G2.RAW_COMPRESSED = struct
 
   let eq x y =
     Jsoo_lib_rust_wasm.Memory.copy_in_buffer
-      M.wasm_memory_buffer
+      (M.get_wasm_memory_buffer ())
       x
       0
       0
       size_in_bytes ;
     Jsoo_lib_rust_wasm.Memory.copy_in_buffer
-      M.wasm_memory_buffer
+      (M.get_wasm_memory_buffer ())
       y
       0
       size_in_bytes
@@ -359,7 +359,7 @@ end) : Bls12_381_base.G2.RAW_COMPRESSED = struct
 
   let negate x =
     Jsoo_lib_rust_wasm.Memory.copy_in_buffer
-      M.wasm_memory_buffer
+      (M.get_wasm_memory_buffer ())
       x
       0
       size_in_bytes
@@ -370,7 +370,7 @@ end) : Bls12_381_base.G2.RAW_COMPRESSED = struct
          [| inject 0; inject size_in_bytes |] ;
     let res =
       Jsoo_lib_rust_wasm.Memory.Buffer.slice
-        M.wasm_memory_buffer
+        (M.get_wasm_memory_buffer ())
         0
         size_in_bytes
     in
@@ -378,7 +378,7 @@ end) : Bls12_381_base.G2.RAW_COMPRESSED = struct
 
   let double x =
     Jsoo_lib_rust_wasm.Memory.copy_in_buffer
-      M.wasm_memory_buffer
+      (M.get_wasm_memory_buffer ())
       x
       0
       size_in_bytes
@@ -389,7 +389,7 @@ end) : Bls12_381_base.G2.RAW_COMPRESSED = struct
          [| inject 0; inject size_in_bytes |] ;
     let res =
       Jsoo_lib_rust_wasm.Memory.Buffer.slice
-        M.wasm_memory_buffer
+        (M.get_wasm_memory_buffer ())
         0
         size_in_bytes
     in
