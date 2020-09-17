@@ -28,7 +28,6 @@ let () =
   in
   let module Properties = struct
     let with_zero_as_first_component () =
-      let open Js_of_ocaml in
       assert (
         Fq12.eq
           (Pairing.pairing G1Uncompressed.zero (G2Uncompressed.random ()))
