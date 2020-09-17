@@ -6,7 +6,7 @@ end) : Bls12_381_base.G1.RAW_UNCOMPRESSED = struct
   open Js_of_ocaml
   open Js_of_ocaml.Js.Unsafe
 
-  let size_in_bytes = 192
+  let size_in_bytes = 96
 
   let check_bytes bs =
     Jsoo_lib_rust_wasm.Memory.copy_in_buffer
