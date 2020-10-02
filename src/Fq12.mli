@@ -1,8 +1,5 @@
 include Ff.BASE
 
-(** Check if a point, represented as a byte array, is in the field *)
-val check_bytes : Bytes.t -> bool
-
 (** Construct an element of Fq12 based on the following pattern:
     Fq12 =
      Fq6 (
