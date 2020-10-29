@@ -12,10 +12,7 @@ depends: [
   "dune" {build & >= "1.7"}
   "dune-configurator" {build}
   "ff" {>= "0.4.0" & < "0.5.0"}
-  "zarith" {build & = "1.9.1"}
+  "zarith" {>= "1.10" & < "2.0"}
 ]
 build: [[ "dune" "build" "-j" jobs "-p" name "@install" ]]
 run-test: [[ "dune" "runtest" "-p" name "-j" jobs ]]
-pin-depends: [
-  ["ff.0.4.0" "git+https://gitlab.com/dannywillems/ocaml-ff.git#0.4.0"]
-]
