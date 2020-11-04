@@ -78,4 +78,5 @@
  )
 )
 
-(rule (alias runtest) (deps package.json .npmrc test_fq12.js test_fr.js test_g1.js test_g2.js test_pairing.js) (action (bash "npm run test")))
+; (rule (alias runtest) (deps package.json .npmrc test_fq12.js test_fr.js test_g1.js test_g2.js test_pairing.js) (action (bash "npm run test")))
+(rule (alias runtest) (deps package.json .npmrc test_fr.js) (action (bash "npm run test")))

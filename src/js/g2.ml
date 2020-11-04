@@ -1,5 +1,5 @@
 module MakeUncompressedStubs (M : sig
-  val rust_module : Jsoo_lib.ESModule.t
+  val rust_module : unit -> Jsoo_lib.ESModule.t
 
   val get_wasm_memory_buffer : unit -> Jsoo_lib_rust_wasm.Memory.Buffer.t
 end) : Bls12_381_base.G2.RAW_UNCOMPRESSED = struct
@@ -17,7 +17,7 @@ end) : Bls12_381_base.G2.RAW_UNCOMPRESSED = struct
       size_in_bytes ;
     Js.to_bool
     @@ fun_call
-         (get M.rust_module "rustc_bls12_381_g2_uncompressed_check_bytes")
+         (get (M.rust_module ()) "rustc_bls12_381_g2_uncompressed_check_bytes")
          [| inject 0 |]
 
   let is_zero bs =
@@ -28,11 +28,15 @@ end) : Bls12_381_base.G2.RAW_UNCOMPRESSED = struct
       0
       size_in_bytes ;
     Js.to_bool
-    @@ fun_call (get M.rust_module "rustc_bls12_381_g2_is_zero") [| inject 0 |]
+    @@ fun_call
+         (get (M.rust_module ()) "rustc_bls12_381_g2_is_zero")
+         [| inject 0 |]
 
   let zero () =
     ignore
-    @@ fun_call (get M.rust_module "rustc_bls12_381_g2_zero") [| inject 0 |] ;
+    @@ fun_call
+         (get (M.rust_module ()) "rustc_bls12_381_g2_zero")
+         [| inject 0 |] ;
     let res =
       Jsoo_lib_rust_wasm.Memory.Buffer.slice
         (M.get_wasm_memory_buffer ())
@@ -43,7 +47,7 @@ end) : Bls12_381_base.G2.RAW_UNCOMPRESSED = struct
 
   let one () =
     ignore
-    @@ fun_call (get M.rust_module "rustc_bls12_381_g2_one") [| inject 0 |] ;
+    @@ fun_call (get (M.rust_module ()) "rustc_bls12_381_g2_one") [| inject 0 |] ;
     let res =
       Jsoo_lib_rust_wasm.Memory.Buffer.slice
         (M.get_wasm_memory_buffer ())
@@ -54,7 +58,9 @@ end) : Bls12_381_base.G2.RAW_UNCOMPRESSED = struct
 
   let random () =
     ignore
-    @@ fun_call (get M.rust_module "rustc_bls12_381_g2_random") [| inject 0 |] ;
+    @@ fun_call
+         (get (M.rust_module ()) "rustc_bls12_381_g2_random")
+         [| inject 0 |] ;
     let res =
       Jsoo_lib_rust_wasm.Memory.Buffer.slice
         (M.get_wasm_memory_buffer ())
@@ -78,7 +84,7 @@ end) : Bls12_381_base.G2.RAW_UNCOMPRESSED = struct
       size_in_bytes ;
     ignore
     @@ fun_call
-         (get M.rust_module "rustc_bls12_381_g2_add")
+         (get (M.rust_module ()) "rustc_bls12_381_g2_add")
          [| inject 0; inject size_in_bytes; inject (2 * size_in_bytes) |] ;
     let res =
       Jsoo_lib_rust_wasm.Memory.Buffer.slice
@@ -103,7 +109,7 @@ end) : Bls12_381_base.G2.RAW_UNCOMPRESSED = struct
       32 ;
     ignore
     @@ fun_call
-         (get M.rust_module "rustc_bls12_381_g2_mul")
+         (get (M.rust_module ()) "rustc_bls12_381_g2_mul")
          [| inject 0; inject size_in_bytes; inject (2 * size_in_bytes) |] ;
     let res =
       Jsoo_lib_rust_wasm.Memory.Buffer.slice
@@ -128,7 +134,7 @@ end) : Bls12_381_base.G2.RAW_UNCOMPRESSED = struct
       size_in_bytes ;
     Js.to_bool
     @@ fun_call
-         (get M.rust_module "rustc_bls12_381_g2_eq")
+         (get (M.rust_module ()) "rustc_bls12_381_g2_eq")
          [| inject 0; inject size_in_bytes |]
 
   let negate x =
@@ -140,7 +146,7 @@ end) : Bls12_381_base.G2.RAW_UNCOMPRESSED = struct
       size_in_bytes ;
     ignore
     @@ fun_call
-         (get M.rust_module "rustc_bls12_381_g2_negate")
+         (get (M.rust_module ()) "rustc_bls12_381_g2_negate")
          [| inject 0; inject size_in_bytes |] ;
     let res =
       Jsoo_lib_rust_wasm.Memory.Buffer.slice
@@ -159,7 +165,7 @@ end) : Bls12_381_base.G2.RAW_UNCOMPRESSED = struct
       size_in_bytes ;
     ignore
     @@ fun_call
-         (get M.rust_module "rustc_bls12_381_g2_double")
+         (get (M.rust_module ()) "rustc_bls12_381_g2_double")
          [| inject 0; inject size_in_bytes |] ;
     let res =
       Jsoo_lib_rust_wasm.Memory.Buffer.slice
@@ -197,7 +203,7 @@ end) : Bls12_381_base.G2.RAW_UNCOMPRESSED = struct
     let res =
       Js.to_bool
       @@ fun_call
-           (get M.rust_module "rustc_bls12_381_g2_build_from_components")
+           (get (M.rust_module ()) "rustc_bls12_381_g2_build_from_components")
            [| inject 0;
               inject size_in_bytes;
               inject (size_in_bytes + 48);
@@ -217,7 +223,7 @@ end) : Bls12_381_base.G2.RAW_UNCOMPRESSED = struct
 end
 
 module MakeCompressedStubs (M : sig
-  val rust_module : Jsoo_lib.ESModule.t
+  val rust_module : unit -> Jsoo_lib.ESModule.t
 
   val get_wasm_memory_buffer : unit -> Jsoo_lib_rust_wasm.Memory.Buffer.t
 end) : Bls12_381_base.G2.RAW_COMPRESSED = struct
@@ -235,7 +241,7 @@ end) : Bls12_381_base.G2.RAW_COMPRESSED = struct
       size_in_bytes ;
     Js.to_bool
     @@ fun_call
-         (get M.rust_module "rustc_bls12_381_g2_compressed_check_bytes")
+         (get (M.rust_module ()) "rustc_bls12_381_g2_compressed_check_bytes")
          [| inject 0 |]
 
   let is_zero bs =
@@ -247,13 +253,13 @@ end) : Bls12_381_base.G2.RAW_COMPRESSED = struct
       size_in_bytes ;
     Js.to_bool
     @@ fun_call
-         (get M.rust_module "rustc_bls12_381_g2_compressed_is_zero")
+         (get (M.rust_module ()) "rustc_bls12_381_g2_compressed_is_zero")
          [| inject 0 |]
 
   let zero () =
     ignore
     @@ fun_call
-         (get M.rust_module "rustc_bls12_381_g2_compressed_zero")
+         (get (M.rust_module ()) "rustc_bls12_381_g2_compressed_zero")
          [| inject 0 |] ;
     let res =
       Jsoo_lib_rust_wasm.Memory.Buffer.slice
@@ -266,7 +272,7 @@ end) : Bls12_381_base.G2.RAW_COMPRESSED = struct
   let one () =
     ignore
     @@ fun_call
-         (get M.rust_module "rustc_bls12_381_g2_compressed_one")
+         (get (M.rust_module ()) "rustc_bls12_381_g2_compressed_one")
          [| inject 0 |] ;
     let res =
       Jsoo_lib_rust_wasm.Memory.Buffer.slice
@@ -279,7 +285,7 @@ end) : Bls12_381_base.G2.RAW_COMPRESSED = struct
   let random () =
     ignore
     @@ fun_call
-         (get M.rust_module "rustc_bls12_381_g2_compressed_random")
+         (get (M.rust_module ()) "rustc_bls12_381_g2_compressed_random")
          [| inject 0 |] ;
     let res =
       Jsoo_lib_rust_wasm.Memory.Buffer.slice
@@ -304,7 +310,7 @@ end) : Bls12_381_base.G2.RAW_COMPRESSED = struct
       size_in_bytes ;
     ignore
     @@ fun_call
-         (get M.rust_module "rustc_bls12_381_g2_compressed_add")
+         (get (M.rust_module ()) "rustc_bls12_381_g2_compressed_add")
          [| inject 0; inject size_in_bytes; inject (2 * size_in_bytes) |] ;
     let res =
       Jsoo_lib_rust_wasm.Memory.Buffer.slice
@@ -329,7 +335,7 @@ end) : Bls12_381_base.G2.RAW_COMPRESSED = struct
       32 ;
     ignore
     @@ fun_call
-         (get M.rust_module "rustc_bls12_381_g2_compressed_mul")
+         (get (M.rust_module ()) "rustc_bls12_381_g2_compressed_mul")
          [| inject 0; inject size_in_bytes; inject (2 * size_in_bytes) |] ;
     let res =
       Jsoo_lib_rust_wasm.Memory.Buffer.slice
@@ -354,7 +360,7 @@ end) : Bls12_381_base.G2.RAW_COMPRESSED = struct
       size_in_bytes ;
     Js.to_bool
     @@ fun_call
-         (get M.rust_module "rustc_bls12_381_g2_compressed_eq")
+         (get (M.rust_module ()) "rustc_bls12_381_g2_compressed_eq")
          [| inject 0; inject size_in_bytes |]
 
   let negate x =
@@ -366,7 +372,7 @@ end) : Bls12_381_base.G2.RAW_COMPRESSED = struct
       size_in_bytes ;
     ignore
     @@ fun_call
-         (get M.rust_module "rustc_bls12_381_g2_compressed_negate")
+         (get (M.rust_module ()) "rustc_bls12_381_g2_compressed_negate")
          [| inject 0; inject size_in_bytes |] ;
     let res =
       Jsoo_lib_rust_wasm.Memory.Buffer.slice
@@ -385,7 +391,7 @@ end) : Bls12_381_base.G2.RAW_COMPRESSED = struct
       size_in_bytes ;
     ignore
     @@ fun_call
-         (get M.rust_module "rustc_bls12_381_g2_compressed_double")
+         (get (M.rust_module ()) "rustc_bls12_381_g2_compressed_double")
          [| inject 0; inject size_in_bytes |] ;
     let res =
       Jsoo_lib_rust_wasm.Memory.Buffer.slice

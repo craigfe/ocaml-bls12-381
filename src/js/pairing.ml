@@ -1,5 +1,5 @@
 module MakeStubs (M : sig
-  val rust_module : Jsoo_lib.ESModule.t
+  val rust_module : unit -> Jsoo_lib.ESModule.t
 
   val get_wasm_memory_buffer : unit -> Jsoo_lib_rust_wasm.Memory.Buffer.t
 end) : Bls12_381_base.Pairing.RAW_STUBS = struct
@@ -26,7 +26,7 @@ end) : Bls12_381_base.Pairing.RAW_STUBS = struct
       g2_size_in_bytes ;
     ignore
     @@ fun_call
-         (get M.rust_module "rustc_bls12_381_pairing_miller_loop_simple")
+         (get (M.rust_module ()) "rustc_bls12_381_pairing_miller_loop_simple")
          [| inject 0;
             inject fq12_size_in_bytes;
             inject (fq12_size_in_bytes + g1_size_in_bytes)
@@ -54,7 +54,7 @@ end) : Bls12_381_base.Pairing.RAW_STUBS = struct
       g2_size_in_bytes ;
     ignore
     @@ fun_call
-         (get M.rust_module "rustc_bls12_381_pairing")
+         (get (M.rust_module ()) "rustc_bls12_381_pairing")
          [| inject 0;
             inject fq12_size_in_bytes;
             inject (fq12_size_in_bytes + g1_size_in_bytes)
@@ -77,7 +77,7 @@ end) : Bls12_381_base.Pairing.RAW_STUBS = struct
     ignore
     @@ fun_call
          (get
-            M.rust_module
+            (M.rust_module ())
             "rustc_bls12_381_unsafe_pairing_final_exponentiation")
          [| inject 0; inject fq12_size_in_bytes |] ;
     let res =
@@ -115,7 +115,7 @@ end) : Bls12_381_base.Pairing.RAW_STUBS = struct
       g2_size_in_bytes ;
     ignore
     @@ fun_call
-         (get M.rust_module "rustc_bls12_381_pairing_miller_loop_2")
+         (get (M.rust_module ()) "rustc_bls12_381_pairing_miller_loop_2")
          [| inject 0;
             inject fq12_size_in_bytes;
             inject (fq12_size_in_bytes + g1_size_in_bytes);
@@ -170,7 +170,7 @@ end) : Bls12_381_base.Pairing.RAW_STUBS = struct
       g2_size_in_bytes ;
     ignore
     @@ fun_call
-         (get M.rust_module "rustc_bls12_381_pairing_miller_loop_3")
+         (get (M.rust_module ()) "rustc_bls12_381_pairing_miller_loop_3")
          [| inject 0;
             inject fq12_size_in_bytes;
             inject (fq12_size_in_bytes + g1_size_in_bytes);
@@ -241,7 +241,7 @@ end) : Bls12_381_base.Pairing.RAW_STUBS = struct
       g2_size_in_bytes ;
     ignore
     @@ fun_call
-         (get M.rust_module "rustc_bls12_381_pairing_miller_loop_4")
+         (get (M.rust_module ()) "rustc_bls12_381_pairing_miller_loop_4")
          [| inject 0;
             inject fq12_size_in_bytes;
             inject (fq12_size_in_bytes + g1_size_in_bytes);
@@ -328,7 +328,7 @@ end) : Bls12_381_base.Pairing.RAW_STUBS = struct
       g2_size_in_bytes ;
     ignore
     @@ fun_call
-         (get M.rust_module "rustc_bls12_381_pairing_miller_loop_5")
+         (get (M.rust_module ()) "rustc_bls12_381_pairing_miller_loop_5")
          [| inject 0;
             inject fq12_size_in_bytes;
             inject (fq12_size_in_bytes + g1_size_in_bytes);
@@ -432,7 +432,7 @@ end) : Bls12_381_base.Pairing.RAW_STUBS = struct
       g2_size_in_bytes ;
     ignore
     @@ fun_call
-         (get M.rust_module "rustc_bls12_381_pairing_miller_loop_6")
+         (get (M.rust_module ()) "rustc_bls12_381_pairing_miller_loop_6")
          [| inject 0;
             inject fq12_size_in_bytes;
             inject (fq12_size_in_bytes + g1_size_in_bytes);
