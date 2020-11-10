@@ -98,7 +98,7 @@ build-ocaml-4.10-rust-1.47.0:
     - opam repository set-url default https://opam.ocaml.org
     - opam update
     # Depext
-    - opam depext -i -y zarith
+    - opam depext -i -y zarith conf-pkg-config conf-libffi
     # Install the static library from rustc
     - ./build_deps.sh
     - opam install -y .
