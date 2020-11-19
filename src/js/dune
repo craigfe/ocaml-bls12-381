@@ -1,8 +1,9 @@
 (library
  (public_name bls12-381-js)
  (name bls12_381_js)
- (modules Fr Fq12 G1 G2 Pairing)
+ (modules Fq12 Fr G1 G2 Pairing)
  (modes byte)
  (preprocess (pps js_of_ocaml-ppx))
- (libraries bls12-381-base zarith ff js_of_ocaml js_of_ocaml-ppx jsoo-lib jsoo-lib-rust-wasm integers)
+ (implements bls12-381)
+ (libraries bls12-381-functors bls12-381-js-functors zarith ff js_of_ocaml js_of_ocaml-ppx jsoo-lib jsoo-lib-rust-wasm integers)
 )

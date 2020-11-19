@@ -27,7 +27,7 @@ module type COMPRESSED = sig
   include BASE
 end
 
-module MakeBase (Scalar : Fr.T) (Stubs : Elliptic_curve_sig.RAW_BASE) :
+module MakeBase (Scalar : Fr_sig.T) (Stubs : Elliptic_curve_sig.RAW_BASE) :
   BASE with module Scalar = Scalar = struct
   exception Not_on_curve of Bytes.t
 
@@ -98,7 +98,7 @@ module MakeBase (Scalar : Fr.T) (Stubs : Elliptic_curve_sig.RAW_BASE) :
     res
 end
 
-module MakeUncompressed (Scalar : Fr.T) (Stubs : RAW_UNCOMPRESSED) :
+module MakeUncompressed (Scalar : Fr_sig.T) (Stubs : RAW_UNCOMPRESSED) :
   UNCOMPRESSED with module Scalar = Scalar = struct
   include MakeBase (Scalar) (Stubs)
 
@@ -123,7 +123,7 @@ module MakeUncompressed (Scalar : Fr.T) (Stubs : RAW_UNCOMPRESSED) :
     match res with None -> None | Some res -> Some (of_bytes_exn res)
 end
 
-module MakeCompressed (Scalar : Fr.T) (Stubs : RAW_COMPRESSED) :
+module MakeCompressed (Scalar : Fr_sig.T) (Stubs : RAW_COMPRESSED) :
   COMPRESSED with module Scalar = Scalar = struct
   include MakeBase (Scalar) (Stubs)
 end

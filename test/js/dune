@@ -10,8 +10,9 @@
             integers_stubs_js
             jsoo-lib
             jsoo-lib-rust-wasm
-            bls12-381-base
             bls12-381-js
+            bls12-381-js-functors
+            bls12-381-functors
  )
  (modes byte)
  (preprocess (pps js_of_ocaml-ppx))
@@ -78,5 +79,4 @@
  )
 )
 
-; (rule (alias runtest) (deps package.json .npmrc test_fq12.js test_fr.js test_g1.js test_g2.js test_pairing.js) (action (bash "npm run test")))
-(rule (alias runtest) (deps package.json .npmrc test_fr.js) (action (bash "npm run test")))
+(rule (alias runtest) (deps package.json .npmrc test_fq12.js test_fr.js test_g1.js test_g2.js test_pairing.js) (action (bash "npm run test")))

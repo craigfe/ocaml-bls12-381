@@ -41,13 +41,22 @@ module Make (Stubs : RAW_BASE) : Ff.BASE = struct
 
   let size_in_bytes = Stubs.size_in_bytes
 
-  let check_bytes bs =
-    if Int.equal (Bytes.length bs) Stubs.size_in_bytes then Stubs.check_bytes bs
-    else false
+  let pad_if_require bs =
+    if Bytes.length bs < size_in_bytes then (
+      let padded_bytes = Bytes.make size_in_bytes '\000' in
+      Bytes.blit bs 0 padded_bytes 0 (Bytes.length bs) ;
+      padded_bytes )
+    else bs
 
-  let of_bytes_opt bs = if check_bytes bs then Some bs else None
+  let check_bytes bs =
+    if Bytes.length bs = size_in_bytes then Stubs.check_bytes bs else false
+
+  let of_bytes_opt bs =
+    let bs = pad_if_require bs in
+    if check_bytes bs then Some bs else None
 
   let of_bytes_exn (g : Bytes.t) : t =
+    let g = pad_if_require g in
     if check_bytes g then g else raise (Not_in_field g)
 
   let to_bytes g = g

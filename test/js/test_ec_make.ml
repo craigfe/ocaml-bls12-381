@@ -6,7 +6,7 @@ let rec repeat n f =
     f () ;
     repeat (n - 1) f )
 
-module MakeEquality (G : Bls12_381_base.Elliptic_curve_sig.T) = struct
+module MakeEquality (G : Bls12_381_functors.Elliptic_curve_sig.T) = struct
   (** Verify the equality is correct with the value zero *)
   let zero () = assert (G.eq G.zero G.zero)
 
@@ -28,7 +28,8 @@ module MakeEquality (G : Bls12_381_base.Elliptic_curve_sig.T) = struct
       ] )
 end
 
-module MakeValueGeneration (G : Bls12_381_base.Elliptic_curve_sig.T) = struct
+module MakeValueGeneration (G : Bls12_381_functors.Elliptic_curve_sig.T) =
+struct
   let random () = ignore @@ G.random ()
 
   let negation_with_random () =
@@ -60,7 +61,7 @@ module MakeValueGeneration (G : Bls12_381_base.Elliptic_curve_sig.T) = struct
         test_case "double_with_zero" `Quick (repeat 100 double_with_zero) ] )
 end
 
-module MakeIsZero (G : Bls12_381_base.Elliptic_curve_sig.T) = struct
+module MakeIsZero (G : Bls12_381_functors.Elliptic_curve_sig.T) = struct
   let with_zero_value () = assert (G.is_zero G.zero = true)
 
   let with_one_value () = assert (G.is_zero G.one = false)
@@ -76,7 +77,7 @@ module MakeIsZero (G : Bls12_381_base.Elliptic_curve_sig.T) = struct
         test_case "with random value" `Quick (repeat 100 with_random_value) ] )
 end
 
-module MakeECProperties (G : Bls12_381_base.Elliptic_curve_sig.T) = struct
+module MakeECProperties (G : Bls12_381_functors.Elliptic_curve_sig.T) = struct
   (** Verify that a random point is valid *)
   let check_bytes_random () = assert (G.(check_bytes @@ to_bytes @@ random ()))
 

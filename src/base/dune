@@ -1,5 +1,0 @@
-(library
- (public_name bls12-381-base)
- (name bls12_381_base)
- (libraries zarith ff)
-)

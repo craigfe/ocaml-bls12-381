@@ -7,23 +7,23 @@ let rec repeat n f =
     repeat (n - 1) f )
 
 let () =
-  let module StubsFr = Bls12_381_js.Fr.MakeStubs (Stubs_node) in
-  let module Fr = Bls12_381_base.Fr.MakeFr (StubsFr) in
-  let module StubsFq12 = Bls12_381_js.Fq12.MakeStubs (Stubs_node) in
-  let module Fq12 = Bls12_381_base.Fq12.MakeFq12 (StubsFq12) in
+  let module StubsFr = Bls12_381_js_functors.Fr.MakeStubs (Stubs_node) in
+  let module Fr = Bls12_381_functors.Fr_sig.MakeFr (StubsFr) in
+  let module StubsFq12 = Bls12_381_js_functors.Fq12.MakeStubs (Stubs_node) in
+  let module Fq12 = Bls12_381_functors.Fq12_sig.MakeFq12 (StubsFq12) in
   let module StubsG1Uncompressed =
-    Bls12_381_js.G1.MakeUncompressedStubs (Stubs_node) in
+    Bls12_381_js_functors.G1.MakeUncompressedStubs (Stubs_node) in
   let module G1Uncompressed =
-    Bls12_381_base.G1.MakeUncompressed (Fr) (StubsG1Uncompressed)
+    Bls12_381_functors.G1_sig.MakeUncompressed (Fr) (StubsG1Uncompressed)
   in
   let module StubsG2Uncompressed =
-    Bls12_381_js.G2.MakeUncompressedStubs (Stubs_node) in
+    Bls12_381_js_functors.G2.MakeUncompressedStubs (Stubs_node) in
   let module G2Uncompressed =
-    Bls12_381_base.G2.MakeUncompressed (Fr) (StubsG2Uncompressed)
+    Bls12_381_functors.G2_sig.MakeUncompressed (Fr) (StubsG2Uncompressed)
   in
-  let module PairingStubs = Bls12_381_js.Pairing.MakeStubs (Stubs_node) in
+  let module PairingStubs = Bls12_381_js_functors.Pairing.MakeStubs (Stubs_node) in
   let module Pairing =
-    Bls12_381_base.Pairing.Make (G1Uncompressed) (G2Uncompressed) (Fq12)
+    Bls12_381_functors.Pairing_sig.Make (G1Uncompressed) (G2Uncompressed) (Fq12)
       (PairingStubs)
   in
   let module Properties = struct

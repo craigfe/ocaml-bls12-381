@@ -1,9 +1,12 @@
 (copy_files bindings/{rustc_bls12_381_ctypes_c_stubs.c,rustc_bls12_381_stubs.ml,rustc_bls12_381_bindings.ml})
 
 (library
- (public_name bls12-381)
- (name bls12_381)
- (libraries zarith ctypes ctypes.foreign ff bls12-381-base)
+ (public_name bls12-381-unix)
+ (name bls12_381_unix)
+ (implements bls12-381)
+ (modules Fr g1 g2 pairing Fq12 Rustc_bls12_381_stubs Rustc_bls12_381_bindings)
+ (private_modules Rustc_bls12_381_stubs Rustc_bls12_381_bindings)
+ (libraries zarith ctypes ctypes.foreign ff bls12-381-functors)
  (library_flags :standard -linkall -ccopt -pthread)
  (foreign_stubs
   (language c)

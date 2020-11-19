@@ -10,10 +10,11 @@ lint:
     - eval $(opam env)
   script:
     - ocamlformat --check benchmark/*.ml*
-    - ocamlformat --check src/base/*.ml*
-    - ocamlformat --check src/native/*.ml*
+    - ocamlformat --check src/functors/*.ml*
+    - ocamlformat --check src/virtual/*.ml*
+    - ocamlformat --check src/unix/*.ml*
     - ocamlformat --check src/js/*.ml*
-    - ocamlformat --check test/native/*.ml*
+    - ocamlformat --check test/unix/*.ml*
     - ocamlformat --check test/js/*.ml*
 
 .build-test: &build_definition
@@ -40,13 +41,14 @@ lint:
     # Install the static library from rustc
     - ./build_deps.sh
     # Pin the packages
-    - opam pin add bls12-381-base . --no-action
-    - opam pin add bls12-381 . --no-action
+    - opam pin add bls12-381-functors. --no-action
+    - opam pin add bls12-381-virtual . --no-action
+    - opam pin add bls12-381-unix . --no-action
     - opam pin add bls12-381-js . --no-action
     # Install the packages
-    - opam install bls12-381-base -y
-    - opam install bls12-381 -y
-
+    - opam install bls12-381-functors -y
+    - opam install bls12-381-virtual -y
+    - opam install bls12-381-unix -y
     - opam install bls12-381-js -y
     # Run test
     - opam install alcotest -y

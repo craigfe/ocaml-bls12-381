@@ -1,31 +1,25 @@
 opam-version: "2.0"
-name: "bls12-381-js"
+name: "bls12-381-unix"
 version: "0.3.13"
 authors: [ "Danny Willems <be.danny.willems@gmail.com>" ]
 maintainer: [ "Danny Willems <be.danny.willems@gmail.com>" ]
-synopsis: "JavaScript version of BLS12-381 compatible with the interface provided by the package bls12-381-base"
+synopsis: "OCaml binding for bls12-381 from librustzcash"
 homepage: "https://gitlab.com/dannywillems/ocaml-bls12-381"
 dev-repo: "git+https://gitlab.com/dannywillems/ocaml-bls12-381.git"
 bug-reports: "https://gitlab.com/dannywillems/ocaml-bls12-381/issues"
 license: "MIT"
 depends: [
   "conf-rust" {build}
-  "dune" {build & >= "1.7"}
+  "ocaml" {>= "4.08"}
+  "dune" {>= "1.7"}
   "dune-configurator" {build}
   "ff" {>= "0.4.0" & < "0.5.0"}
   "zarith" {>= "1.10" & < "2.0"}
+  "ctypes" {= "0.17.1"}
+  "ctypes-foreign" {= "0.4.0"}
   "alcotest" {with-test}
-  "jsoo-lib" {= "0.0.4"}
-  "jsoo-lib-rust-wasm" {= "0.0.4"}
-  "bls12-381-virtual"
-  "bls12-381-js-functors"
   "bls12-381-functors"
-  "zarith_stubs_js"
-  "integers_stubs_js"
+  "bls12-381-virtual"
 ]
 build: [[ "dune" "build" "-j" jobs "-p" name "@install" ]]
 run-test: [[ "dune" "runtest" "-p" name "-j" jobs ]]
-pin-depends: [
-  ["jsoo-lib.0.0.4" "git+https://gitlab.com/dannywillems/jsoo-lib.git#dfbe6a864b5f01fc8c7d95f6dbea4c2b7784f822"]
-  ["jsoo-lib-rust-wasm.0.0.4" "git+https://gitlab.com/dannywillems/jsoo-lib.git#dfbe6a864b5f01fc8c7d95f6dbea4c2b7784f822"]
-]

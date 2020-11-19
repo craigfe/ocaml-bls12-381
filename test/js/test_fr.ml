@@ -26,14 +26,8 @@ let rec repeat n f =
     repeat (n - 1) f )
 
 let () =
-  let open Js_of_ocaml.Js in
-  Unsafe.global ##. HELLO :=
-    Jsoo_lib.ESModule.of_js
-      (Unsafe.js_expr {| require("@dannywillems/rustc-bls12-381-node") |}) ;
-  Js_of_ocaml.Firebug.console##log Unsafe.global ;
-  Js_of_ocaml.Firebug.console##log Unsafe.global ##. HELLO ;
-  (* let module StubsFr = Bls12_381_js.Fr.MakeStubs (Stubs_node) in *)
-  let module Fr = Bls12_381_js.Fr in
+  let module StubsFr = Bls12_381_js_functors.Fr.MakeStubs (Stubs_node) in
+  let module Fr = Bls12_381_functors.Fr_sig.MakeFr (StubsFr) in
   let module ValueGeneration = Test_ff_make.MakeValueGeneration (Fr) in
   let module IsZero = Test_ff_make.MakeIsZero (Fr) in
   let module Equality = Test_ff_make.MakeEquality (Fr) in
