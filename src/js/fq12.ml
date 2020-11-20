@@ -5,7 +5,7 @@ Bls12_381_gen.Fq12.MakeFq12 (Bls12_381_js_gen.Fq12.MakeStubs (struct
   open Js
 
   let rust_module () : Jsoo_lib.ESModule.t =
-    Jsoo_lib.ESModule.of_js Unsafe.global ##. RUSTC_BLS12_381
+    Jsoo_lib.ESModule.of_js Unsafe.global##._rustc_bls12_381
 
   let get_wasm_memory_buffer () =
     Jsoo_lib_rust_wasm.Memory.Buffer.of_js
