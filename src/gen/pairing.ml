@@ -81,7 +81,12 @@ module Make
     (G2 : G2.UNCOMPRESSED)
     (GT : Fq12.T)
     (Stubs : RAW_STUBS) :
-  T with module G1 = G1 and module G2 = G2 and module GT = GT = struct
+  T
+    with type G1.t = G1.t
+     and type G2.t = G2.t
+     and type GT.t = GT.t
+     and type G1.Scalar.t = G1.Scalar.t
+     and type G2.Scalar.t = G2.Scalar.t = struct
   module G1 = G1
   module G2 = G2
   module GT = GT

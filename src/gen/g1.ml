@@ -97,7 +97,7 @@ module MakeBase (Scalar : Fr.T) (Stubs : Elliptic_curve_sig.RAW_BASE) :
 end
 
 module MakeUncompressed (Scalar : Fr.T) (Stubs : RAW_UNCOMPRESSED) :
-  UNCOMPRESSED with module Scalar = Scalar = struct
+  UNCOMPRESSED with type Scalar.t = Scalar.t = struct
   include MakeBase (Scalar) (Stubs)
 
   let of_z_opt ~x ~y =
@@ -112,6 +112,6 @@ module MakeUncompressed (Scalar : Fr.T) (Stubs : RAW_UNCOMPRESSED) :
 end
 
 module MakeCompressed (Scalar : Fr.T) (Stubs : RAW_COMPRESSED) :
-  COMPRESSED with module Scalar = Scalar = struct
+  COMPRESSED with type Scalar.t = Scalar.t = struct
   include MakeBase (Scalar) (Stubs)
 end

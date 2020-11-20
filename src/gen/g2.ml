@@ -124,6 +124,6 @@ module MakeUncompressed (Scalar : Fr.T) (Stubs : RAW_UNCOMPRESSED) :
 end
 
 module MakeCompressed (Scalar : Fr.T) (Stubs : RAW_COMPRESSED) :
-  COMPRESSED with module Scalar = Scalar = struct
+  COMPRESSED with type Scalar.t = Scalar.t = struct
   include MakeBase (Scalar) (Stubs)
 end
