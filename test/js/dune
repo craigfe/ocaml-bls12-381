@@ -12,7 +12,7 @@
             jsoo-lib-rust-wasm
             bls12-381-js
             bls12-381-js-functors
-            bls12-381-functors
+            bls12-381-gen
  )
  (modes byte)
  (preprocess (pps js_of_ocaml-ppx))

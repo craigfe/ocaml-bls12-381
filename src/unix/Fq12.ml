@@ -89,4 +89,4 @@ module Stubs = struct
     buffer
 end
 
-include Bls12_381_functors.Fq12_sig.MakeFq12 (Stubs)
+include Bls12_381_gen.Fq12.MakeFq12 (Stubs)

@@ -133,9 +133,8 @@ module Compressed_Stubs = struct
 end
 
 module Uncompressed =
-  Bls12_381_functors.G2_sig.MakeUncompressed (Fr) (Uncompressed_Stubs)
-module Compressed =
-  Bls12_381_functors.G2_sig.MakeCompressed (Fr) (Compressed_Stubs)
+  Bls12_381_gen.G2.MakeUncompressed (Fr) (Uncompressed_Stubs)
+module Compressed = Bls12_381_gen.G2.MakeCompressed (Fr) (Compressed_Stubs)
 
 (* let compressed_of_uncompressed g =
  *   let buffer = Compressed.empty () in

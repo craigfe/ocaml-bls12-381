@@ -1,5 +1,5 @@
 module Uncompressed =
-  Bls12_381_functors.G2_sig.MakeUncompressed
+  Bls12_381_gen.G2.MakeUncompressed
     (Fr)
     (Bls12_381_js_functors.G2.MakeUncompressedStubs (struct
       open Js_of_ocaml.Js
@@ -15,7 +15,7 @@ module Uncompressed =
     end))
 
 module Compressed =
-  Bls12_381_functors.G2_sig.MakeCompressed
+  Bls12_381_gen.G2.MakeCompressed
     (Fr)
     (Bls12_381_js_functors.G2.MakeCompressedStubs (struct
       open Js_of_ocaml.Js

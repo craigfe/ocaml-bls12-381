@@ -1,0 +1,5 @@
+(library
+ (name bls12_381_gen)
+ (public_name bls12-381-gen)
+ (libraries zarith ff)
+)

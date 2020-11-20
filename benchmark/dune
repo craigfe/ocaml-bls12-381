@@ -1,17 +1,17 @@
 (executable
  (name bench_ec)
  (modules bench_ec)
- (libraries core_bench bls12-381-base bls12-381 core)
+ (libraries core_bench bls12-381-unix core)
 )
 
 (executable
  (name bench_pairing)
  (modules bench_pairing)
- (libraries core_bench bls12-381 bls12-381-base core)
+ (libraries core_bench bls12-381-unix core)
 )
 
 (executable
  (name bench_ff)
  (modules bench_ff)
- (libraries core_bench bls12-381 bls12-381-base core)
+ (libraries core_bench bls12-381-unix core)
 )

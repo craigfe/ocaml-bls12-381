@@ -2,7 +2,7 @@ module MakeStubs (M : sig
   val rust_module : unit -> Jsoo_lib.ESModule.t
 
   val get_wasm_memory_buffer : unit -> Jsoo_lib_rust_wasm.Memory.Buffer.t
-end) : Bls12_381_functors.Pairing_sig.RAW_STUBS = struct
+end) : Bls12_381_gen.Pairing.RAW_STUBS = struct
   open Js_of_ocaml.Js.Unsafe
 
   let g1_size_in_bytes = 96

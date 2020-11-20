@@ -87,4 +87,4 @@ module Stubs = struct
     buffer
 end
 
-include Bls12_381_functors.Fr_sig.MakeFr (Stubs)
+include Bls12_381_gen.Fr.MakeFr (Stubs)

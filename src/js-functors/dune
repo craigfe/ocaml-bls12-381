@@ -3,6 +3,6 @@
  (name bls12_381_js_functors)
  (preprocess (pps js_of_ocaml-ppx))
  (modes byte)
- (libraries bls12-381-functors zarith ff js_of_ocaml js_of_ocaml-ppx jsoo-lib jsoo-lib-rust-wasm integers)
+ (libraries bls12-381-gen zarith ff js_of_ocaml js_of_ocaml-ppx jsoo-lib jsoo-lib-rust-wasm integers)
  (modules Fr Fq12 G1 G2 Pairing)
 )

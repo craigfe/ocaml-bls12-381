@@ -1,1 +1,1 @@
-include Fq12_sig.T
+include Bls12_381_gen.Fq12.T

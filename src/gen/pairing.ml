@@ -77,9 +77,9 @@ module type RAW_STUBS = sig
 end
 
 module Make
-    (G1 : G1_sig.UNCOMPRESSED)
-    (G2 : G2_sig.UNCOMPRESSED)
-    (GT : Fq12_sig.T)
+    (G1 : G1.UNCOMPRESSED)
+    (G2 : G2.UNCOMPRESSED)
+    (GT : Fq12.T)
     (Stubs : RAW_STUBS) :
   T with module G1 = G1 and module G2 = G2 and module GT = GT = struct
   module G1 = G1

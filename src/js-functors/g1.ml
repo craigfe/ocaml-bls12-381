@@ -2,7 +2,7 @@ module MakeUncompressedStubs (M : sig
   val rust_module : unit -> Jsoo_lib.ESModule.t
 
   val get_wasm_memory_buffer : unit -> Jsoo_lib_rust_wasm.Memory.Buffer.t
-end) : Bls12_381_functors.G1_sig.RAW_UNCOMPRESSED = struct
+end) : Bls12_381_gen.G1.RAW_UNCOMPRESSED = struct
   open Js_of_ocaml
   open Js_of_ocaml.Js.Unsafe
 
@@ -209,7 +209,7 @@ module MakeCompressedStubs (M : sig
   val rust_module : unit -> Jsoo_lib.ESModule.t
 
   val get_wasm_memory_buffer : unit -> Jsoo_lib_rust_wasm.Memory.Buffer.t
-end) : Bls12_381_functors.G1_sig.RAW_COMPRESSED = struct
+end) : Bls12_381_gen.G1.RAW_COMPRESSED = struct
   open Js_of_ocaml
   open Js_of_ocaml.Js.Unsafe
 

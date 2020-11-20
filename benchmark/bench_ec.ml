@@ -1,6 +1,6 @@
 open Core_bench.Std
 
-module ECBenchmark (G : Bls12_381_base.Elliptic_curve_sig.T) = struct
+module ECBenchmark (G : Bls12_381_gen.Elliptic_curve_sig.T) = struct
   let g1 = G.random ()
 
   let g2 = G.random ()

@@ -1,6 +1,0 @@
-(library
- (name Bls12_381_functors)
- (public_name bls12-381-functors)
- (libraries zarith ff)
- (modules Fr_sig Fq12_sig g1_sig g2_sig pairing_sig Ff_sig Elliptic_curve_sig)
-)

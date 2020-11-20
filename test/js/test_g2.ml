@@ -1,16 +1,16 @@
 let () =
   (* let on_resolved m = *)
   let module StubsFr = Bls12_381_js_functors.Fr.MakeStubs (Stubs_node) in
-  let module Fr = Bls12_381_functors.Fr_sig.MakeFr (StubsFr) in
+  let module Fr = Bls12_381_gen.Fr.MakeFr (StubsFr) in
   let module StubsG2Uncompressed =
     Bls12_381_js_functors.G2.MakeUncompressedStubs (Stubs_node) in
   let module StubsG2Compressed =
     Bls12_381_js_functors.G2.MakeCompressedStubs (Stubs_node) in
   let module G2Uncompressed =
-    Bls12_381_functors.G2_sig.MakeUncompressed (Fr) (StubsG2Uncompressed)
+    Bls12_381_gen.G2.MakeUncompressed (Fr) (StubsG2Uncompressed)
   in
   let module G2Compressed =
-    Bls12_381_functors.G2_sig.MakeCompressed (Fr) (StubsG2Compressed)
+    Bls12_381_gen.G2.MakeCompressed (Fr) (StubsG2Compressed)
   in
   let module ValueGeneration = Test_ec_make.MakeValueGeneration (G2Uncompressed) in
   let module IsZero = Test_ec_make.MakeIsZero (G2Uncompressed) in

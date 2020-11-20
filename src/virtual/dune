@@ -1,7 +1,6 @@
 (library
  (name bls12_381)
  (public_name bls12-381)
- (libraries zarith ff bls12-381-functors)
+ (libraries zarith ff bls12-381-gen)
  (virtual_modules Fr Fq12 g1 g2 pairing)
- (flags (:standard -open Bls12_381_functors))
 )

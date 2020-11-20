@@ -17,6 +17,8 @@ depends: [
   "jsoo-lib-rust-wasm" {= "0.0.4"}
   "zarith_stubs_js"
   "integers_stubs_js"
+  "bls12-381-gen"
+  "bls12-381"
 ]
 build: [[ "dune" "build" "-j" jobs "-p" name "@install" ]]
 run-test: [[ "dune" "runtest" "-p" name "-j" jobs ]]

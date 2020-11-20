@@ -6,7 +6,7 @@
  (implements bls12-381)
  (modules Fr g1 g2 pairing Fq12 Rustc_bls12_381_stubs Rustc_bls12_381_bindings)
  (private_modules Rustc_bls12_381_stubs Rustc_bls12_381_bindings)
- (libraries zarith ctypes ctypes.foreign ff bls12-381-functors)
+ (libraries zarith ctypes ctypes.foreign ff bls12-381-gen)
  (library_flags :standard -linkall -ccopt -pthread)
  (foreign_stubs
   (language c)

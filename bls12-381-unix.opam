@@ -18,8 +18,8 @@ depends: [
   "ctypes" {= "0.17.1"}
   "ctypes-foreign" {= "0.4.0"}
   "alcotest" {with-test}
-  "bls12-381-functors"
-  "bls12-381-virtual"
+  "bls12-381-gen"
+  "bls12-381"
 ]
 build: [[ "dune" "build" "-j" jobs "-p" name "@install" ]]
 run-test: [[ "dune" "runtest" "-p" name "-j" jobs ]]

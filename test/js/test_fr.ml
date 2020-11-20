@@ -27,7 +27,7 @@ let rec repeat n f =
 
 let () =
   let module StubsFr = Bls12_381_js_functors.Fr.MakeStubs (Stubs_node) in
-  let module Fr = Bls12_381_functors.Fr_sig.MakeFr (StubsFr) in
+  let module Fr = Bls12_381_gen.Fr.MakeFr (StubsFr) in
   let module ValueGeneration = Test_ff_make.MakeValueGeneration (Fr) in
   let module IsZero = Test_ff_make.MakeIsZero (Fr) in
   let module Equality = Test_ff_make.MakeEquality (Fr) in
