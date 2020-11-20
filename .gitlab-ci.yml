@@ -22,7 +22,6 @@ lint:
   before_script:
     # Required to get the right Rust version.
     - . $HOME/.cargo/env
-    - rustc --version
     # Always update system package manager + setup OPAM env
     - sudo apt-get update
     - eval $(opam env)
@@ -34,6 +33,11 @@ lint:
     - . "$NVM_DIR/nvm.sh"
     - nvm install 14.12.0
     - nvm use 14.12.0
+    # List versions
+    - rustc --version
+    - ocaml --version
+    - opam --version
+    - node --version
   script:
     # Install external dependencies
     - opam depext -i -y zarith
@@ -44,16 +48,15 @@ lint:
     - opam pin add bls12-381-gen . --no-action
     - opam pin add bls12-381 . --no-action
     - opam pin add bls12-381-unix . --no-action
+    - opam pin add bls12-381-js-gen . --no-action
     - opam pin add bls12-381-js . --no-action
-    - opam pin add bls12-381-js-functors . --no-action
     # Install the packages
     - opam install bls12-381-gen -y
     - opam install bls12-381 -y
     - opam install bls12-381-unix -y
-    - opam install bls12-381-js-functors -y
+    - opam install bls12-381-js-gen -y
     - opam install bls12-381-js -y
     # Run test
-    - opam install alcotest -y
     - cd ${CI_PROJECT_DIR}
     - dune runtest
  

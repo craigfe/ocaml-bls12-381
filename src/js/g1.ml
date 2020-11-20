@@ -1,7 +1,7 @@
 module Uncompressed =
   Bls12_381_gen.G1.MakeUncompressed
     (Fr)
-    (Bls12_381_js_functors.G1.MakeUncompressedStubs (struct
+    (Bls12_381_js_gen.G1.MakeUncompressedStubs (struct
       open Js_of_ocaml.Js
 
       let rust_module () : Jsoo_lib.ESModule.t =
@@ -17,7 +17,7 @@ module Uncompressed =
 module Compressed =
   Bls12_381_gen.G1.MakeCompressed
     (Fr)
-    (Bls12_381_js_functors.G1.MakeCompressedStubs (struct
+    (Bls12_381_js_gen.G1.MakeCompressedStubs (struct
       open Js_of_ocaml.Js
 
       let rust_module () : Jsoo_lib.ESModule.t =

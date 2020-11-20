@@ -1,11 +1,11 @@
 let () =
   (* let on_resolved m = *)
-  let module StubsFr = Bls12_381_js_functors.Fr.MakeStubs (Stubs_node) in
+  let module StubsFr = Bls12_381_js_gen.Fr.MakeStubs (Stubs_node) in
   let module Fr = Bls12_381_gen.Fr.MakeFr (StubsFr) in
   let module StubsG1Uncompressed =
-    Bls12_381_js_functors.G1.MakeUncompressedStubs (Stubs_node) in
+    Bls12_381_js_gen.G1.MakeUncompressedStubs (Stubs_node) in
   let module StubsG1Compressed =
-    Bls12_381_js_functors.G1.MakeCompressedStubs (Stubs_node) in
+    Bls12_381_js_gen.G1.MakeCompressedStubs (Stubs_node) in
   let module G1Uncompressed =
     Bls12_381_gen.G1.MakeUncompressed (Fr) (StubsG1Uncompressed)
   in

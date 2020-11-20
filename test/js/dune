@@ -11,7 +11,7 @@
             jsoo-lib
             jsoo-lib-rust-wasm
             bls12-381-js
-            bls12-381-js-functors
+            bls12-381-js-gen
             bls12-381-gen
  )
  (modes byte)

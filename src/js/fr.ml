@@ -1,4 +1,4 @@
-module Fr = Bls12_381_gen.Fr.MakeFr (Bls12_381_js_functors.Fr.MakeStubs (struct
+module Fr = Bls12_381_gen.Fr.MakeFr (Bls12_381_js_gen.Fr.MakeStubs (struct
   open Js_of_ocaml.Js
 
   let rust_module () : Jsoo_lib.ESModule.t =

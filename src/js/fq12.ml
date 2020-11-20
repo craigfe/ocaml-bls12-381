@@ -1,7 +1,7 @@
 open Js_of_ocaml
 
 module Fq12 =
-Bls12_381_gen.Fq12.MakeFq12 (Bls12_381_js_functors.Fq12.MakeStubs (struct
+Bls12_381_gen.Fq12.MakeFq12 (Bls12_381_js_gen.Fq12.MakeStubs (struct
   open Js
 
   let rust_module () : Jsoo_lib.ESModule.t =
