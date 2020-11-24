@@ -3,7 +3,7 @@ name: "bls12-381-js-gen"
 version: "0.3.13"
 authors: [ "Danny Willems <be.danny.willems@gmail.com>" ]
 maintainer: [ "Danny Willems <be.danny.willems@gmail.com>" ]
-synopsis: "Package providing the interface of BLS12-381"
+synopsis: "Functors to generate BLS12-381 JavaScript primitives based on stubs"
 homepage: "https://gitlab.com/dannywillems/ocaml-bls12-381"
 dev-repo: "git+https://gitlab.com/dannywillems/ocaml-bls12-381.git"
 bug-reports: "https://gitlab.com/dannywillems/ocaml-bls12-381/issues"
@@ -17,8 +17,8 @@ depends: [
   "jsoo-lib-rust-wasm" {= "0.0.4"}
   "zarith_stubs_js"
   "integers_stubs_js"
-  "bls12-381-gen"
-  "bls12-381"
+  "bls12-381-gen" {= "0.3.13"}
+  "bls12-381" {= "0.3.13"}
 ]
 build: [[ "dune" "build" "-j" jobs "-p" name "@install" ]]
 run-test: [[ "dune" "runtest" "-p" name "-j" jobs ]]
