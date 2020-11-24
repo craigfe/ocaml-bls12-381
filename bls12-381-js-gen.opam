@@ -17,8 +17,8 @@ depends: [
   "js_of_ocaml"
   "js_of_ocaml-compiler"
   "js_of_ocaml-ppx"
-  "bls12-381-gen" {= "0.3.13"}
-  "bls12-381" {= "0.3.13"}
+  "bls12-381-gen" {= version}
+  "bls12-381" {= version}
 ]
 build: [[ "dune" "build" "-j" jobs "-p" name "@install" ]]
 run-test: [[ "dune" "runtest" "-p" name "-j" jobs ]]

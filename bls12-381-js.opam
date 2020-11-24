@@ -16,9 +16,9 @@ depends: [
   "ff" {>= "0.4.0" & < "0.5.0"}
   "zarith" {>= "1.10" & < "2.0"}
   "alcotest" {with-test}
-  "bls12-381-gen" {= "0.3.13"}
-  "bls12-381" {= "0.3.13"}
-  "bls12-381-js-gen" {= "0.3.13"}
+  "bls12-381-gen" {= version}
+  "bls12-381" {= version}
+  "bls12-381-js-gen" {= version}
   "js_of_ocaml"
   "js_of_ocaml-compiler"
   "js_of_ocaml-ppx"
