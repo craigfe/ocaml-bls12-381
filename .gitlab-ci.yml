@@ -11,11 +11,14 @@ lint:
   script:
     - ocamlformat --check benchmark/*.ml*
     - ocamlformat --check src/gen/*.ml*
-    - ocamlformat --check src/virtual/*.ml*
-    - ocamlformat --check src/unix/*.ml*
     - ocamlformat --check src/js/*.ml*
-    - ocamlformat --check test/unix/*.ml*
+    - ocamlformat --check src/js-gen/*.ml*
+    - ocamlformat --check src/unix/*.ml*
+    - ocamlformat --check src/unix/bindings/*.ml*
+    - ocamlformat --check src/virtual/*.ml*
+    - ocamlformat --check test/*.ml*
     - ocamlformat --check test/js/*.ml*
+    - ocamlformat --check test/js-gen/*.ml*
 
 .build-test: &build_definition
   stage: build
