@@ -10,6 +10,7 @@ lint-ocaml:
     - eval $(opam env)
   script:
     - ocamlformat --check benchmark/*.ml*
+    - ocamlformat --check common/*.ml*
     - ocamlformat --check src/gen/*.ml*
     - ocamlformat --check src/js/*.ml*
     - ocamlformat --check src/js-gen/*.ml*
