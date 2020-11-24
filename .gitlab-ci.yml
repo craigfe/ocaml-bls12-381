@@ -3,7 +3,7 @@ stages:
   - build
   - benchmark
 
-lint:
+lint-ocaml:
   stage: lint
   image: registry.gitlab.com/dannywillems/docker-ocamlformat:0.15.0
   before_script:
@@ -19,6 +19,16 @@ lint:
     - ocamlformat --check test/*.ml*
     - ocamlformat --check test/js/*.ml*
     - ocamlformat --check test/js-gen/*.ml*
+
+lint-js:
+  image: node:lts
+  stage: lint
+  before_script:
+    - cd .ci
+    - npm install -d
+  script:
+    - ./node_modules/eslint/bin/eslint.js -c .eslintrc.js ../test/js/node/run.js
+    - ./node_modules/eslint/bin/eslint.js -c .eslintrc.js ../test/js/browser/run.js
 
 .build-test: &build_definition
   stage: build
