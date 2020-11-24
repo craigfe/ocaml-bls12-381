@@ -3,7 +3,7 @@ open Js_of_ocaml
 module MakeStubs (M : sig
   val rust_module : unit -> Jsoo_lib.ESModule.t
 
-  val get_wasm_memory_buffer : unit -> Jsoo_lib_rust_wasm.Memory.Buffer.t
+  val get_wasm_memory_buffer : unit -> Jsoo_lib.Memory.Buffer.t
 end) : Bls12_381_gen.Ff_sig.RAW_BASE = struct
   open Js.Unsafe
 
@@ -17,7 +17,7 @@ end) : Bls12_381_gen.Ff_sig.RAW_BASE = struct
   let size_in_bytes = 576
 
   let check_bytes bs =
-    Jsoo_lib_rust_wasm.Memory.copy_in_buffer
+    Jsoo_lib.Memory.copy_in_buffer
       (M.get_wasm_memory_buffer ())
       bs
       0
@@ -29,7 +29,7 @@ end) : Bls12_381_gen.Ff_sig.RAW_BASE = struct
          [| inject 0 |]
 
   let is_zero bs =
-    Jsoo_lib_rust_wasm.Memory.copy_in_buffer
+    Jsoo_lib.Memory.copy_in_buffer
       (M.get_wasm_memory_buffer ())
       bs
       0
@@ -41,7 +41,7 @@ end) : Bls12_381_gen.Ff_sig.RAW_BASE = struct
          [| inject 0 |]
 
   let is_one bs =
-    Jsoo_lib_rust_wasm.Memory.copy_in_buffer
+    Jsoo_lib.Memory.copy_in_buffer
       (M.get_wasm_memory_buffer ())
       bs
       0
@@ -58,12 +58,9 @@ end) : Bls12_381_gen.Ff_sig.RAW_BASE = struct
          (get (M.rust_module ()) "rustc_bls12_381_fq12_zero")
          [| inject 0 |] ;
     let res =
-      Jsoo_lib_rust_wasm.Memory.Buffer.slice
-        (M.get_wasm_memory_buffer ())
-        0
-        size_in_bytes
+      Jsoo_lib.Memory.Buffer.slice (M.get_wasm_memory_buffer ()) 0 size_in_bytes
     in
-    Jsoo_lib_rust_wasm.Memory.Buffer.to_bytes res
+    Jsoo_lib.Memory.Buffer.to_bytes res
 
   let one () =
     ignore
@@ -71,12 +68,9 @@ end) : Bls12_381_gen.Ff_sig.RAW_BASE = struct
          (get (M.rust_module ()) "rustc_bls12_381_fq12_one")
          [| inject 0 |] ;
     let res =
-      Jsoo_lib_rust_wasm.Memory.Buffer.slice
-        (M.get_wasm_memory_buffer ())
-        0
-        size_in_bytes
+      Jsoo_lib.Memory.Buffer.slice (M.get_wasm_memory_buffer ()) 0 size_in_bytes
     in
-    Jsoo_lib_rust_wasm.Memory.Buffer.to_bytes res
+    Jsoo_lib.Memory.Buffer.to_bytes res
 
   let random () =
     ignore
@@ -84,21 +78,18 @@ end) : Bls12_381_gen.Ff_sig.RAW_BASE = struct
          (get (M.rust_module ()) "rustc_bls12_381_fq12_random")
          [| inject 0 |] ;
     let res =
-      Jsoo_lib_rust_wasm.Memory.Buffer.slice
-        (M.get_wasm_memory_buffer ())
-        0
-        size_in_bytes
+      Jsoo_lib.Memory.Buffer.slice (M.get_wasm_memory_buffer ()) 0 size_in_bytes
     in
-    Jsoo_lib_rust_wasm.Memory.Buffer.to_bytes res
+    Jsoo_lib.Memory.Buffer.to_bytes res
 
   let add x y =
-    Jsoo_lib_rust_wasm.Memory.copy_in_buffer
+    Jsoo_lib.Memory.copy_in_buffer
       (M.get_wasm_memory_buffer ())
       x
       0
       size_in_bytes
       size_in_bytes ;
-    Jsoo_lib_rust_wasm.Memory.copy_in_buffer
+    Jsoo_lib.Memory.copy_in_buffer
       (M.get_wasm_memory_buffer ())
       y
       0
@@ -110,21 +101,18 @@ end) : Bls12_381_gen.Ff_sig.RAW_BASE = struct
          [| inject 0; inject size_in_bytes; inject (2 * size_in_bytes) |] ;
     (* The value is gonna be in the first 32 bytes of the buffer *)
     let res =
-      Jsoo_lib_rust_wasm.Memory.Buffer.slice
-        (M.get_wasm_memory_buffer ())
-        0
-        size_in_bytes
+      Jsoo_lib.Memory.Buffer.slice (M.get_wasm_memory_buffer ()) 0 size_in_bytes
     in
-    Jsoo_lib_rust_wasm.Memory.Buffer.to_bytes res
+    Jsoo_lib.Memory.Buffer.to_bytes res
 
   let mul x y =
-    Jsoo_lib_rust_wasm.Memory.copy_in_buffer
+    Jsoo_lib.Memory.copy_in_buffer
       (M.get_wasm_memory_buffer ())
       x
       0
       size_in_bytes
       size_in_bytes ;
-    Jsoo_lib_rust_wasm.Memory.copy_in_buffer
+    Jsoo_lib.Memory.copy_in_buffer
       (M.get_wasm_memory_buffer ())
       y
       0
@@ -136,15 +124,12 @@ end) : Bls12_381_gen.Ff_sig.RAW_BASE = struct
          [| inject 0; inject size_in_bytes; inject (2 * size_in_bytes) |] ;
     (* The value is gonna be in the first 32 bytes of the buffer *)
     let res =
-      Jsoo_lib_rust_wasm.Memory.Buffer.slice
-        (M.get_wasm_memory_buffer ())
-        0
-        size_in_bytes
+      Jsoo_lib.Memory.Buffer.slice (M.get_wasm_memory_buffer ()) 0 size_in_bytes
     in
-    Jsoo_lib_rust_wasm.Memory.Buffer.to_bytes res
+    Jsoo_lib.Memory.Buffer.to_bytes res
 
   let unsafe_inverse x =
-    Jsoo_lib_rust_wasm.Memory.copy_in_buffer
+    Jsoo_lib.Memory.copy_in_buffer
       (M.get_wasm_memory_buffer ())
       x
       0
@@ -156,21 +141,18 @@ end) : Bls12_381_gen.Ff_sig.RAW_BASE = struct
          [| inject 0; inject size_in_bytes |] ;
     (* The value is gonna be in the first 32 bytes of the buffer *)
     let res =
-      Jsoo_lib_rust_wasm.Memory.Buffer.slice
-        (M.get_wasm_memory_buffer ())
-        0
-        size_in_bytes
+      Jsoo_lib.Memory.Buffer.slice (M.get_wasm_memory_buffer ()) 0 size_in_bytes
     in
-    Jsoo_lib_rust_wasm.Memory.Buffer.to_bytes res
+    Jsoo_lib.Memory.Buffer.to_bytes res
 
   let eq x y =
-    Jsoo_lib_rust_wasm.Memory.copy_in_buffer
+    Jsoo_lib.Memory.copy_in_buffer
       (M.get_wasm_memory_buffer ())
       x
       0
       0
       size_in_bytes ;
-    Jsoo_lib_rust_wasm.Memory.copy_in_buffer
+    Jsoo_lib.Memory.copy_in_buffer
       (M.get_wasm_memory_buffer ())
       y
       0
@@ -182,7 +164,7 @@ end) : Bls12_381_gen.Ff_sig.RAW_BASE = struct
          [| inject 0; inject size_in_bytes |]
 
   let negate x =
-    Jsoo_lib_rust_wasm.Memory.copy_in_buffer
+    Jsoo_lib.Memory.copy_in_buffer
       (M.get_wasm_memory_buffer ())
       x
       0
@@ -193,15 +175,12 @@ end) : Bls12_381_gen.Ff_sig.RAW_BASE = struct
          (get (M.rust_module ()) "rustc_bls12_381_fq12_negate")
          [| inject 0; inject size_in_bytes |] ;
     let res =
-      Jsoo_lib_rust_wasm.Memory.Buffer.slice
-        (M.get_wasm_memory_buffer ())
-        0
-        size_in_bytes
+      Jsoo_lib.Memory.Buffer.slice (M.get_wasm_memory_buffer ()) 0 size_in_bytes
     in
-    Jsoo_lib_rust_wasm.Memory.Buffer.to_bytes res
+    Jsoo_lib.Memory.Buffer.to_bytes res
 
   let square x =
-    Jsoo_lib_rust_wasm.Memory.copy_in_buffer
+    Jsoo_lib.Memory.copy_in_buffer
       (M.get_wasm_memory_buffer ())
       x
       0
@@ -212,15 +191,12 @@ end) : Bls12_381_gen.Ff_sig.RAW_BASE = struct
          (get (M.rust_module ()) "rustc_bls12_381_fq12_square")
          [| inject 0; inject size_in_bytes |] ;
     let res =
-      Jsoo_lib_rust_wasm.Memory.Buffer.slice
-        (M.get_wasm_memory_buffer ())
-        0
-        size_in_bytes
+      Jsoo_lib.Memory.Buffer.slice (M.get_wasm_memory_buffer ()) 0 size_in_bytes
     in
-    Jsoo_lib_rust_wasm.Memory.Buffer.to_bytes res
+    Jsoo_lib.Memory.Buffer.to_bytes res
 
   let double x =
-    Jsoo_lib_rust_wasm.Memory.copy_in_buffer
+    Jsoo_lib.Memory.copy_in_buffer
       (M.get_wasm_memory_buffer ())
       x
       0
@@ -231,21 +207,18 @@ end) : Bls12_381_gen.Ff_sig.RAW_BASE = struct
          (get (M.rust_module ()) "rustc_bls12_381_fq12_double")
          [| inject 0; inject size_in_bytes |] ;
     let res =
-      Jsoo_lib_rust_wasm.Memory.Buffer.slice
-        (M.get_wasm_memory_buffer ())
-        0
-        size_in_bytes
+      Jsoo_lib.Memory.Buffer.slice (M.get_wasm_memory_buffer ()) 0 size_in_bytes
     in
-    Jsoo_lib_rust_wasm.Memory.Buffer.to_bytes res
+    Jsoo_lib.Memory.Buffer.to_bytes res
 
   let pow x n =
-    Jsoo_lib_rust_wasm.Memory.copy_in_buffer
+    Jsoo_lib.Memory.copy_in_buffer
       (M.get_wasm_memory_buffer ())
       x
       0
       size_in_bytes
       size_in_bytes ;
-    Jsoo_lib_rust_wasm.Memory.copy_in_buffer
+    Jsoo_lib.Memory.copy_in_buffer
       (M.get_wasm_memory_buffer ())
       n
       0
@@ -256,10 +229,7 @@ end) : Bls12_381_gen.Ff_sig.RAW_BASE = struct
          (get (M.rust_module ()) "rustc_bls12_381_fq12_pow")
          [| inject 0; inject size_in_bytes; inject (2 * size_in_bytes) |] ;
     let res =
-      Jsoo_lib_rust_wasm.Memory.Buffer.slice
-        (M.get_wasm_memory_buffer ())
-        0
-        size_in_bytes
+      Jsoo_lib.Memory.Buffer.slice (M.get_wasm_memory_buffer ()) 0 size_in_bytes
     in
-    Jsoo_lib_rust_wasm.Memory.Buffer.to_bytes res
+    Jsoo_lib.Memory.Buffer.to_bytes res
 end

@@ -1,10 +1,12 @@
+(copy_files ../../common/{jsoo_lib.ml,jsoo_lib.mli})
+
 (library
  (public_name bls12-381-js)
  (name bls12_381_js)
- (modules Fq12 Fr G1 G2 Pairing stubs)
- (private_modules stubs)
+ (modules Fq12 Fr G1 G2 Pairing stubs Jsoo_lib)
+ (private_modules stubs Jsoo_lib)
  (modes byte)
  (preprocess (pps js_of_ocaml-ppx))
  (implements bls12-381)
- (libraries bls12-381-gen bls12-381-js-gen zarith ff js_of_ocaml js_of_ocaml-ppx jsoo-lib jsoo-lib-rust-wasm integers)
+ (libraries bls12-381-gen bls12-381-js-gen zarith ff js_of_ocaml js_of_ocaml-ppx)
 )
