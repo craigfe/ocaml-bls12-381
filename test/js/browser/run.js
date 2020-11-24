@@ -1,5 +1,5 @@
 import('@dannywillems/rustc-bls12-381').then((m) => {
-  window._rustc_bls12_381 = m;
+  window._RUSTC_BLS12_381 = m;
   import('./test.js').then((m) => {
     m.run();
   }).catch((e) => {
