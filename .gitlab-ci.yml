@@ -72,6 +72,9 @@ lint-js:
     # Run test
     - cd ${CI_PROJECT_DIR}
     - dune runtest
+    # Additional test for the browser case of `js`. Tests are not automatic.
+    # Only checking the stanza does work
+    - dune build @test/js/browser/serve
  
 build-ocaml-4.09-rust-1.39.0:
   <<: *build_definition
