@@ -1,6 +1,5 @@
 opam-version: "2.0"
 name: "bls12-381-js"
-version: "0.3.13"
 authors: [ "Danny Willems <be.danny.willems@gmail.com>" ]
 maintainer: [ "Danny Willems <be.danny.willems@gmail.com>" ]
 synopsis: "JavaScript version of BLS12-381 primitives implementing the virtual
