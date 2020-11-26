@@ -18,9 +18,9 @@ depends: [
   "bls12-381-gen" {= version}
   "bls12-381" {= version}
   "bls12-381-js-gen" {= version}
-  "js_of_ocaml"
-  "js_of_ocaml-compiler"
-  "js_of_ocaml-ppx"
+  "js_of_ocaml" { >= "3.7.1"}
+  "js_of_ocaml-compiler" { >= "3.7.1" }
+  "js_of_ocaml-ppx" { >= "3.7.1" }
   "zarith_stubs_js"
 ]
 build: [[ "dune" "build" "-j" jobs "-p" name "@install" ]]
