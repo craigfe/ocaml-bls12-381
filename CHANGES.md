@@ -7,3 +7,4 @@
   bls12-381-unix/bls12-381-js are the actual implementation for respectively the
   UNIX and JavaScript versions. bls12-381-gen and bls12-381-js-gen are helpers.
 - Remove version field in opam files.
+- Update to ff-sig.0.6.0, ff.0.6.0 and ff-pbt.0.5.0
