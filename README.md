@@ -1,35 +1,20 @@
 # OCaml implementation of BLS12-381
 
+## Local development
 
-## Install
-
-1. Setup environment
-```
+```shell
 opam switch create ./ 4.09.1 --deps-only
 eval $(opam env)
-```
-
-2. Install Rust dependencies and install the library
-
-
-```
+# Install Rust dependencies and install the library
 ./build_deps.sh
 opam install . -y
-```
-
-3. Play with utop
-
-```
-opam install utop
-dune utop
 ```
 
 ## Run tests
 
 ```
-dune build @install
-opam install alcotest
 dune runtest
+dune build @test/js/browser/serve
 ```
 
 ## How to use in my project
