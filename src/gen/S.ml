@@ -32,7 +32,7 @@ module type RAW_BASE = sig
   val pow : Bytes.t -> Bytes.t -> Bytes.t
 end
 
-module Make (Stubs : RAW_BASE) : Ff.BASE = struct
+module Make (Stubs : RAW_BASE) : Ff_sig.BASE = struct
   type t = Bytes.t
 
   exception Not_in_field of Bytes.t
@@ -129,6 +129,8 @@ module Make (Stubs : RAW_BASE) : Ff.BASE = struct
     res
 
   let ( - ) = negate
+
+  let sub a b = add a (negate b)
 
   let square g =
     assert (Bytes.length g = Stubs.size_in_bytes) ;

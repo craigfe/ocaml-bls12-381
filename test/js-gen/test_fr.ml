@@ -28,11 +28,15 @@ let rec repeat n f =
 let () =
   let module StubsFr = Bls12_381_js_gen.Fr.MakeStubs (Stubs_node) in
   let module Fr = Bls12_381_gen.Fr.MakeFr (StubsFr) in
-  let module ValueGeneration = Test_ff_make.MakeValueGeneration (Fr) in
-  let module IsZero = Test_ff_make.MakeIsZero (Fr) in
-  let module Equality = Test_ff_make.MakeEquality (Fr) in
-  let module FieldProperties = Test_ff_make.MakeFieldProperties (Fr) in
-  let module MemoryRepresentation = Test_ff_make.MakeMemoryRepresentation (Fr) in
+  let rec random_z () =
+    let size = Random.int Fr.size_in_bytes in
+    if size = 0 then random_z ()
+    else
+      let r = Bytes.init size (fun _ -> char_of_int (Random.int 256)) in
+      Z.erem (Z.of_bits (Bytes.to_string r)) Fr.order
+  in
+
+  let module Tests = Ff_pbt.MakeAll (Fr) in
   let module StringRepresentation = struct
     let test_to_string_one () = assert (String.equal "1" (Fr.to_string Fr.one))
 
@@ -56,6 +60,52 @@ let () =
           ( "consistency of_string to_string with test vectors",
             test_of_string_to_string_consistency );
           ("zero", test_to_string_zero) ] )
+  end in
+  let module BytesRepresentation = struct
+    let test_bytes_repr_is_zarith_encoding_using_to_bits () =
+      (* Pad zarith repr *)
+      let r_z = random_z () in
+      let bytes_z = Bytes.of_string (Z.to_bits r_z) in
+      let bytes = Bytes.make Fr.size_in_bytes '\000' in
+      Bytes.blit bytes_z 0 bytes 0 (Bytes.length bytes_z) ;
+      assert (Fr.eq (Fr.of_bytes_exn bytes) (Fr.of_string (Z.to_string r_z))) ;
+      let r = Fr.random () in
+      (* Use Fr repr *)
+      let bytes_r = Fr.to_bytes r in
+      (* Use the Fr repr to convert in a Z element *)
+      let z_r = Z.of_bits (Bytes.to_string bytes_r) in
+      (* We should get the same value, using both ways *)
+      assert (Z.equal z_r (Fr.to_z r)) ;
+      assert (Fr.(eq (of_z z_r) r))
+
+    let test_padding_is_done_automatically_with_of_bytes () =
+      let z = Z.of_string "32343543534" in
+      let z_bytes = Bytes.of_string (Z.to_bits z) in
+      (* Checking we are in the case requiring a padding *)
+      assert (Bytes.length z_bytes < Fr.size_in_bytes) ;
+      (* Should not raise an exception *)
+      let e = Fr.of_bytes_exn z_bytes in
+      (* Should not be an option *)
+      assert (Option.is_some (Fr.of_bytes_opt z_bytes)) ;
+      (* Equality in Fr should be fine (require to check to verify the
+         internal representation is the same). In the current implementation, we
+         verify the internal representation is the padded version.
+      *)
+      assert (Fr.(eq (of_z z) e)) ;
+      (* And as zarith elements, we also have the equality *)
+      assert (Z.equal (Fr.to_z e) z)
+
+    let get_tests () =
+      let open Alcotest in
+      ( "Bytes representation",
+        [ test_case
+            "bytes representation is the same than zarith using Z.to_bits"
+            `Quick
+            (repeat 1000 test_bytes_repr_is_zarith_encoding_using_to_bits);
+          test_case
+            "Padding is done automatically with of_bytes"
+            `Quick
+            test_padding_is_done_automatically_with_of_bytes ] )
   end in
   let module ZRepresentation = struct
     let test_of_z_zero () = assert (Fr.eq Fr.zero (Fr.of_z Z.zero))
@@ -252,11 +302,8 @@ let () =
   let open Alcotest in
   run
     "Fr"
-    [ IsZero.get_tests ();
-      ValueGeneration.get_tests ();
-      Equality.get_tests ();
-      FieldProperties.get_tests ();
-      TestVector.get_tests ();
-      ZRepresentation.get_tests ();
-      MemoryRepresentation.get_tests ();
-      StringRepresentation.get_tests () ]
+    ( TestVector.get_tests ()
+    :: ZRepresentation.get_tests ()
+    :: BytesRepresentation.get_tests ()
+    :: StringRepresentation.get_tests ()
+    :: Tests.get_tests () )

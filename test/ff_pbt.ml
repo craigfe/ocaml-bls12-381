@@ -7,7 +7,7 @@ let rec repeat ?(n = 100) f =
     repeat ~n:(n - 1) f )
 
 (** Check the routine generators do not raise any exception *)
-module MakeValueGeneration (FiniteField : Ff.BASE) = struct
+module MakeValueGeneration (FiniteField : Ff_sig.BASE) = struct
   let zero () = ignore @@ FiniteField.zero
 
   let random () = ignore @@ FiniteField.random ()
@@ -51,7 +51,9 @@ module MakeValueGeneration (FiniteField : Ff.BASE) = struct
 
   let get_tests () =
     let open Alcotest in
-    ( "Value generation",
+    ( Printf.sprintf
+        "Value generation for field of order %s"
+        (Z.to_string FiniteField.order),
       [ test_case "zero" `Quick (repeat zero);
         test_case "random" `Quick (repeat random);
         test_case "non null random" `Quick (repeat ~n:100 non_null_random);
@@ -74,7 +76,7 @@ module MakeValueGeneration (FiniteField : Ff.BASE) = struct
         test_case "inverse_one" `Quick (repeat inverse_with_one) ] )
 end
 
-module MakeIsZero (FiniteField : Ff.BASE) = struct
+module MakeIsZero (FiniteField : Ff_sig.BASE) = struct
   let with_zero_value () = assert (FiniteField.is_zero FiniteField.zero = true)
 
   let rec with_random_value () =
@@ -84,12 +86,14 @@ module MakeIsZero (FiniteField : Ff.BASE) = struct
 
   let get_tests () =
     let open Alcotest in
-    ( "is_zero",
+    ( Printf.sprintf
+        "is_zero for field of order %s"
+        (Z.to_string FiniteField.order),
       [ test_case "with zero value" `Quick (repeat with_zero_value);
         test_case "with random value" `Quick (repeat with_random_value) ] )
 end
 
-module MakeEquality (FiniteField : Ff.BASE) = struct
+module MakeEquality (FiniteField : Ff_sig.BASE) = struct
   let zero_same_objects () =
     assert (FiniteField.eq FiniteField.zero FiniteField.zero)
 
@@ -100,23 +104,17 @@ module MakeEquality (FiniteField : Ff.BASE) = struct
     let random = FiniteField.random () in
     assert (FiniteField.eq random random)
 
-  (* Low probability to be true on Fr and Fq12 *)
-  let two_random_objects_not_equal () =
-    assert (not (FiniteField.eq (FiniteField.random ()) (FiniteField.random ())))
-
   let get_tests () =
     let open Alcotest in
-    ( "Equality",
+    ( Printf.sprintf
+        "Equality for field of order %s"
+        (Z.to_string FiniteField.order),
       [ test_case "zero_same_objects" `Quick (repeat zero_same_objects);
         test_case "one_same_objects" `Quick (repeat one_same_objects);
-        test_case
-          "random_not_equal"
-          `Quick
-          (repeat ~n:10 two_random_objects_not_equal);
         test_case "random_same_objects" `Quick (repeat random_same_objects) ] )
 end
 
-module MakeFieldProperties (FiniteField : Ff.BASE) = struct
+module MakeFieldProperties (FiniteField : Ff_sig.BASE) = struct
   let zero_nullifier_random () =
     (* 0 * g = 0 *)
     let random = FiniteField.random () in
@@ -283,9 +281,16 @@ module MakeFieldProperties (FiniteField : Ff.BASE) = struct
       FiniteField.eq (FiniteField.pow x (Z.add n order)) (FiniteField.pow x n)
     )
 
+  let sub_definition () =
+    let x = FiniteField.random () in
+    let y = FiniteField.random () in
+    assert (FiniteField.(sub x y = add x (negate y)))
+
   let get_tests () =
     let open Alcotest in
-    ( "Field properties",
+    ( Printf.sprintf
+        "Field properties for field of order %s"
+        (Z.to_string FiniteField.order),
       [ test_case "zero_nullifier_one" `Quick (repeat zero_nullifier_one);
         test_case "zero_nullifier_zero" `Quick (repeat zero_nullifier_zero);
         test_case "zero_nullifier_random" `Quick (repeat zero_nullifier_random);
@@ -349,13 +354,14 @@ module MakeFieldProperties (FiniteField : Ff.BASE) = struct
         test_case "opposite property" `Quick (repeat opposite_property);
         test_case "inverse property" `Quick (repeat inverse_property);
         test_case "pow addition property" `Quick (repeat pow_addition_property);
+        test_case "sub definition" `Quick (repeat sub_definition);
         test_case
           "multiplicative_associativity"
           `Quick
           (repeat multiplicative_associativity) ] )
 end
 
-module MakeMemoryRepresentation (FiniteField : Ff.BASE) = struct
+module MakeMemoryRepresentation (FiniteField : Ff_sig.BASE) = struct
   let test_to_bytes_has_correct_size () =
     let x = FiniteField.random () in
     let x_bytes = FiniteField.to_bytes x in
@@ -368,7 +374,9 @@ module MakeMemoryRepresentation (FiniteField : Ff.BASE) = struct
 
   let get_tests () =
     let open Alcotest in
-    ( "Memory representation",
+    ( Printf.sprintf
+        "Memory representation for field of order %s"
+        (Z.to_string FiniteField.order),
       [ test_case
           "to_bytes returns the correct number of bytes"
           `Quick
@@ -377,4 +385,54 @@ module MakeMemoryRepresentation (FiniteField : Ff.BASE) = struct
           "to_bytes and of bytes are inverses"
           `Quick
           (repeat test_to_bytes_of_bytes_inverse) ] )
+end
+
+module MakeQuadraticResidue (PrimeField : Ff_sig.PRIME) = struct
+  let test_is_quadratic_residue () =
+    let r = PrimeField.random () in
+    assert (PrimeField.(is_quadratic_residue (r * r)))
+
+  let get_tests () =
+    let open Alcotest in
+    ( Printf.sprintf
+        "Quadratic residue tests for prime field of order %s"
+        (Z.to_string PrimeField.order),
+      [ test_case
+          "With random elements and using its square"
+          `Quick
+          (repeat ~n:1000 test_is_quadratic_residue) ] )
+end
+
+module MakeSquareRoot (PrimeField : Ff_sig.PRIME) = struct
+  let test_square_root_on_random () =
+    let r = PrimeField.random () in
+    let res = Option.get @@ PrimeField.(sqrt_opt (square r)) in
+    let res_neg = PrimeField.negate res in
+    assert (PrimeField.(res = r || res = negate r)) ;
+    assert (PrimeField.(res_neg = r || res_neg = negate r))
+
+  let get_tests () =
+    let open Alcotest in
+    ( Printf.sprintf
+        "Square root on finite field of order %s"
+        (Z.to_string PrimeField.order),
+      [ test_case
+          "With random elements and using its square"
+          `Quick
+          (repeat ~n:1000 test_square_root_on_random) ] )
+end
+
+module MakeAll (FiniteField : Ff_sig.BASE) = struct
+  module ValueGeneration = MakeValueGeneration (FiniteField)
+  module IsZero = MakeIsZero (FiniteField)
+  module Equality = MakeEquality (FiniteField)
+  module FieldProperties = MakeFieldProperties (FiniteField)
+  module MemoryRepresentation = MakeMemoryRepresentation (FiniteField)
+
+  let get_tests () =
+    [ ValueGeneration.get_tests ();
+      IsZero.get_tests ();
+      Equality.get_tests ();
+      FieldProperties.get_tests ();
+      MemoryRepresentation.get_tests () ]
 end

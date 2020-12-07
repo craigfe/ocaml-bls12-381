@@ -1,12 +1,21 @@
 module type T = sig
-  include Ff.PRIME
+  include Ff_sig.PRIME
 
   (** Check if a point, represented as a byte array, is in the field **)
   val check_bytes : Bytes.t -> bool
 end
 
-module MakeFr (Stubs : Ff_sig.RAW_BASE) : T = struct
-  include Ff_sig.Make (Stubs)
+module MakeFr (Stubs : S.RAW_BASE) : T = struct
+  include S.Make (Stubs)
+
+  let two_z = Z.succ Z.one
+
+  let factor_power_of_two =
+    let rec aux i n =
+      let (q, r) = Z.ediv_rem n two_z in
+      if Z.equal r Z.zero then aux Int.(succ i) q else (i, n)
+    in
+    aux 0 (Z.pred order)
 
   let empty () = Bytes.make size_in_bytes '\000'
 
@@ -25,4 +34,52 @@ module MakeFr (Stubs : Ff_sig.RAW_BASE) : T = struct
     let x = empty () in
     Bytes.blit z 0 x 0 (min (Bytes.length z) size_in_bytes) ;
     of_bytes_exn x
+
+  let legendre_symbol x =
+    if is_zero x then Z.zero
+    else if is_one (pow x (Z.divexact (Z.pred order) (Z.of_int 2))) then Z.one
+    else Z.neg Z.one
+
+  let is_quadratic_residue x =
+    if is_zero x then true else Z.equal (legendre_symbol x) Z.one
+
+  let rec pick_non_square () =
+    let z = random () in
+    if Z.equal (legendre_symbol z) (Z.of_int (-1)) then z
+    else pick_non_square ()
+
+  let sqrt_opt x =
+    if not (is_quadratic_residue x) then None
+    else
+      (* https://en.wikipedia.org/wiki/Tonelli%E2%80%93Shanks_algorithm *)
+      let (s, q) = factor_power_of_two in
+      (* implies p = 3 mod 4 *)
+      if Int.equal s 1 then
+        (* r = x^((p + 1) / 4) *)
+        let r = pow x (Z.divexact (Z.succ order) (Z.of_string "4")) in
+        Some r
+      else
+        let rec compute_lowest_n_2th_root_of_unity (i : int) x upper : int =
+          let x = square x in
+          if is_one x then i
+          else if Int.(equal i upper) then
+            failwith "Upperbound should be higher"
+            (* should never happen in this case, just being explicit *)
+          else compute_lowest_n_2th_root_of_unity (Int.succ i) x upper
+        in
+        let z = pick_non_square () in
+        let c = pow z q in
+        let rec aux m c t r =
+          if eq t zero then zero (* case x is zero *)
+          else if eq t one then r (* base case *)
+          else
+            let i = compute_lowest_n_2th_root_of_unity 1 t m in
+            let b = pow c (Z.pow two_z Int.(pred (sub m i))) in
+            let m = i in
+            let c = mul b b in
+            let t = mul t c in
+            let r = mul r b in
+            aux m c t r
+        in
+        Some (aux s c (pow x q) (pow x (Z.divexact (Z.succ q) two_z)))
 end

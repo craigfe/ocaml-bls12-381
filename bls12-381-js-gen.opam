@@ -11,7 +11,7 @@ license: "MIT"
 depends: [
   "dune" {build & >= "1.7"}
   "dune-configurator" {build}
-  "ff" {>= "0.4.0" & < "0.5.0"}
+  "ff-sig" {>= "0.6.0" & < "0.7.0"}
   "zarith" {>= "1.10" & < "2.0"}
   "zarith_stubs_js"
   "js_of_ocaml" { >= "3.7.1"}
@@ -19,5 +19,11 @@ depends: [
   "js_of_ocaml-ppx" { >= "3.7.1" }
   "bls12-381-gen" {= version}
   "bls12-381" {= version}
+  "ff-pbt" {>= "0.6.0" & < "0.7.0" & with-test}
+  "alcotest" {with-test}
 ]
 build: [[ "dune" "build" "-j" jobs "-p" name "@install" ]]
+pin-depends: [
+  ["ff-sig.0.6.0" "git+https://gitlab.com/dannywillems/ocaml-ff.git#0.6.0"]
+  ["ff-pbt.0.6.0" "git+https://gitlab.com/dannywillems/ocaml-ff.git#0.6.0"]
+]

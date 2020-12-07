@@ -1,5 +1,5 @@
 module type T = sig
-  include Ff.BASE
+  include Ff_sig.BASE
 
   (** Construct an element of Fq12 based on the following pattern:
     Fq12 =
@@ -68,8 +68,8 @@ module type T = sig
     t
 end
 
-module MakeFq12 (Stubs : Ff_sig.RAW_BASE) : T = struct
-  include Ff_sig.Make (Stubs)
+module MakeFq12 (Stubs : S.RAW_BASE) : T = struct
+  include S.Make (Stubs)
 
   let empty () = Bytes.make size_in_bytes '\000'
 

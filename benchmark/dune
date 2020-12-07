@@ -13,5 +13,5 @@
 (executable
  (name bench_ff)
  (modules bench_ff)
- (libraries core_bench bls12-381-unix core)
+ (libraries core_bench bls12-381-unix core ff-sig)
 )

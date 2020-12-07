@@ -11,8 +11,14 @@ license: "MIT"
 depends: [
   "dune" {build & >= "1.7"}
   "dune-configurator" {build}
-  "ff" {>= "0.4.0" & < "0.5.0"}
+  "ff-sig" {>= "0.6.0" & < "0.7.0"}
   "zarith" {>= "1.10" & < "2.0"}
+  "alcotest" {with-test}
+  "ff-pbt" {>= "0.6.0" & < "0.7.0" & with-test}
 ]
 build: [[ "dune" "build" "-j" jobs "-p" name "@install" ]]
 run-test: [[ "dune" "runtest" "-p" name "-j" jobs ]]
+pin-depends: [
+  ["ff-sig.0.6.0" "git+https://gitlab.com/dannywillems/ocaml-ff.git#0.6.0"]
+  ["ff-pbt.0.6.0" "git+https://gitlab.com/dannywillems/ocaml-ff.git#0.6.0"]
+]
