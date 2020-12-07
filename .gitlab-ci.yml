@@ -55,24 +55,17 @@ lint-js:
   script:
     # Install external dependencies
     - opam depext -i -y zarith
-    - opam install --deps-only --with-test -y .
+    - opam install --deps-only -y . --with-test
     # Install the static library from rustc
     - ./build_deps.sh
-    # Pin the packages
-    - opam pin add bls12-381-gen . --no-action
-    - opam pin add bls12-381 . --no-action
-    - opam pin add bls12-381-unix . --no-action
-    - opam pin add bls12-381-js-gen . --no-action
-    - opam pin add bls12-381-js . --no-action
+    - dune build @install
+    - dune runtest
     # Install the packages
     - opam install bls12-381-gen -y
     - opam install bls12-381 -y
     - opam install bls12-381-unix -y
     - opam install bls12-381-js-gen -y
     - opam install bls12-381-js -y
-    # Run test
-    - cd ${CI_PROJECT_DIR}
-    - dune runtest
     # Additional test for the browser case of `js`. Tests are not automatic.
     # Only checking the stanza does work
     - dune build @test/js/browser/serve
