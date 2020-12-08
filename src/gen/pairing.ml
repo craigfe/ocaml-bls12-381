@@ -1,29 +1,3 @@
-module type T = sig
-  module G1 : Elliptic_curve_sig.T
-
-  module G2 : Elliptic_curve_sig.T
-
-  module GT : Ff_sig.BASE
-
-  exception FailToComputeFinalExponentiation of GT.t
-
-  val miller_loop : (G1.t * G2.t) list -> GT.t
-
-  (** Compute the miller loop on a single tuple of point *)
-  val miller_loop_simple : G1.t -> G2.t -> GT.t
-
-  (** Compute a pairing result of a list of points *)
-  val pairing : G1.t -> G2.t -> GT.t
-
-  (** Compute the final exponentiation of the given point. Returns a [None] if
-      the point is null *)
-  val final_exponentiation_opt : GT.t -> GT.t option
-
-  (** Compute the final exponentiation of the given point. Raise
-      [FailToComputeFinalExponentiation] if the point is null *)
-  val final_exponentiation_exn : GT.t -> GT.t
-end
-
 module type RAW_STUBS = sig
   val final_exponentiation : Bytes.t -> Bytes.t
 
@@ -80,13 +54,25 @@ module Make
     (G1 : G1.UNCOMPRESSED)
     (G2 : G2.UNCOMPRESSED)
     (GT : Fq12.T)
-    (Stubs : RAW_STUBS) :
-  T
-    with type G1.t = G1.t
-     and type G2.t = G2.t
-     and type GT.t = GT.t
-     and type G1.Scalar.t = G1.Scalar.t
-     and type G2.Scalar.t = G2.Scalar.t = struct
+    (Stubs : RAW_STUBS) : sig
+  exception FailToComputeFinalExponentiation of GT.t
+
+  val miller_loop : (G1.t * G2.t) list -> GT.t
+
+  (** Compute the miller loop on a single tuple of point *)
+  val miller_loop_simple : G1.t -> G2.t -> GT.t
+
+  (** Compute a pairing result of a list of points *)
+  val pairing : G1.t -> G2.t -> GT.t
+
+  (** Compute the final exponentiation of the given point. Returns a [None] if
+      the point is null *)
+  val final_exponentiation_opt : GT.t -> GT.t option
+
+  (** Compute the final exponentiation of the given point. Raise
+      [FailToComputeFinalExponentiation] if the point is null *)
+  val final_exponentiation_exn : GT.t -> GT.t
+end = struct
   module G1 = G1
   module G2 = G2
   module GT = GT
