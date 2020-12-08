@@ -170,5 +170,3 @@ build-ocaml-4.11-rust-1.47.0:
 benchmark-ocaml-4.09-rust-1.39.0:
   <<: *benchmark_definition
   image: registry.gitlab.com/dannywillems/docker-ocaml-rust:4.09-1.39.0
-
-
