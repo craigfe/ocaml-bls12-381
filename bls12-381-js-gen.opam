@@ -23,3 +23,7 @@ depends: [
   "alcotest" {with-test}
 ]
 build: [[ "dune" "build" "-j" jobs "-p" name "@install" ]]
+pin-depends: [
+  ["ff-sig.0.6.1" "git+https://gitlab.com/dannywillems/ocaml-ff.git#0.6.1"]
+  ["ff-pbt.0.6.1" "git+https://gitlab.com/dannywillems/ocaml-ff.git#0.6.1"]
+]
