@@ -37,6 +37,7 @@ let () =
   in
 
   let module Tests = Ff_pbt.MakeAll (Fr) in
+  let module ResidueTests = Ff_pbt.MakeQuadraticResidue (Fr) in
   let module StringRepresentation = struct
     let test_to_string_one () = assert (String.equal "1" (Fr.to_string Fr.one))
 
@@ -302,7 +303,7 @@ let () =
   let open Alcotest in
   run
     "Fr"
-    ( TestVector.get_tests ()
+    ( TestVector.get_tests () :: ResidueTests.get_tests ()
     :: ZRepresentation.get_tests ()
     :: BytesRepresentation.get_tests ()
     :: StringRepresentation.get_tests ()

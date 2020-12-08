@@ -33,6 +33,7 @@ let rec repeat n f =
     repeat (n - 1) f )
 
 module Tests = Ff_pbt.MakeAll (Bls12_381.Fr)
+module ResidueTests = Ff_pbt.MakeQuadraticResidue (Bls12_381.Fr)
 
 module StringRepresentation = struct
   let test_to_string_one () =
@@ -350,7 +351,7 @@ let () =
   let open Alcotest in
   run
     "Fr"
-    ( TestVector.get_tests ()
+    ( TestVector.get_tests () :: ResidueTests.get_tests ()
     :: ZRepresentation.get_tests ()
     :: BytesRepresentation.get_tests ()
     :: StringRepresentation.get_tests ()
