@@ -55,6 +55,13 @@ lint-js:
   script:
     # Install external dependencies
     - opam depext -i -y zarith
+    # Pin for later installation
+    - opam pin add bls12-381-gen . --no-action
+    - opam pin add bls12-381 . --no-action
+    - opam pin add bls12-381-unix . --no-action
+    - opam pin add bls12-381-js-gen . --no-action
+    - opam pin add bls12-381-js . --no-action
+    # Install Deps only
     - opam install --deps-only -y . --with-test
     # Install the static library from rustc
     - ./build_deps.sh
