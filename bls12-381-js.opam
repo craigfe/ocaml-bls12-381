@@ -12,7 +12,7 @@ bug-reports: "https://gitlab.com/dannywillems/ocaml-bls12-381/issues"
 license: "MIT"
 depends: [
   "conf-rust" {build}
-  "dune" {build & >= "1.7"}
+  "dune" {build & >= "2.7"}
   "dune-configurator" {build}
   "ff-sig" {>= "0.6.1" & < "0.7.0"}
   "zarith" {>= "1.10" & < "2.0"}
