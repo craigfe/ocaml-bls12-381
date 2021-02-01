@@ -77,29 +77,9 @@ lint-js:
     # Only checking the stanza does work
     - dune build @test/js/browser/serve
  
-build-ocaml-4.09-rust-1.39.0:
+build-ocaml-4.08-rust-1.44.0:
   <<: *build_definition
-  image: registry.gitlab.com/dannywillems/docker-ocaml-rust:4.09-1.39.0
-
-build-ocaml-4.10-rust-1.39.0:
-  <<: *build_definition
-  image: registry.gitlab.com/dannywillems/docker-ocaml-rust:4.10-1.39.0
-
-build-ocaml-4.11-rust-1.39.0:
-  <<: *build_definition
-  image: registry.gitlab.com/dannywillems/docker-ocaml-rust:4.11-1.39.0
-
-build-ocaml-4.09-rust-1.43.0:
-  <<: *build_definition
-  image: registry.gitlab.com/dannywillems/docker-ocaml-rust:4.09-1.43.0
-
-build-ocaml-4.10-rust-1.43.0:
-  <<: *build_definition
-  image: registry.gitlab.com/dannywillems/docker-ocaml-rust:4.10-1.43.0
-
-build-ocaml-4.11-rust-1.43.0:
-  <<: *build_definition
-  image: registry.gitlab.com/dannywillems/docker-ocaml-rust:4.11-1.43.0
+  image: registry.gitlab.com/dannywillems/docker-ocaml-rust:4.08-1.44.0
 
 build-ocaml-4.09-rust-1.44.0:
   <<: *build_definition
@@ -112,42 +92,6 @@ build-ocaml-4.10-rust-1.44.0:
 build-ocaml-4.11-rust-1.44.0:
   <<: *build_definition
   image: registry.gitlab.com/dannywillems/docker-ocaml-rust:4.11-1.44.0
-
-build-ocaml-4.09-rust-1.45.0:
-  <<: *build_definition
-  image: registry.gitlab.com/dannywillems/docker-ocaml-rust:4.09-1.45.0
-
-build-ocaml-4.10-rust-1.45.0:
-  <<: *build_definition
-  image: registry.gitlab.com/dannywillems/docker-ocaml-rust:4.10-1.45.0
-
-build-ocaml-4.11-rust-1.45.0:
-  <<: *build_definition
-  image: registry.gitlab.com/dannywillems/docker-ocaml-rust:4.11-1.45.0
-
-build-ocaml-4.09-rust-1.46.0:
-  <<: *build_definition
-  image: registry.gitlab.com/dannywillems/docker-ocaml-rust:4.09-1.46.0
-
-build-ocaml-4.10-rust-1.46.0:
-  <<: *build_definition
-  image: registry.gitlab.com/dannywillems/docker-ocaml-rust:4.10-1.46.0
-
-build-ocaml-4.11-rust-1.46.0:
-  <<: *build_definition
-  image: registry.gitlab.com/dannywillems/docker-ocaml-rust:4.11-1.46.0
-
-build-ocaml-4.09-rust-1.47.0:
-  <<: *build_definition
-  image: registry.gitlab.com/dannywillems/docker-ocaml-rust:4.09-1.47.0
-
-build-ocaml-4.10-rust-1.47.0:
-  <<: *build_definition
-  image: registry.gitlab.com/dannywillems/docker-ocaml-rust:4.10-1.47.0
-
-build-ocaml-4.11-rust-1.47.0:
-  <<: *build_definition
-  image: registry.gitlab.com/dannywillems/docker-ocaml-rust:4.11-1.47.0
 
 # Benchmarks
 .benchmark: &benchmark_definition
