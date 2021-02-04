@@ -48,11 +48,12 @@ lint-js:
     - . "$NVM_DIR/nvm.sh"
     - nvm install 14.12.0
     - nvm use 14.12.0
-    # List versions
+    # List versions and environments
     - rustc --version
     - ocaml --version
     - opam --version
     - node --version
+    - echo $OPAM_SWITCH_PREFIX
   script:
     # Install external dependencies
     - opam depext -i -y zarith
@@ -96,12 +97,16 @@ build-ocaml-4.11-rust-1.44.0:
   before_script:
     # Required to get the right Rust version.
     - . $HOME/.cargo/env
-    - rustc --version
     # Always update system package manager + setup OPAM env
     - sudo apt-get update && sudo apt-get upgrade -y
     - eval $(opam env)
     - opam repository set-url default https://opam.ocaml.org
     - opam update
+    # List versions and environments
+    - rustc --version
+    - ocaml --version
+    - opam --version
+    - echo $OPAM_SWITCH_PREFIX
     # Depext
     - opam depext -i -y zarith conf-pkg-config conf-libffi
     # Pin for later installation
@@ -133,7 +138,11 @@ opam-install-and-remove:
   image: registry.gitlab.com/dannywillems/docker-ocaml-rust:4.09-1.44.0
   before_script:
     - . $HOME/.cargo/env
+    # List versions and environments
+    - rustc --version
+    - ocaml --version
     - opam --version
+    - echo $OPAM_SWITCH_PREFIX
     - opam repository set-url default https://opam.ocaml.org
     - opam update
   script:
