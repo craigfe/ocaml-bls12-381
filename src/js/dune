@@ -3,8 +3,8 @@
 (library
  (public_name bls12-381-js)
  (name bls12_381_js)
- (modules Fq12 Fr G1 G2 Pairing stubs Jsoo_lib)
- (private_modules stubs Jsoo_lib)
+ (modules fq12 fr g1 g2 pairing stubs jsoo_lib)
+ (private_modules stubs jsoo_lib)
  (modes byte)
  (preprocess (pps js_of_ocaml-ppx))
  (implements bls12-381)
