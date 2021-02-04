@@ -10,19 +10,20 @@ dev-repo: "git+https://gitlab.com/dannywillems/ocaml-bls12-381.git"
 bug-reports: "https://gitlab.com/dannywillems/ocaml-bls12-381/issues"
 license: "MIT"
 depends: [
-  "conf-rust" {build}
   "dune" {build & >= "2.7"}
-  "dune-configurator" {build}
-  "ff-sig" {>= "0.6.1" & < "0.7.0"}
-  "zarith" {>= "1.10" & < "2.0"}
   "bls12-381-gen" {= version}
   "bls12-381" {= version}
   "bls12-381-js-gen" {= version}
   "js_of_ocaml" { >= "3.7.1"}
   "js_of_ocaml-compiler" { >= "3.7.1" }
   "js_of_ocaml-ppx" { >= "3.7.1" }
-  "zarith_stubs_js"
-  "ff-pbt" {>= "0.6.1" & < "0.7.0" & with-test}
+  # Commenting for the moment because ff-pbt does require
+  # Alcotest, and Alcotest is not JavaScript compatible yet
+  # "ff-pbt" {>= "0.6.1" & < "0.7.0" & with-test}
   "alcotest" {with-test}
+  # Used by intermediary packages but only used by tests in this package.
+  "zarith" {>= "1.10" & < "2.0" & with-test}
+  "zarith_stubs_js" {with-test}
 ]
 build: [[ "dune" "build" "-j" jobs "-p" name "@install" ]]
+run-test: [[ "dune" "runtest" "-p" name "-j" jobs ]]

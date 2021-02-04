@@ -18,7 +18,10 @@ depends: [
   "js_of_ocaml-ppx" { >= "3.7.1" }
   "bls12-381-gen" {= version}
   "bls12-381" {= version}
-  "ff-pbt" {>= "0.6.1" & < "0.7.0" & with-test}
+  # Commenting for the moment because ff-pbt does require
+  # Alcotest, and Alcotest is not JavaScript compatible yet
+  # "ff-pbt" {>= "0.6.1" & < "0.7.0" & with-test}
   "alcotest" {with-test}
 ]
 build: [[ "dune" "build" "-j" jobs "-p" name "@install" ]]
+run-test: [[ "dune" "runtest" "-p" name "-j" jobs ]]
