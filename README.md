@@ -1,14 +1,18 @@
 # OCaml implementation of BLS12-381
 
-## Local development
+## Install
+
 
 ```shell
-opam switch create ./ 4.09.1 --deps-only
-eval $(opam env)
-# Install Rust dependencies and install the library
-./build_deps.sh
-opam install . -y
+# if you implement a library and you don't need an actual implementation
+opam install bls12-381
+# to target UNIX
+opam insall bls12-381-unix
+# to target JavaScript, to be used with jsoo.
+opam install bls12-381-js
 ```
+
+See below how to use in your project.
 
 ## Run tests
 
@@ -41,13 +45,11 @@ However, if you are writing a binary, three packages are relevant:
     val get_wasm_memory_buffer : unit -> Jsoo_lib.Memory.Buffer.t
   end
   ```
-  (note: functions are not directly evaluated values are required because the module might not already be loaded when loading the JavaScript resulting file and the wasm memory buffer being a view over a ArrayBuffer might be invalid if the buffer size is increased on runtime). You can see an example in the `src/js`.
+  (note: functions are not directly evaluated values are required because the module might not already be loaded when loading the JavaScript resulting file and the wasm memory buffer being a view over a ArrayBuffer might be invalid if the buffer size is increased at runtime). You can see an example in the `src/js`.
 
 For more examples, see the test directories.
 
 ## Run the benchmarks
-
-**USE THE RELEASE VERSION OF THE RUST LIBRARY TO GET PRODUCTION BENCHMARKS (cargo build --release)**
 
 ```
 opam install core_bench
@@ -58,4 +60,7 @@ dune exec benchmark/bench_pairing.exe
 
 ## Documentation
 
-- Use `dune build @doc` to generate the API documentation.
+```
+opam install odoc
+dune build @doc
+```
