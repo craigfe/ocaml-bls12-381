@@ -8,7 +8,7 @@ dev-repo: "git+https://gitlab.com/dannywillems/ocaml-bls12-381.git"
 bug-reports: "https://gitlab.com/dannywillems/ocaml-bls12-381/issues"
 license: "MIT"
 depends: [
-  "dune" {build & >= "2.7"}
+  "dune" {>= "2.7"}
   "dune-configurator" {build}
   "ff-sig" {>= "0.6.1" & < "0.7.0"}
   "zarith" {>= "1.10" & < "2.0"}
@@ -22,6 +22,7 @@ depends: [
   # Alcotest, and Alcotest is not JavaScript compatible yet
   # "ff-pbt" {>= "0.6.1" & < "0.7.0" & with-test}
   "alcotest" {with-test}
+  "conf-npm" {with-test}
 ]
 build: [[ "dune" "build" "-j" jobs "-p" name "@install" ]]
 run-test: [[ "dune" "runtest" "-p" name "-j" jobs ]]
