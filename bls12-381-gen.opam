@@ -8,6 +8,7 @@ dev-repo: "git+https://gitlab.com/dannywillems/ocaml-bls12-381.git"
 bug-reports: "https://gitlab.com/dannywillems/ocaml-bls12-381/issues"
 license: "MIT"
 depends: [
+  "ocaml" {>= "4.08" & < "4.12"}
   "dune" {>= "2.7"}
   "ff-sig" {>= "0.6.1" & < "0.7.0"}
   "zarith" {>= "1.10" & < "2.0"}
