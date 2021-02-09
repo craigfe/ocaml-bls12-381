@@ -18,7 +18,13 @@ See below how to use in your project.
 
 ```
 dune runtest
-dune build @test/js/browser/serve
+dune build @test/js/browser/serve # Check _build/default/test/js/browser and run `npm run serve`
+```
+
+To get the coverage (only ok for bls12-381-unix and bls12-381-gen)
+```
+dune runtest --instrument-with bisect_ppx --force
+bisect-ppx-report html
 ```
 
 ## How to use in my project
