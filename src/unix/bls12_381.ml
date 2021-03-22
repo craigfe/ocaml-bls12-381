@@ -22,10 +22,8 @@
 (*                                                                           *)
 (*****************************************************************************)
 
-module Uncompressed : Bls12_381_gen.G2.UNCOMPRESSED with type Scalar.t = Fr.t
-
-module Compressed : Bls12_381_gen.G2.COMPRESSED with type Scalar.t = Fr.t
-
-(* val compressed_of_uncompressed : Uncompressed.t -> Compressed.t
- * 
- * val uncompressed_of_compressed : Compressed.t -> Uncompressed.t *)
+module Fr = Fr
+module Fq12 = Fq12
+module G1 = G1
+module G2 = G2
+module Pairing = Pairing
