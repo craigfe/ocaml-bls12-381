@@ -28,4 +28,3 @@ depends: [
   "zarith_stubs_js" {with-test}
 ]
 build: [[ "dune" "build" "-j" jobs "-p" name "@install" ]]
-run-test: [[ "dune" "runtest" "-p" name "-j" jobs ]]
