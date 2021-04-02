@@ -77,6 +77,27 @@ module type T = sig
 
   (** Multiply an element by a scalar *)
   val mul : t -> Scalar.t -> t
+
+  (** [fft ~domain ~points] performs a Fourier transform on [points] using [domain]
+      The domain should be of the form [w^{i}] where [w] is a principal root of
+      unity. If the domain is of size [n], [w] must be a [n]-th principal root
+      of unity.
+      The number of points can be smaller than the domain size, but not larger. The
+      complexity is in [O(n log(m))] where [n] is the domain size and [m] the
+      number of points.
+   *)
+  val fft : domain:Scalar.t list -> points:t list -> t list
+
+  (** [ifft ~domain ~points] performs an inverse Fourier transform on [points]
+      using [domain].
+      The domain should be of the form [w^{-i}] (i.e the "inverse domain") where
+      [w] is a principal root of
+      unity. If the domain is of size [n], [w] must be a [n]-th principal root
+      of unity.
+      The domain size must be exactly the same than the number of points. The
+      complexity is O(n log(n)) where [n] is the domain size.
+  *)
+  val ifft : domain:Scalar.t list -> points:t list -> t list
 end
 
 module type RAW_BASE = sig

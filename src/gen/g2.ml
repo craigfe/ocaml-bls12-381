@@ -120,6 +120,43 @@ module MakeBase (Scalar : Fr.T) (Stubs : Elliptic_curve_sig.RAW_BASE) :
     let res = Stubs.mul g (Scalar.to_bytes a) in
     assert (Bytes.length res = size_in_bytes) ;
     res
+
+  let fft ~domain ~points =
+    let n = List.length domain in
+    let m = List.length points in
+    let points = Array.of_list points in
+    (* Using Array to get a better complexity for `get` *)
+    let domain = Array.of_list domain in
+    (* height is the height in the rec call tree *)
+    (* k is the starting index of the branch *)
+    let rec inner height k number_p =
+      let step = 1 lsl height in
+      if number_p = 1 then Array.make (n / step) points.(k)
+      else
+        let q = number_p / 2 and r = number_p mod 2 in
+        let odd_fft = inner (height + 1) (k + step) q in
+        let even_fft = inner (height + 1) k (q + r) in
+        let output_length = n lsr height in
+        let output = Array.make output_length zero in
+        let length_odd = n lsr (height + 1) in
+        for i = 0 to length_odd - 1 do
+          let x = even_fft.(i) in
+          let y = odd_fft.(i) in
+          (* most of the computation should be spent here *)
+          let right = mul y domain.(i * step) in
+          output.(i) <- add x right ;
+          output.(i + length_odd) <- add x (negate right)
+        done ;
+        output
+    in
+    Array.to_list (inner 0 0 m)
+
+  let ifft ~domain ~points =
+    let power = List.length domain in
+    assert (power = List.length points) ;
+    let points = fft ~domain ~points in
+    let power_inv = Scalar.inverse_exn (Scalar.of_z (Z.of_int power)) in
+    List.map (fun g -> mul g power_inv) points
 end
 
 module MakeUncompressed (Scalar : Fr.T) (Stubs : RAW_UNCOMPRESSED) :

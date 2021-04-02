@@ -171,6 +171,8 @@ let () =
             test_vectors_zero_and_minus_2_not_on_curve;
           test_case "test vectors add" `Quick test_vectors_add ] )
   end in
+  (* let module FFT = struct
+     We do not test the FFT here as dune copy is not supported by JS *)
   let open Alcotest in
   run
     "G1 Uncompressed"

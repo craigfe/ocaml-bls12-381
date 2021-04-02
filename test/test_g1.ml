@@ -23,18 +23,17 @@
 (*****************************************************************************)
 
 (** Check the routine generators do not raise any exception *)
-module ValueGeneration =
-  Test_ec_make.MakeValueGeneration (Bls12_381.G1.Uncompressed)
 
-module IsZero = Test_ec_make.MakeIsZero (Bls12_381.G1.Uncompressed)
-module Equality = Test_ec_make.MakeEquality (Bls12_381.G1.Uncompressed)
-module ECProperties = Test_ec_make.MakeECProperties (Bls12_381.G1.Uncompressed)
-module ValueGenerationCompressed =
-  Test_ec_make.MakeValueGeneration (Bls12_381.G1.Compressed)
-module IsZeroCompressed = Test_ec_make.MakeIsZero (Bls12_381.G1.Compressed)
-module EqualityCompressed = Test_ec_make.MakeEquality (Bls12_381.G1.Compressed)
-module ECPropertiesCompressed =
-  Test_ec_make.MakeECProperties (Bls12_381.G1.Compressed)
+module G1U = Bls12_381.G1.Uncompressed
+module G1C = Bls12_381.G1.Compressed
+module ValueGeneration = Test_ec_make.MakeValueGeneration (G1U)
+module IsZero = Test_ec_make.MakeIsZero (G1U)
+module Equality = Test_ec_make.MakeEquality (G1U)
+module ECProperties = Test_ec_make.MakeECProperties (G1U)
+module ValueGenerationCompressed = Test_ec_make.MakeValueGeneration (G1C)
+module IsZeroCompressed = Test_ec_make.MakeIsZero (G1C)
+module EqualityCompressed = Test_ec_make.MakeEquality (G1C)
+module ECPropertiesCompressed = Test_ec_make.MakeECProperties (G1C)
 
 module Constructors = struct
   let test_of_z_one () =
@@ -47,11 +46,8 @@ module Constructors = struct
       Z.of_string
         "1339506544944476473020471379941921221584933875938349620426543736416511423956333506472724655353366534992391756441569"
     in
-    let g = Bls12_381.G1.Uncompressed.of_z_opt ~x ~y in
-    match g with
-    | Some g ->
-        assert (Bls12_381.G1.Uncompressed.eq Bls12_381.G1.Uncompressed.one g)
-    | None -> assert false
+    let g = G1U.of_z_opt ~x ~y in
+    match g with Some g -> assert (G1U.eq G1U.one g) | None -> assert false
 
   (* https://github.com/zcash/librustzcash/blob/0.1.0/pairing/src/bls12_381/ec.rs#L1196 *)
   (* https://github.com/zcash/librustzcash/blob/0.1.0/pairing/src/bls12_381/ec.rs#L1245 *)
@@ -64,7 +60,7 @@ module Constructors = struct
       Z.of_string
         "1711275103908443722918766889652776216989264073722543507596490456144926139887096946237734327757134898380852225872709"
     in
-    let g = Bls12_381.G1.Uncompressed.of_z_opt ~x ~y in
+    let g = G1U.of_z_opt ~x ~y in
     match g with Some _ -> assert true | None -> assert false
 
   let test_vectors_2 () =
@@ -76,7 +72,7 @@ module Constructors = struct
       Z.of_string
         "2291134451313223670499022936083127939567618746216464377735567679979105510603740918204953301371880765657042046687078"
     in
-    let g = Bls12_381.G1.Uncompressed.of_z_opt ~x ~y in
+    let g = G1U.of_z_opt ~x ~y in
     match g with Some _ -> assert true | None -> assert false
 
   let test_vectors_3 () =
@@ -88,7 +84,7 @@ module Constructors = struct
       Z.of_string
         "2291134451313223670499022936083127939567618746216464377735567679979105510603740918204953301371880765657042046687078"
     in
-    let g = Bls12_381.G1.Uncompressed.of_z_opt ~x ~y in
+    let g = G1U.of_z_opt ~x ~y in
     match g with Some _ -> assert true | None -> assert false
 
   let test_vectors_add () =
@@ -100,12 +96,12 @@ module Constructors = struct
       Z.of_string
         "2291134451313223670499022936083127939567618746216464377735567679979105510603740918204953301371880765657042046687078"
     in
-    let p1 = Bls12_381.G1.Uncompressed.of_z_opt ~x:x_1 ~y in
+    let p1 = G1U.of_z_opt ~x:x_1 ~y in
     let x_2 =
       Z.of_string
         "3821408151224848222394078037104966877485040835569514006839342061575586899845797797516352881516922679872117658572470"
     in
-    let p2 = Bls12_381.G1.Uncompressed.of_z_opt ~x:x_2 ~y in
+    let p2 = G1U.of_z_opt ~x:x_2 ~y in
     let x_res =
       Z.of_string
         "52901198670373960614757979459866672334163627229195745167587898707663026648445040826329033206551534205133090753192"
@@ -114,34 +110,25 @@ module Constructors = struct
       Z.of_string
         "1711275103908443722918766889652776216989264073722543507596490456144926139887096946237734327757134898380852225872709"
     in
-    let res = Bls12_381.G1.Uncompressed.of_z_opt ~x:x_res ~y:y_res in
+    let res = G1U.of_z_opt ~x:x_res ~y:y_res in
     match (res, p1, p2) with
-    | (Some res, Some p1, Some p2) ->
-        assert (
-          Bls12_381.G1.Uncompressed.eq res (Bls12_381.G1.Uncompressed.add p1 p2)
-        )
+    | (Some res, Some p1, Some p2) -> assert (G1U.eq res (G1U.add p1 p2))
     | _ -> assert false
 
   let test_vectors_zero_and_2_not_on_curve () =
     let x = Z.of_string "0" in
     let y = Z.of_string "2" in
-    match Bls12_381.G1.Uncompressed.of_z_opt ~x ~y with
-    | Some _ -> assert false
-    | None -> assert true
+    match G1U.of_z_opt ~x ~y with Some _ -> assert false | None -> assert true
 
   let test_vectors_zero_and_minus_2_not_on_curve () =
     let x = Z.of_string "0" in
     let y = Z.neg @@ Z.of_string "2" in
-    match Bls12_381.G1.Uncompressed.of_z_opt ~x ~y with
-    | Some _ -> assert false
-    | None -> assert true
+    match G1U.of_z_opt ~x ~y with Some _ -> assert false | None -> assert true
 
   let test_vectors_random_points_not_on_curve () =
     let x = Z.of_string "90809235435" in
     let y = Z.neg @@ Z.of_string "8090843059809345" in
-    match Bls12_381.G1.Uncompressed.of_z_opt ~x ~y with
-    | Some _ -> assert false
-    | None -> assert true
+    match G1U.of_z_opt ~x ~y with Some _ -> assert false | None -> assert true
 
   let test_vectors_generator_from_bytes () =
     let x_cs =
@@ -252,7 +239,7 @@ module Constructors = struct
     let _y = Bytes.init 48 (fun i -> y_cs.(i)) in
     let x = Z.of_bits (Bytes.to_string _x) in
     let y = Z.of_string (Bytes.to_string _y) in
-    let g = Bls12_381.G1.Uncompressed.of_z_opt ~x ~y in
+    let g = G1U.of_z_opt ~x ~y in
     match g with Some _ -> assert true | None -> assert false
 
   let get_tests () =
@@ -280,50 +267,44 @@ end
 
 module UncompressedRepresentation = struct
   let test_uncompressed_zero_has_first_byte_at_64 () =
-    assert (
-      int_of_char (Bytes.get Bls12_381.G1.Uncompressed.(to_bytes zero) 0) = 64
-    )
+    assert (int_of_char (Bytes.get G1U.(to_bytes zero) 0) = 64)
 
   let test_uncompressed_random_has_first_byte_strictly_lower_than_64 () =
-    assert (
-      int_of_char (Bytes.get Bls12_381.G1.Uncompressed.(to_bytes (random ())) 0)
-      < 64 )
+    assert (int_of_char (Bytes.get G1U.(to_bytes (random ())) 0) < 64)
 
   let test_of_bytes_exn_to_bytes_consistent_on_random () =
-    let r = Bls12_381.G1.Uncompressed.random () in
-    assert (Bls12_381.G1.Uncompressed.(eq (of_bytes_exn (to_bytes r)) r))
+    let r = G1U.random () in
+    assert (G1U.(eq (of_bytes_exn (to_bytes r)) r))
 
   let test_bytes () =
     let test_vectors =
-      [ ( Bls12_381.G1.Uncompressed.one,
+      [ ( G1U.one,
           Bytes.of_string
             "\023\241\211\1671\151\215\148&\149c\140O\169\172\015\195h\140O\151t\185\005\161N:?\023\027\172XlU\232?\249z\026\239\251:\240\n\
              \219\"\198\187\b\179\244\129\227\170\160\241\160\1580\237t\029\138\228\252\245\224\149\213\208\n\
              \246\000\219\024\203,\004\179\237\208<\199D\162\136\138\228\012\170#)F\197\231\225"
         );
-        ( Bls12_381.G1.Uncompressed.zero,
+        ( G1U.zero,
           Bytes.of_string
             "@\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
         ) ]
     in
     List.iter
       (fun (v, expected_value) ->
-        assert (
-          Bls12_381.G1.Uncompressed.(
-            eq v (Bls12_381.G1.Uncompressed.of_bytes_exn expected_value)) ))
+        assert (G1U.(eq v (G1U.of_bytes_exn expected_value))))
       test_vectors
 
   let test_of_bytes_exn_to_bytes_consistent_on_one () =
-    let r = Bls12_381.G1.Uncompressed.one in
-    assert (Bls12_381.G1.Uncompressed.(eq (of_bytes_exn (to_bytes r)) r))
+    let r = G1U.one in
+    assert (G1U.(eq (of_bytes_exn (to_bytes r)) r))
 
   let test_of_bytes_exn_to_bytes_consistent_on_zero () =
-    let r = Bls12_381.G1.Uncompressed.zero in
-    assert (Bls12_381.G1.Uncompressed.(eq (of_bytes_exn (to_bytes r)) r))
+    let r = G1U.zero in
+    assert (G1U.(eq (of_bytes_exn (to_bytes r)) r))
 
   let get_tests () =
     let open Alcotest in
-    ( "Representation of G1 uncompressed",
+    ( "Representation of G1 Uncompressed",
       [ test_case
           "zero has first byte at 64"
           `Quick
@@ -352,6 +333,62 @@ module UncompressedRepresentation = struct
     )
 end
 
+module FFT = struct
+  let rec power2 x = if x = 0 then 1 else 2 * power2 (x - 1)
+
+  (* Output the domain comprising the powers of the root of unity*)
+  let generate_domain power size is_inverse =
+    let omega_base =
+      Bls12_381.Fr.of_string
+        "0x16a2a19edfe81f20d09b681922c813b4b63683508c2280b93829971f439f0d2b"
+    in
+    let rec get_omega limit is_inverse =
+      if limit < 32 then Bls12_381.Fr.square (get_omega (limit + 1) is_inverse)
+      else if is_inverse = false then omega_base
+      else Bls12_381.Fr.inverse_exn omega_base
+    in
+    let omega = get_omega power is_inverse in
+    List.init size (fun i -> Bls12_381.Fr.pow omega (Z.of_int i))
+
+  let parse_group_elements_from_file n f =
+    let ic = open_in_bin f in
+    let group_elements =
+      List.init n (fun _i ->
+          let bytes_buf = Bytes.create G1U.size_in_bytes in
+          Stdlib.really_input ic bytes_buf 0 G1U.size_in_bytes ;
+          G1U.of_bytes_exn bytes_buf)
+    in
+    close_in ic ;
+    group_elements
+
+  let test_fft () =
+    let power = 2 in
+    let m = power2 power in
+    let omega_domain = generate_domain 2 m false in
+    let g1_elements = parse_group_elements_from_file m "test_vector_g1_2" in
+    let result = G1U.fft ~domain:omega_domain ~points:g1_elements in
+    let expected_result =
+      parse_group_elements_from_file m "fft_test_vector_g1_2"
+    in
+    assert (result = expected_result)
+
+  let test_ifft () =
+    let power = 2 in
+    let m = power2 power in
+    let omega_domain = generate_domain power m true in
+    let g1_elements = parse_group_elements_from_file m "test_vector_g1_2" in
+    let result = G1U.ifft ~domain:omega_domain ~points:g1_elements in
+    let expected_result =
+      parse_group_elements_from_file m "ifft_test_vector_g1_2"
+    in
+    assert (result = expected_result)
+
+  let get_tests () =
+    let open Alcotest in
+    ( "(i)FFT of G1 Uncompressed",
+      [test_case "fft" `Quick test_fft; test_case "ifft" `Quick test_ifft] )
+end
+
 let () =
   let open Alcotest in
   run
@@ -361,6 +398,7 @@ let () =
       Equality.get_tests ();
       ECProperties.get_tests ();
       UncompressedRepresentation.get_tests ();
+      FFT.get_tests ();
       Constructors.get_tests () ] ;
   run
     "G1 Compressed"
