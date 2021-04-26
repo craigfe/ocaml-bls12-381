@@ -149,12 +149,22 @@ let () =
       let test_vectors = List.map Z.of_string test_vectors in
       List.iter (fun x -> assert (Z.equal (Fr.to_z (Fr.of_z x)) x)) test_vectors
 
+    let test_random_of_z_higher_than_modulo () =
+      (* Verify of_z uses the modulo of the parameter (and therefore accepts value
+         higher than the order)
+      *)
+      let x = random_z () in
+      let x_plus_order = Z.(add x Fr.order) in
+      assert (Fr.(eq (of_z x) (of_z x_plus_order)))
+
     let get_tests () =
       ( "Z representation",
         [ ("one", test_of_z_one);
           ("zero", test_of_z_zero);
           ( "of z and to z with random small numbers",
             repeat 1000 test_random_of_z_and_to_z );
+          ( "of z accepts value greater than the modulo",
+            repeat 1000 test_random_of_z_higher_than_modulo );
           ("to z and of z with test vectors", test_vectors_to_z_and_of_z);
           ( "to z and of z with random small numbers",
             repeat 1000 test_random_to_z_and_of_z ) ] )
