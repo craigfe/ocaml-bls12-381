@@ -66,10 +66,10 @@ module MakeBase (Scalar : Fr.T) (Stubs : Elliptic_curve_sig.RAW_BASE) :
   let check_bytes bs =
     if Bytes.length bs = size_in_bytes then Stubs.check_bytes bs else false
 
-  let of_bytes_opt bs = if check_bytes bs then Some bs else None
+  let of_bytes_opt bs = if check_bytes bs then Some (Bytes.copy bs) else None
 
   let of_bytes_exn (g : Bytes.t) : t =
-    if check_bytes g then g else raise (Not_on_curve g)
+    if check_bytes g then Bytes.copy g else raise (Not_on_curve g)
 
   let to_bytes g = g
 

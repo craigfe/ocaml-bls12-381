@@ -66,11 +66,12 @@ module Make (Stubs : RAW_BASE) : Ff_sig.BASE = struct
   let size_in_bytes = Stubs.size_in_bytes
 
   let pad_if_require bs =
+    (* Pad to 32 bytes. In anycase, copy the bytes to a new buffer *)
     if Bytes.length bs < size_in_bytes then (
       let padded_bytes = Bytes.make size_in_bytes '\000' in
       Bytes.blit bs 0 padded_bytes 0 (Bytes.length bs) ;
       padded_bytes )
-    else bs
+    else Bytes.copy bs
 
   let check_bytes bs =
     if Bytes.length bs = size_in_bytes then Stubs.check_bytes bs else false
