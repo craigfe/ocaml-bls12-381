@@ -59,6 +59,8 @@ module type T = sig
 
     See https://docs.rs/crate/pairing/0.16.0/source/src/bls12_381/README.md for
     more information on the instances used by the library.
+
+    FIXME: the function is not memory efficient because the elements are copied multiple times
 *)
   val of_string :
     String.t ->
@@ -75,7 +77,10 @@ module type T = sig
     String.t ->
     t
 
-  (** Same than [of_string], using Z.t elements *)
+  (** Same than [of_string], using Z.t elements
+      FIXME: the function is not memory efficient because the elements are
+      copied multiple times
+  *)
   val of_z :
     Z.t ->
     Z.t ->
