@@ -86,8 +86,6 @@ let () =
             `Quick
             test_vectors_random_points_not_on_curve ] )
   end in
-  (* let module FFT = struct
-     We do not test the FFT here as dune copy is not supported by JS *)
   let open Alcotest in
   run
     "G2 uncompressed"
