@@ -20,7 +20,7 @@ depends: [
   "ctypes-foreign"
   "bls12-381-gen" {= version}
   "bls12-381" {= version}
-  "tezos-rust-libs" {= "1.1"}
+  "tezos-rust-libs" {>= "1.1"}
   "alcotest" {with-test}
   "ff-pbt" {>= "0.6.0" & < "0.7.0" & with-test}
 ]
